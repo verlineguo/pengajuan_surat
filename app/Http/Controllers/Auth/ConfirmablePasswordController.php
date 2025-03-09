@@ -36,11 +36,11 @@ class ConfirmablePasswordController extends Controller
         $request->session()->put('auth.password_confirmed_at', time());
 
         $authUserRole = Auth::user()->role;
-        if ($authUserRole == 0) {
+        if ($authUserRole == 1) {
             return redirect()->intended(route('admin.dashboard', absolute: false));
-        } else if ($authUserRole == 1) {
-            return redirect()->intended(route('tu.dashboard', absolute: false));
         } else if ($authUserRole == 2) {
+            return redirect()->intended(route('tu.dashboard', absolute: false));
+        } else if ($authUserRole == 3) {
             return redirect()->intended(route('kaprodi.dashboard', absolute: false));
         } else {
             return redirect()->intended(route('mahasiswa.dashboard', absolute: false));
