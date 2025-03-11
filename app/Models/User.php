@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = ['nomor_induk', 'name', 'email', 'password', 'role'];
+    protected $fillable = ['nomor_induk', 'name', 'email', 'password', 'role_id', 'profile', 'phone', 'address'];
 
 
     /**
@@ -44,7 +44,7 @@ class User extends Authenticatable
     }
 
     public function role() {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id', 'id')->from('role');;
     }
 
     

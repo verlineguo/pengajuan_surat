@@ -20,7 +20,7 @@ class roleManager
             return redirect()->route('login');
         }
         
-        $authUserRole = Auth::user()->role;
+        $authUserRole = Auth::user()->role->id;
         switch($role) {
             case 'admin':
                 if ($authUserRole == 1) {
@@ -43,7 +43,6 @@ class roleManager
                 }
                 break;
         }
-        dd($authUserRole);
         switch ($authUserRole) {
             case 1:
                 return redirect()->route('admin.dashboard');

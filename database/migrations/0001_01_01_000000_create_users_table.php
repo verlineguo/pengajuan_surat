@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('profile')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->foreign('id_role')->references('id')->on('role');
+            $table->foreign('role')->references('id')->on('role');
 
             $table->rememberToken();
             $table->timestamps();

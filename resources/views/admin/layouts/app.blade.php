@@ -51,6 +51,8 @@
       </div>
       @include('admin.layouts.footer')
     </div>
+    @yield('scripts')
+
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('template') }}/vendors/@coreui/coreui-pro/js/coreui.bundle.min.js"></script>
     <script src="{{ asset('template') }}/vendors/simplebar/js/simplebar.min.js"></script>
@@ -70,7 +72,7 @@
     <!-- Plugins and scripts required by this view-->
     <script src="{{ asset('template') }}/vendors/chart.js/js/chart.umd.js"></script>
     <script src="{{ asset('template') }}/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
-    <script src="{{ asset('template') }}/vendors/@coreui/utils/js/index.js"></script>
+    <script src="{{ asset(path: 'template') }}/vendors/@coreui/utils/js/index.js"></script>
     <script src="js/main.js"></script>
     <script>
     </script>
