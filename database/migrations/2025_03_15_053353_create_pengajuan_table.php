@@ -13,12 +13,19 @@ return new class extends Migration
     {
         Schema::create('pengajuan', function (Blueprint $table) {
             $table->id('id_pengajuan')->primary();
+            $table->unsignedBigInteger('id_document');  
             $table->string('nrp');
-            $table->bigInteger('id_document')->unsigned();  
+            $table->string('nik_kaprodi');
             $table->datetime('tanggal_pengajuan');
-            $table->string('catatan', 255)->nullable();
+            $table->string('status_pengajuan', 10);
+            $table->datetime('tanggal_persetujuan');
+            $table->string('catatan_kaprodi', 255)->nullable();
+            $table->string('catatan_tu', 255)->nullable();
+
+
             $table->foreign('nrp')->references('nomor_induk')->on('users');
-            $table->foreign('id_document')->references('id_document')->on('document');
+            $table->foreign('nik_kaprodi')->references('nomor_induk')->on('users');
+            $table->foreign('id_document')->references('id')->on('detail_surat');
             $table->timestamps();
         });
     }
