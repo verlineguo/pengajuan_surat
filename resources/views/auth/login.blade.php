@@ -63,9 +63,9 @@
                                                 <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                                             </svg>
                                         </span>
-                                        <input id="email" class="form-control" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
+                                        <input id="login" class="form-control" type="text" name="login" required autofocus placeholder="Nomor Induk atau Email">
                                     </div>
-                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('login')" class="mt-2" />
                                     
                                     <!-- Password -->
                                     <div class="input-group mb-4">
