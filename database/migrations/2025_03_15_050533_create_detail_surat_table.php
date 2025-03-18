@@ -15,13 +15,10 @@ return new class extends Migration
     {
         Schema::create('detail_surat', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_jenis_document');
-            $table->text('isi_document');
-            $table->datetime('tanggal_pembuatan');
-            $table->string('file_document', 255);
+            $table->unsignedBigInteger('id_pengajuan');
+            $table->json('data_surat'); 
             $table->timestamps();
-
-            $table->foreign('id_jenis_document')->references('id')->on('document');
+            $table->foreign('id_pengajuan')->references('id_pengajuan')->on('pengajuan');
         });
     }
 

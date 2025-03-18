@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Document extends Model
+class Surat extends Model
 {
     use HasFactory, Notifiable;
     protected $table = 'document';

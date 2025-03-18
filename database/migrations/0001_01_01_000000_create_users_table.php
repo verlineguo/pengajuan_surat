@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->string('nomor_induk', 10)->unique();
+            $table->string('nomor_induk', 10)->primary();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('id_role')->unsigned()->default(3);
+            $table->unsignedBigInteger('role_id')->unsigned()->default(3);
             $table->string('profile')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
 
-            $table->foreign('id_role')->references('id')->on('role');
+            $table->foreign('role_id')->references('id')->on('role');
 
             $table->rememberToken();
             $table->timestamps();
@@ -37,11 +37,13 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('user_id')->nullable()->index();
+            $table->string('user_id', 10)->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
+
+            $table->foreign('user_id')->references('nomor_induk')->on('users')->onDelete('cascade');
 
         });
     }
