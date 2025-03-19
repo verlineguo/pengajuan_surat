@@ -5,11 +5,9 @@
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
             </svg>
           </button>
-          <ul class="header-nav d-none d-md-flex">
-            <li class="nav-item"><a class="nav-link" href="#" data-coreui-i18n="dashboard">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-coreui-i18n="users">Users</a></li>
+          {{-- <ul class="header-nav d-none d-md-flex">
             <li class="nav-item"><a class="nav-link" href="#" data-coreui-i18n="settings">Settings</a></li>
-          </ul>
+          </ul> --}}
           <ul class="header-nav d-none d-md-flex ms-auto">
             <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <svg class="icon icon-lg my-1 mx-2">
@@ -29,73 +27,6 @@
                   <svg class="icon me-2 text-success">
                     <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-basket"></use>
                   </svg><span data-coreui-i18n="newClient">New client</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2 text-warning">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
-                  </svg><span data-coreui-i18n="serverOverloaded">Server overloaded</span></a>
-                <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2" data-coreui-i18n="server">Server</div><a class="dropdown-item d-block py-2" href="#">
-                  <div class="text-uppercase small fw-semibold mb-1" data-coreui-i18n="cpuUsage">CPU Usage</div>
-                  <div class="progress progress-thin">
-                    <div class="progress-bar bg-info-gradient" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="small text-body-secondary" data-coreui-i18n="cpuUsageDescription, { 'number_of_processes': 358, 'number_of_cores': '1/4' }">348 Processes. 1/4 Cores.</div>
-                </a><a class="dropdown-item d-block py-2" href="#">
-                  <div class="text-uppercase small fw-semibold mb-1" data-coreui-i18n="memoryUsage">Memory Usage</div>
-                  <div class="progress progress-thin">
-                    <div class="progress-bar bg-warning-gradient" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="small text-body-secondary">11444MB/16384MB</div>
-                </a><a class="dropdown-item d-block py-2" href="#">
-                  <div class="text-uppercase small fw-semibold mb-1" data-coreui-i18n="ssdUsage">SSD Usage</div>
-                  <div class="progress progress-thin">
-                    <div class="progress-bar bg-danger-gradient" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="small text-body-secondary">243GB/256GB</div>
-                </a>
-              </div>
-            </li>
-            <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <svg class="icon icon-lg my-1 mx-2">
-                  <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-list-rich"></use>
-                </svg><span class="badge rounded-pill position-absolute top-0 end-0 bg-warning-gradient">5</span></a>
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg pt-0">
-                <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2" data-coreui-i18n="taskCounter, { 'counter': 5 }">You have 5 pending tasks</div><a class="dropdown-item d-block py-2" href="#">
-                  <div class="d-flex justify-content-between mb-1">
-                    <div class="small">Upgrade NPM</div>
-                    <div class="fw-semibold">0%</div>
-                  </div>
-                  <div class="progress progress-thin">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </a><a class="dropdown-item d-block py-2" href="#">
-                  <div class="d-flex justify-content-between mb-1">
-                    <div class="small">ReactJS Version</div>
-                    <div class="fw-semibold">25%</div>
-                  </div><span class="progress progress-thin">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                  </span>
-                </a><a class="dropdown-item d-block py-2" href="#">
-                  <div class="d-flex justify-content-between mb-1">
-                    <div class="small">VueJS Version</div>
-                    <div class="fw-semibold">50%</div>
-                  </div><span class="progress progress-thin">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                  </span>
-                </a><a class="dropdown-item d-block py-2" href="#">
-                  <div class="d-flex justify-content-between mb-1">
-                    <div class="small">Add new layouts</div>
-                    <div class="fw-semibold">75%</div>
-                  </div><span class="progress progress-thin">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                  </span>
-                </a><a class="dropdown-item d-block py-2" href="#">
-                  <div class="d-flex justify-content-between mb-1">
-                    <div class="small">Angular Version</div>
-                    <div class="fw-semibold">100%</div>
-                  </div><span class="progress progress-thin">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                  </span>
-                </a>
-                <div class="dropdown-divider"></div><a class="dropdown-item text-center fw-semibold" href="#" data-coreui-i18n="viewAllTasks">View all tasks</a>
               </div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -172,36 +103,7 @@
             <li class="nav-item py-1">
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
-            <li class="nav-item dropdown">
-              <button class="btn btn-link nav-link" type="button" aria-expanded="false" data-coreui-toggle="dropdown">
-                <svg class="icon icon-lg">
-                  <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-language"></use>
-                </svg>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end" style="--cui-dropdown-min-width: 8rem;">
-                <li>
-                  <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-language-value="en">
-                    <svg class="icon icon-lg me-3">
-                      <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/flag.svg#cif-gb"></use>
-                    </svg>English
-                  </button>
-                </li>
-                <li>
-                  <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-language-value="es">
-                    <svg class="icon icon-lg me-3">
-                      <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/flag.svg#cif-es"></use>
-                    </svg>Español
-                  </button>
-                </li>
-                <li>
-                  <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-language-value="pl">
-                    <svg class="icon icon-lg me-3">
-                      <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/flag.svg#cif-pl"></use>
-                    </svg>Polski
-                  </button>
-                </li>
-              </ul>
-            </li>
+            
             <li class="nav-item dropdown">
               <button class="btn btn-link nav-link" type="button" aria-expanded="false" data-coreui-toggle="dropdown">
                 <svg class="icon icon-lg theme-icon-active">
@@ -239,19 +141,7 @@
                 <div class="avatar avatar-md"><img class="avatar-img" src="{{ asset('template') }}/assets/img/avatars/8.jpg" alt="user@email.com"></div>
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
-                <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2" data-coreui-i18n="account">Account</div><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
-                  </svg><span data-coreui-i18n="updates">Updates</span><span class="badge badge-sm bg-info-gradient ms-2">42</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
-                  </svg><span data-coreui-i18n="messages">Messages</span><span class="badge badge-sm badge-sm bg-success ms-2">42</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-task"></use>
-                  </svg><span data-coreui-i18n="tasks">Tasks</span><span class="badge badge-sm bg-danger-gradient ms-2">42</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-comment-square"></use>
-                  </svg><span data-coreui-i18n="comments">Comments</span><span class="badge badge-sm bg-warning-gradient ms-2">42</span></a>
+                
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2" data-coreui-i18n="settings">Settings</div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
                     <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
@@ -259,32 +149,28 @@
                   <svg class="icon me-2">
                     <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
                   </svg><span data-coreui-i18n="settings">Settings</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-credit-card"></use>
-                  </svg><span data-coreui-i18n="payments">Payments</span><span class="badge badge-sm bg-secondary-gradient text-dark ms-2">42</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-file"></use>
-                  </svg><span data-coreui-i18n="projects">Projects</span><span class="badge badge-sm bg-primary-gradient ms-2">42</span></a>
+            
                 <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
-                  </svg><span data-coreui-i18n="lockAccount">Lock Account</span></a><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-                  </svg><span data-coreui-i18n="logout">Logout</span></a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
+                  
+                  <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      <svg class="icon me-2">
+                          <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                      </svg>
+                      Logout
+                  </a>
+                  
               </div>
             </li>
           </ul>
-          <button class="header-toggler" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#aside')).show()" style="margin-inline-end: -12px">
-            <svg class="icon icon-lg">
-              <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-applications-settings"></use>
-            </svg>
-          </button>
+          
         </div>
         <div class="container-fluid px-4">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0">
-              <li class="breadcrumb-item"><a href="#" data-coreui-i18n="home">Home</a>
+              <li class="breadcrumb-item"><a href="{{ route('kaprodi.dashboard')}}" data-coreui-i18n="home">Home</a>
               </li>
               <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Dashboard</span>
               </li>

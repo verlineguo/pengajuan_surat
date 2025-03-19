@@ -20,10 +20,14 @@
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-drop"></use>
             </svg><span data-coreui-i18n="colors">Users</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('admin.pengajuan') }}">
+        <li class="nav-item"><a class="nav-link" href="{{ route('admin.surat') }}">
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
-            </svg><span data-coreui-i18n="typography">daftar pengajuan</span></a></li>
+            </svg><span data-coreui-i18n="typography">daftar Surat</span></a></li>
+       <li class="nav-item"><a class="nav-link" href="{{ route('admin.matakuliah') }}">
+         <svg class="nav-icon">
+           <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-drop"></use>
+         </svg><span data-coreui-i18n="colors">Mata kuliah</span></a></li>
         
         
         
