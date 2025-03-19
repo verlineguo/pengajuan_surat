@@ -4,8 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use function Laravel\Prompts\text;
-
 return new class extends Migration
 {
     /**
@@ -15,10 +13,18 @@ return new class extends Migration
     {
         Schema::create('detail_surat', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_pengajuan');
-            $table->json('data_surat'); 
+            $table->foreignId('pengajuan_id');
+            $table->string('semester')->nullable();
+            $table->string('alamat_bandung')->nullable();
+            $table->text('keperluan')->nullable();
+            $table->string('tujuan')->nullable();
+            $table->string('tujukan')->nullable();
+            $table->string('mata_kuliah')->nullable();
+            $table->text('data_mahasiswa')->nullable();
+            $table->string('topik')->nullable();
+            $table->date('tanggal_kelulusan')->nullable();
             $table->timestamps();
-            $table->foreign('id_pengajuan')->references('id_pengajuan')->on('pengajuan');
+
         });
     }
 

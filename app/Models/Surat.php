@@ -9,8 +9,8 @@ use Illuminate\Notifications\Notifiable;
 class Surat extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'document';
+    protected $table = 'surat';
     protected $primaryKey = 'id';
-    protected $fillable = ['id', 'nama_dokumen'];
+    protected $fillable = ['nama_jenis_surat'];
     public $timestamps = true;
 }

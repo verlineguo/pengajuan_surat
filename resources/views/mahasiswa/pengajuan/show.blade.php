@@ -23,39 +23,18 @@
                         @endif
                     </td>
                 </tr>
+                
                 <tr><td><strong>Tanggal Pengajuan</strong></td><td>{{ $pengajuan->tanggal_pengajuan->format('d-m-Y H:i') }}</td></tr>
                 @if($pengajuan->tanggal_persetujuan)
                 <tr class="bg-light"><td><strong>Tanggal Persetujuan</strong></td><td>{{ $pengajuan->tanggal_persetujuan->format('d-m-Y H:i') }}</td></tr>
                 @endif
-
-                @if($pengajuan->status_pengajuan === 'Disetujui' || $pengajuan->status_pengajuan === 'Ditolak')
                 <tr class="bg-light">
                     <td><strong>Catatan Kaprodi</strong></td>
                     <td>{{ $pengajuan->catatan_kaprodi ? $pengajuan->catatan_kaprodi : '-' }}</td>
                 </tr>
-            @endif
+
             </table>
 
-            @if($pengajuan->status_pengajuan === 'pending')
-            <form id="pengajuanForm" action="{{ route('admin.pengajuan.update', ['id' => $pengajuan->id_pengajuan]) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="status_pengajuan" id="status_pengajuan">
-                
-                <div class="mb-2">
-                    <label for="catatan_kaprodi" class="form-label">Catatan Kaprodi (Opsional)</label>
-                    <textarea name="catatan_kaprodi" id="catatan_kaprodi" class="form-control"></textarea>
-                </div>
-            
-                <button type="button" class="btn btn-success text-white" onclick="submitForm('Disetujui')">Setujui</button>
-                <button type="button" class="btn btn-danger text-white" onclick="submitForm('Ditolak')">Tolak</button>
-            </form>
-            
-        
-
-        
-        @endif
-        
 
         </div>
     </div>
@@ -88,12 +67,7 @@
                 @endif
             </table>
 
-            @if($pengajuan->status_pengajuan === 'Disetujui' && $pengajuan->file_upload)
-                <div class="mt-3">
-                    <h5>File dari TU</h5>
-                    <a href="{{ asset('storage/' . $pengajuan->file_upload) }}" class="btn btn-info" target="_blank">Lihat File</a>
-                </div>
-            @endif
+           
         </div>
     </div>
 

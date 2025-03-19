@@ -30,8 +30,8 @@
                 <td>{{ $user->phone }}</td>
                 <td>{{ $user->address }}</td>
                 <td>
-                    <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-warning btn-sm text-white">Edit</a>
-                    <form action="{{ route('admin.user.delete', $user->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                    <a href="{{ route('admin.user.edit', $user->nomor_induk) }}" class="btn btn-warning btn-sm text-white">Edit</a>
+                    <form action="{{ route('admin.user.delete', $user->nomor_induk) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm text-white">Hapus</button>

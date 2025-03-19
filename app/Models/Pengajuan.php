@@ -17,7 +17,7 @@ class Pengajuan extends Model
     public $incrementing = true;
 
     protected $fillable = [
-        'id_document',
+        'id_surat',
         'nrp',
         'nik_kaprodi',
         'tanggal_pengajuan',
@@ -25,7 +25,9 @@ class Pengajuan extends Model
         'tanggal_persetujuan',
         'catatan_kaprodi',
         'catatan_tu',
+        'file_surat',
     ];
+
 
     public function mahasiswa()
     {
@@ -38,10 +40,13 @@ class Pengajuan extends Model
         return $this->belongsTo(User::class, 'nik_kaprodi', 'nomor_induk');
     }
 
-    public function detailSurat()
+    public function surat()
     {
-        return $this->belongsTo(DetailSurat::class, 'id_document', 'id');
+        return $this->belongsTo(Surat::class, 'id_surat', 'id');
     }
-    
+
+    public function detailSurat() {
+        return $this->hasOne(DetailSurat::class, 'pengajuan_id');
+    }
 
 }
