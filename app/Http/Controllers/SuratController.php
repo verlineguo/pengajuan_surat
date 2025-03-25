@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Surat;
 use Illuminate\Http\Request;
 
+
 class SuratController extends Controller
 {
     public function index() {
@@ -24,6 +25,7 @@ class SuratController extends Controller
     public function store(Request $request) {
         $request->validate([
             'nama_jenis_surat' => 'required|string|max:50',
+
         ]);
 
         Surat::create([
@@ -38,7 +40,7 @@ class SuratController extends Controller
 
         $request->validate([
             'nama_jenis_surat' => 'required|string|max:50',
-        ]);
+
 
         $surat->update([
             'nama_jenis_surat' => $request->nama_jenis_surat,

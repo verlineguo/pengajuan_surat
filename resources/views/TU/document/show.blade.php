@@ -89,19 +89,10 @@
             </table>
 
             @if($pengajuan->status_pengajuan === 'Disetujui' && $pengajuan->file_upload)
-                <form action="{{ route('admin.surat.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <label for="nama_jenis_surat">Nama File:</label>
-                    <input type="text" name="nama_jenis_surat" required>
-
-                    <label for="file">Upload File:</label>
-                    <input type="file" name="file">
-                    <button type="submit">Upload File</button>
-                </form>
-            @endif
-            @if($surat->file_path)
-                <p>File Surat:</p>
-                <a href="{{ asset('storage/' . $surat->file_path) }}" target="_blank">Lihat File</a>
+                <div class="mt-3">
+                    <h5>File dari TU</h5>
+                    <a href="{{ asset('storage/' . $pengajuan->file_upload) }}" class="btn btn-info" target="_blank">Lihat File</a>
+                </div>
             @endif
         </div>
     </div>

@@ -50,7 +50,7 @@
                         <div class="card col-md-12 p-4 mb-0">
                             <div class="card-body">
                                 <h1>Login</h1>
-                                <p class="text-body-secondary">Sign In to your account</p>
+                                <p class="text-body-secondary">Sign in to your account</p>
                                 
                                 <!-- Form Login -->
                                 <form method="POST" action="{{ route('login') }}">
