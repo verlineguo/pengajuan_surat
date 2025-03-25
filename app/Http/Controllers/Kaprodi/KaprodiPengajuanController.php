@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Kaprodi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pengajuan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class AdminPengajuanController extends Controller
+class KaprodiPengajuanController extends Controller
 {
     public function index() {
         $pengajuans = Pengajuan::with('mahasiswa', 'surat')->get();
-        return view('admin.pengajuan.index', compact('pengajuans'));
+        return view('kaprodi.pengajuan.index', compact('pengajuans'));
     }
 
     public function show($id) {
@@ -23,7 +23,11 @@ class AdminPengajuanController extends Controller
             $pengajuan->tanggal_persetujuan = Carbon::parse($pengajuan->tanggal_persetujuan);
         }
 
-        return view('admin.pengajuan.show', compact('pengajuan'));
+        if ($pengajuan->detailSurat->tanggal_kelulusan) {
+            $pengajuan->detailSurat->tanggal_kelulusan = Carbon::parse($pengajuan->detailSurat->tanggal_kelulusan);
+        }
+
+        return view('kaprodi.pengajuan.show', compact('pengajuan'));
 
 
     }
@@ -34,7 +38,7 @@ class AdminPengajuanController extends Controller
             'status_pengajuan' => 'Disetujui',
             'tanggal_persetujuan' => now(),
         ]);
-        return redirect()->route('admin.pengajuan')->with('success', 'Pengajuan berhasil disetujui.');
+        return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil disetujui.');
     }
 
     public function reject($id, Request $request) {
@@ -50,7 +54,7 @@ class AdminPengajuanController extends Controller
             'catatan_tu' => $request->catatan_tu,
         ]);
 
-        return redirect()->route('admin.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
+        return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
     }
 
     public function update(Request $request, $id)
@@ -60,7 +64,7 @@ class AdminPengajuanController extends Controller
         $pengajuan->catatan_kaprodi = $request->catatan_kaprodi; // Simpan catatan Kaprodi
         $pengajuan->save();
 
-        return redirect()->route('admin.pengajuan')->with('success', 'Status pengajuan berhasil diperbarui.');
+        return redirect()->route('kaprodi.pengajuan')->with('success', 'Status pengajuan berhasil diperbarui.');
     }
 
 
@@ -69,6 +73,6 @@ class AdminPengajuanController extends Controller
         $pengajuan = Pengajuan::findOrFail($id);
         $pengajuan->delete();
 
-        return redirect()->route('admin.pengajuan')->with('success', 'Pengajuan berhasil dihapus.');
+        return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil dihapus.');
     }
 }

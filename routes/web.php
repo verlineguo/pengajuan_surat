@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminPengajuanController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Kaprodi\KaprodiPengajuanController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuratController;
 use App\Http\Controllers\TUController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,16 +29,27 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::delete('/user/delete/{id}', 'destroy')->name('admin.user.delete');
         });
 
-        Route::controller(AdminPengajuanController::class)->group(function() {
-            Route::get('/pengajuan', 'index')->name(name: 'admin.pengajuan');
-            Route::get('/pengajuan/{id}', 'show')->name(name: 'admin.pengajuan.show');
-            Route::get('/pengajuan/edit/{id}', 'edit')->name('admin.pengajuan.edit');
-            Route::put('/pengajuan/update/{id}', 'update')->name('admin.pengajuan.update');
-            Route::post('/pengajuan/{id}/approve', 'approve')->name('admin.pengajuan.approve');
-            Route::post('/pengajuan/{id}/reject', 'reject')->name('admin.pengajuan.reject');
-
-            Route::delete('/pengajuan/delete/{id}', 'destroy')->name('admin.pengajuan.destroy');
+        Route::controller(MataKuliahController::class)->group(function() {
+            Route::get('/matakuliah', 'index')->name('admin.matakuliah');
+            Route::get('/matakuliah/create', 'create')->name('admin.matakuliah.create');
+            Route::post('/matakuliah/store', 'store')->name('admin.matakuliah.store');
+            Route::get('/matakuliah/{id}', 'show')->name(name: 'admin.matakuliah.show');
+            Route::get('/matakuliah/edit/{id}', 'edit')->name('admin.matakuliah.edit');
+            Route::put('/matakuliah/update/{id}', 'update')->name('admin.matakuliah.update');
+            Route::delete('/matakuliah/delete/{id}', 'destroy')->name('admin.matakuliah.delete');
         });
+
+        Route::controller(SuratController::class)->group(function() {
+            Route::get('/surat', 'index')->name('admin.surat');
+            Route::get('/surat/create', 'create')->name('admin.surat.create');
+            Route::post('/surat/store', 'store')->name('admin.surat.store');
+            Route::get('/surat/{id}', 'show')->name(name: 'admin.surat.show');
+            Route::get('/surat/edit/{id}', 'edit')->name('admin.surat.edit');
+            Route::put('/surat/update/{id}', 'update')->name('admin.surat.update');
+            Route::delete('/surat/delete/{id}', 'destroy')->name('admin.surat.destroy');
+        });
+
+        
 
     });
     
@@ -57,6 +70,17 @@ Route::middleware(['auth', 'verified', 'rolemanager:kaprodi'])->group(function (
         Route::controller(KaprodiController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('kaprodi.dashboard');
         });
+    });
+
+    Route::controller(KaprodiPengajuanController::class)->group(function() {
+        Route::get('/pengajuan', 'index')->name(name: 'kaprodi.pengajuan');
+        Route::get('/pengajuan/{id}', 'show')->name(name: 'kaprodi.pengajuan.show');
+        Route::get('/pengajuan/edit/{id}', 'edit')->name('kaprodi.pengajuan.edit');
+        Route::put('/pengajuan/update/{id}', 'update')->name('kaprodi.pengajuan.update');
+        Route::post('/pengajuan/{id}/approve', 'approve')->name('kaprodi.pengajuan.approve');
+        Route::post('/pengajuan/{id}/reject', 'reject')->name('kaprodi.pengajuan.reject');
+
+        Route::delete('/pengajuan/delete/{id}', 'destroy')->name('kaprodi.pengajuan.destroy');
     });
 });
 
