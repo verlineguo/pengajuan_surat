@@ -15,7 +15,6 @@
                 <th>Status</th>
                 <th>Tanggal Persetujuan</th>
                 <th>Catatan Kaprodi</th>
-                <th>Catatan TU</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -34,23 +33,30 @@
                 </td>
                 <td>{{ $pengajuan->tanggal_persetujuan ?? '-' }}</td>
                 <td>{{ $pengajuan->catatan_kaprodi ?? '-' }}</td>
-                <td>{{ $pengajuan->catatan_tu ?? '-' }}</td>
                 <td>
                     @if ($pengajuan->status_pengajuan == 'Disetujui' && $pengajuan->file_surat)
                         <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary btn-sm" target="_blank">Download</a>
                     @endif
 
-                    <a href="{{ route('kaprodi.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm text-white">Show</a>
+                    <a href="{{ route('kaprodi.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info"  style="background-color: #53BCE9">
+                        <i class="fas fa-eye"></i>
+                    </a>
 
                     @if ($pengajuan->status_pengajuan == 'pending')
-                        <a href="{{ route('kaprodi.pengajuan.approve', $pengajuan->id_pengajuan) }}" class="btn btn-success text-white btn-sm">Setujui</a>
-                        <a href="{{ route('kaprodi.pengajuan.reject', $pengajuan->id_pengajuan) }}" class="btn btn-danger text-white btn-sm">Tolak</a>
+                        <a href="{{ route('kaprodi.pengajuan.approve', $pengajuan->id_pengajuan) }}" class="btn" style="background-color: #47C97F; color: #000000">
+                            <i class="fas fa-check-circle"></i>
+                        </a>
+                        <a href="{{ route('kaprodi.pengajuan.reject', $pengajuan->id_pengajuan) }}" class="btn btn-danger" style="background-color: #FA3F68">
+                            <i class="fas fa-times-circle"></i>
+                        </a>
                     @endif
 
-                    <form action="{{ route('kaprodi.pengajuan.destroy', $pengajuan->id_pengajuan) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('kaprodi.pengajuan.destroy', $pengajuan->id_pengajuan) }}" method="POST" style="display:inline; background-color: #FBB65F;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-dark btn-sm text-white" onclick="return confirm('Yakin ingin menghapus pengajuan ini?');">Hapus</button>
+                        <button type="submit" class="btn btn-dark" onclick="return confirm('Yakin ingin menghapus pengajuan ini?');">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </form>
                 </td>
                 

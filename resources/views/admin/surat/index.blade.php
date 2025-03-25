@@ -27,11 +27,13 @@
                             <td>{{ $surat->id }}</td>
                             <td>{{ $surat->nama_jenis_surat }}</td>
                             <td>
-                                <a href="{{ route('admin.surat.edit', $surat->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('admin.surat.edit', $surat->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
                                 <form action="{{ route('admin.surat.destroy', $surat->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus surat ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

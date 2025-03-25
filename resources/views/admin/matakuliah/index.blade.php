@@ -23,11 +23,15 @@
                 <td>{{ $matakuliah->nama_mk }}</td>
                 
                 <td>
-                    <a href="{{ route('admin.matakuliah.edit', $matakuliah->kode_mk) }}" class="btn btn-warning btn-sm text-white">Edit</a>
+                    <a href="{{ route('admin.matakuliah.edit', $matakuliah->kode_mk) }}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i>
+                    </a>
                     <form action="{{ route('admin.matakuliah.delete', $matakuliah->kode_mk) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm text-white">Hapus</button>
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </form>
                 </td>
             </tr>

@@ -41,6 +41,8 @@
     <script src="{{ asset('template') }}/js/config.js"></script>
     <script src="{{ asset('template') }}/js/color-modes.js"></script>
     <link href="{{ asset('template') }}/vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   </head>
   <body>
     @include('kaprodi.layouts.sidebar')
