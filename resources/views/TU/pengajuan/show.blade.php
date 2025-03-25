@@ -37,7 +37,11 @@
             </table>
 
             @if($pengajuan->status_pengajuan === 'pending')
+<<<<<<< Updated upstream
             <form id="pengajuanForm" action="{{ route('admin.pengajuan.update', ['id' => $pengajuan->id_pengajuan]) }}" method="POST">
+=======
+            <form id="pengajuanForm" action="{{ route('kaprodi.pengajuan.update', ['id' => $pengajuan->id_pengajuan]) }}" method="POST">
+>>>>>>> Stashed changes
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="status_pengajuan" id="status_pengajuan">
@@ -87,6 +91,7 @@
                     <tr class="bg-light"><td><strong>Keperluan</strong></td><td>{{ $pengajuan->detailSurat->keperluan }}</td></tr>
                 @endif
             </table>
+<<<<<<< Updated upstream
 
             @if($pengajuan->status_pengajuan === 'Disetujui' && $pengajuan->file_upload)
                 <div class="mt-3">
@@ -98,6 +103,12 @@
     </div>
 
     <a href="{{ route('admin.pengajuan') }}" class="btn btn-primary mt-4">Kembali</a>
+=======
+        </div>
+    </div>
+
+    <a href="{{ route('kaprodi.pengajuan') }}" class="btn btn-primary mt-4">Kembali</a>
+>>>>>>> Stashed changes
 </div>
 
 <script>
