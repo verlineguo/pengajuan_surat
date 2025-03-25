@@ -40,6 +40,7 @@ class SuratController extends Controller
 
         $request->validate([
             'nama_jenis_surat' => 'required|string|max:50',
+        ]);
 
 
         $surat->update([

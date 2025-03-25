@@ -36,6 +36,7 @@
       <link rel="stylesheet" href="{{ asset('template') }}/vendors/simplebar/css/simplebar.css">
       <!-- Main styles for this application-->
       <link href="{{ asset('template') }}/css/style.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
       <!-- We use those styles to show code examples, you should remove them in your application.-->
       <link href="{{ asset('template') }}/css/examples.css" rel="stylesheet">
       <script src="{{ asset('template') }}/js/config.js"></script>

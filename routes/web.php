@@ -18,15 +18,17 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
     Route::prefix('admin')->group(function() {
         Route::controller(AdminController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('admin.dashboard');
+            Route::get('/profile', 'profile')->name('admin.profile');
+
         });
         Route::controller(UserController::class)->group(function() {
             Route::get('/user', 'index')->name('admin.user');
             Route::get('/user/create', 'create')->name('admin.user.create');
             Route::post('/user/store', 'store')->name('admin.user.store');
-            Route::get('/user/{id}', 'show')->name(name: 'admin.user.show');
-            Route::get('/user/edit/{id}', 'edit')->name('admin.user.edit');
-            Route::put('/user/update/{id}', 'update')->name('admin.user.update');
-            Route::delete('/user/delete/{id}', 'destroy')->name('admin.user.delete');
+            Route::get('/user/{nomor_induk}', 'show')->name(name: 'admin.user.show');
+            Route::get('/user/edit/{nomor_induk}', 'edit')->name('admin.user.edit');
+            Route::put('/user/update/{nomor_induk}', 'update')->name('admin.user.update');
+            Route::delete('/user/delete/{nomor_induk}', 'destroy')->name('admin.user.delete');
         });
 
         Route::controller(MataKuliahController::class)->group(function() {
@@ -47,6 +49,7 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::get('/surat/edit/{id}', 'edit')->name('admin.surat.edit');
             Route::put('/surat/update/{id}', 'update')->name('admin.surat.update');
             Route::delete('/surat/delete/{id}', 'destroy')->name('admin.surat.destroy');
+
         });
 
         
@@ -95,10 +98,10 @@ Route::middleware(['auth', 'verified', 'rolemanager:mahasiswa'])->group(function
             Route::get('/pengajuan', 'index')->name('mahasiswa.pengajuan.history');
             Route::get('/pengajuan/create', 'create')->name('mahasiswa.pengajuan');
             Route::post('/pengajuan/store', 'store')->name('mahasiswa.pengajuan.store');
-            Route::get('/pengajuan/show/{id}', 'show')->name('mahasiswa.pengajuan.show');
-            Route::get('/pengajuan/edit/{id}', 'edit')->name('mahasiswa.pengajuan.edit');
-            Route::put('/pengajuan/update/{id}', 'update')->name('mahasiswa.pengajuan.update');
-            Route::delete('/pengajuan/delete/{id}', 'destroy')->name('mahasiswa.pengajuan.destroy');
+            Route::get('/pengajuan/show/{id_pengajuan}', 'show')->name('mahasiswa.pengajuan.show');
+            Route::get('/pengajuan/edit/{id_pengajuan}', 'edit')->name('mahasiswa.pengajuan.edit');
+            Route::put('/pengajuan/update/{id_pengajuan}', 'update')->name('mahasiswa.pengajuan.update');
+            Route::delete('/pengajuan/delete/{id_pengajuan}', 'destroy')->name('mahasiswa.pengajuan.destroy');
             
 
         });

@@ -11,8 +11,9 @@ class UserController extends Controller
 {
     public function index() {
         $users = User::with('role')->get();
+        $roles = Role::all(); 
 
-        return view('admin.user.index', compact('users'));
+        return view('admin.user.index', compact('users', 'roles'));
     }
 
     public function create(){
@@ -21,8 +22,8 @@ class UserController extends Controller
     }
 
 
-    public function edit($id) {
-        $user = User::findOrFail($id);
+    public function edit($nomor_induk) {
+        $user = User::findOrFail($nomor_induk);
         $roles = Role::all(); // Ambil semua role untuk pilihan dropdown
         return view('admin.user.edit', compact('user', 'roles'));
     }
@@ -34,10 +35,15 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'role_id' => 'required|exists:role,id',
-            'profile' => 'nullable|string|max:255',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
         ]);
+
+        $profilePicturePath = null;
+        if ($request->hasFile('profile')) {
+            $profilePicturePath = $request->file('profile')->store('profiles', 'public');
+        }
 
         User::create([
             'nomor_induk' => $request->nomor_induk,
@@ -45,7 +51,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password), // Hash password
             'role_id' => $request->role_id,
-            'profile' => $request->profile,
+            'profile' => $profilePicturePath,
             'phone' => $request->phone,
             'address' => $request->address,
         ]);
@@ -53,23 +59,29 @@ class UserController extends Controller
         return redirect()->route('admin.user')->with('success', 'User berhasil ditambahkan!');
     }
 
-    public function show($id) {
-        $user = User::findOrFail($id);
-        return view('admin.user.show', compact('user'));
-    }
-
-    public function update(Request $request, $id) {
-        $user = User::findOrFail($id);
+    
+    public function update(Request $request, $nomor_induk) {
+        $user = User::where('nomor_induk', $nomor_induk)->firstOrFail();
 
         $request->validate([
-            'nomor_induk' => 'required|string|max:10|unique:users,nomor_induk,' . $id,
+            'nomor_induk' => 'required|unique:users,nomor_induk,'.$user->nomor_induk.',nomor_induk',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,' . $nomor_induk . ',nomor_induk',
             'role_id' => 'required|exists:role,id',
-            'profile' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
         ]);
+
+    
+     if ($request->hasFile('profile')) {
+            $imagePath = $request->file('profile')->store('profiles', 'public');
+            $user->profile = $imagePath;
+            $user->save();
+
+        }
+   
 
         $data = [
             'nomor_induk' => $request->nomor_induk,
@@ -88,8 +100,8 @@ class UserController extends Controller
         return redirect()->route('admin.user')->with('success', 'User berhasil diperbarui!');
     }
 
-    public function destroy($id) {
-        $user = User::findOrFail($id);
+    public function destroy($nomor_induk) {
+        $user = User::findOrFail($nomor_induk);
         $user->delete();
 
         return redirect()->route('admin.user')->with('success', 'User berhasil dihapus!');

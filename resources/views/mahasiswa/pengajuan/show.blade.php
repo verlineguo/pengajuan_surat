@@ -1,4 +1,4 @@
-@extends('admin.layouts.app') 
+@extends('mahasiswa.layouts.app') 
 
 @section('content')
 <div class="container">
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <a href="{{ route('admin.pengajuan') }}" class="btn btn-primary mt-4">Kembali</a>
+    <a href="{{ route('mahasiswa.pengajuan') }}" class="btn btn-primary mt-4">Kembali</a>
 </div>
 
 <script>

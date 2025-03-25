@@ -145,7 +145,7 @@
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2" data-coreui-i18n="settings">Settings</div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
                     <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-                  </svg><span data-coreui-i18n="profile">Profile</span></a><a class="dropdown-item" href="#">
+                  </svg><span data-coreui-i18n="profile">Profile</span></a><a class="dropdown-item" href="{{ route('admin.profile') }}">
                   <svg class="icon me-2">
                     <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
                   </svg><span data-coreui-i18n="settings">Settings</span></a><a class="dropdown-item" href="#">
@@ -167,14 +167,5 @@
           </ul>
           
         </div>
-        <div class="container-fluid px-4">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb my-0">
-              <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}" data-coreui-i18n="home">Home</a>
-              </li>
-              <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Dashboard</span>
-              </li>
-            </ol>
-          </nav>
-        </div>
+        @yield('header')
       </header>

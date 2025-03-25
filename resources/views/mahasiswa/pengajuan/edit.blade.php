@@ -1,5 +1,18 @@
 @extends('mahasiswa.layouts.app')
+@section('header')
+<div class="container-fluid px-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb my-0">
+        <li class="breadcrumb-item text-white"><a href="{{ route('mahasiswa.dashboard')}}" data-coreui-i18n="home">Home</a>
+        </li>
+        <li class="breadcrumb-item text-white"><a href="{{ route('mahasiswa.pengajuan.history')}}" data-coreui-i18n="home">Pengajuan</a>
+        </li>
+        <li class="breadcrumb-item active"><span data-coreui-i18n="pengajuan">Edit Surat</span>
 
+      </ol>
+    </nav>
+  </div>
+@endsection
 @section('content')
 <div class="container-lg px-4">
     <div class="card mb-4">
@@ -29,18 +42,18 @@
                 
                 <div class="mb-3">
                     <label class="form-label">Jenis Surat</label>
-                    <input class="form-control" type="text" value="{{ $pengajuan->surat->nama_jenis_surat }}" disabled>
+                    <input class="form-control" type="text" value="{{ $pengajuan->surat->nama_jenis_surat }}" readonly>
                 </div>
 
                 <div id="form-surat">
                     @if ($pengajuan->surat->nama_jenis_surat === 'Surat Keterangan Mahasiswa Aktif')
                         <div class="mb-3">
                             <label class="form-label">Nama Lengkap</label>
-                            <input class="form-control" type="text" name="name"  value="{{ $mahasiswa->name }}" disabled>
+                            <input class="form-control" type="text" name="name"  value="{{ $mahasiswa->name }}" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">NRP</label>
-                            <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->nomor_induk }}" disabled>
+                            <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->nomor_induk }}" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Semester</label>
@@ -86,11 +99,11 @@
                         <div class="mb-3">
                             <label class="form-label">Nama Lengkap</label>
                             <div class="form-text"> Isikan dengan nama lengkap dalam format Huruf Besar - Huruf Kecil (contoh: Susi Susanti)</div>
-                            <input class="form-control" type="text" name="name" value="{{ $mahasiswa->name }}" required>
+                            <input class="form-control" type="text" name="name" value="{{ $mahasiswa->name }}" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">NRP</label>
-                            <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->nomor_induk }}" required>
+                            <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->nomor_induk }}" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tanggal Kelulusan</label>

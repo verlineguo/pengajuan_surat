@@ -1,5 +1,18 @@
 @extends('admin.layouts.app')
+@section('header')
+<div class="container-fluid px-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb my-0">
+        <li class="breadcrumb-item text-white"><a href="{{ route('admin.dashboard')}}" data-coreui-i18n="home">Home</a>
+        </li>
+        <li class="breadcrumb-item active"><a href="{{ route('admin.surat')}}" data-coreui-i18n="dashboard">Surat</a>
+        </li>
+        <li class="breadcrumb-item active"><span data-coreui-i18n="surat">Create</span>
 
+      </ol>
+    </nav>
+  </div>
+@endsection
 @section('content')
 <div class="container-lg px-4">
     <div class="card mb-4">

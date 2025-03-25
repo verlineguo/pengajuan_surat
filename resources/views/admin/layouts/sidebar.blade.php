@@ -18,12 +18,12 @@
         <li class="nav-title" data-coreui-i18n="theme">Admin</li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.user') }}">
             <svg class="nav-icon">
-              <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-drop"></use>
+              <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
             </svg><span data-coreui-i18n="colors">Users</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.surat') }}">
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
-            </svg><span data-coreui-i18n="typography">daftar Surat</span></a></li>
+            </svg><span data-coreui-i18n="typography">Jenis Surat</span></a></li>
        <li class="nav-item"><a class="nav-link" href="{{ route('admin.matakuliah') }}">
          <svg class="nav-icon">
            <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-drop"></use>
