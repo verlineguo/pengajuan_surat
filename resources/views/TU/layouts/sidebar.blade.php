@@ -15,23 +15,20 @@
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
             </svg><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
-        <li class="nav-title" data-coreui-i18n="theme">Admin</li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('admin.user') }}">
+        {{-- <li class="nav-title" data-coreui-i18n="theme">Admin</li> --}}
+        {{-- <li class="nav-item"><a class="nav-link" href="{{ route('tu.mahasiswa') }}">
             <svg class="nav-icon">
-              <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-drop"></use>
-            </svg><span data-coreui-i18n="colors">Users</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('admin.surat') }}">
+              <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-drop"></use> --}}
+            {{-- </svg><span data-coreui-i18n="colors">Mahasiswa</span></a></li> --}}
+        <li class="nav-item"><a class="nav-link" href="{{ route('tu.pengajuan.show') }}">
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
-            </svg><span data-coreui-i18n="typography">daftar Surat</span></a></li>
-       <li class="nav-item"><a class="nav-link" href="{{ route('admin.matakuliah') }}">
+            </svg><span data-coreui-i18n="typography">Daftar Surat</span></a></li>
+       {{-- <li class="nav-item"><a class="nav-link" href="{{ route('tu.pengajuan') }}">
          <svg class="nav-icon">
            <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-drop"></use>
-         </svg><span data-coreui-i18n="colors">Mata kuliah</span></a></li>
-        
-        
-        
-    
+         </svg><span data-coreui-i18n="colors">Mata kuliah</span></a></li> --}}
+      </ul>
         
       <div class="sidebar-footer border-top d-none d-lg-flex">
         <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>

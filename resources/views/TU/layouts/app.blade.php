@@ -43,13 +43,13 @@
     <link href="{{ asset('template') }}/vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
   </head>
   <body>
-    @include('admin.layouts.sidebar')
+    @include('tu.layouts.sidebar')
     <div class="wrapper d-flex flex-column min-vh-100">
-      @include('admin.layouts.header')
+      @include('tu.layouts.header')
       <div class="body flex-grow-1">
         @yield('content')
       </div>
-      @include('admin.layouts.footer')
+      @include('tu.layouts.footer')
     </div>
     @yield('scripts')
 

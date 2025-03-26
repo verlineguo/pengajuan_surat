@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Kaprodi\KaprodiPengajuanController;
+use App\Http\Controllers\TU\TuPengajuanController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
@@ -49,8 +50,6 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::delete('/surat/delete/{id}', 'destroy')->name('admin.surat.destroy');
         });
 
-        
-
     });
     
 });
@@ -60,9 +59,13 @@ Route::middleware(['auth', 'verified', 'rolemanager:tu'])->group(function () {
         Route::controller(TUController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('tu.dashboard');
         });
-
-
+        
+        Route::controller(TuPengajuanController::class)->group(function() {
+            Route::get('/pengajuan', 'index')->name(name: 'tu.pengajuan');
+            Route::get('/pengajuan/{id}', 'show')->name(name: 'tu.pengajuan.show');
+        });
     });
+        
 });
 
 Route::middleware(['auth', 'verified', 'rolemanager:kaprodi'])->group(function () {
