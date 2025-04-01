@@ -62,7 +62,6 @@ Route::middleware(['auth', 'verified', 'rolemanager:tu'])->group(function () {
         
         Route::controller(TuPengajuanController::class)->group(function() {
             Route::get('/pengajuan', 'index')->name(name: 'tu.pengajuan');
-            Route::get('/pengajuan/{id}', 'show')->name(name: 'tu.pengajuan.show');
         });
     });
         
