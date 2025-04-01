@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('mahasiswa.layouts.app')
 
 @section('header')
 <div class="container-fluid px-4">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb my-0">
-        <li class="breadcrumb-item text-white"><a href="{{ route('admin.dashboard')}}" data-coreui-i18n="home">Home</a>
+        <li class="breadcrumb-item text-white"><a href="{{ route('mahasiswa.dashboard')}}" data-coreui-i18n="home">Home</a>
         </li>
         <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Profile</span>
         </li>
@@ -35,8 +35,8 @@
             @endif
 
             <div class="card shadow border-0">
-                <div class="card-header bg-primary text-white py-3">
-                    <h4 class="card-title mb-0 text-center">Profil admin</h4>
+                <div class="card-header bg-secondary text-white py-3">
+                    <h4 class="card-title mb-0 text-center">Profil Mahasiswa</h4>
                 </div>
                 
                 <div class="card-body p-0">
@@ -156,7 +156,7 @@
                         
                         <!-- Edit Profil -->
                         <div class="tab-pane fade" id="edit-profile" role="tabpanel">
-                            <form action="{{ route('admin.user.update', $user->nomor_induk) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('mahasiswa.user.update', $user->nomor_induk) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 

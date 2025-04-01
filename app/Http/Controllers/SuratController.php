@@ -4,22 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Surat;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class SuratController extends Controller
 {
     public function index() {
+        $user = Auth::user();        
         $surats = Surat::all();
-        return view('admin.surat.index', compact('surats'));
+        return view('admin.surat.index', compact('user','surats'));
     }
 
     public function create(){
-        return view('admin.surat.create');
+        $user = Auth::user();        
+        return view('admin.surat.create', compact('user'));
     }
 
     public function edit($id) {
+        $user = Auth::user();        
         $surat = Surat::findOrFail($id);
-        return view('admin.surat.edit', compact('surat'));
+        return view('admin.surat.edit', compact('surat', 'user'));
     }
 
     public function store(Request $request) {

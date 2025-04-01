@@ -39,7 +39,10 @@
                 <td>{{ $pengajuan->surat->nama_jenis_surat }}</td>
                 <td>{{ $pengajuan->tanggal_pengajuan }}</td>
                 <td>
-                    <span class="badge {{ $pengajuan->status_pengajuan == 'Disetujui' ? 'bg-success' : ($pengajuan->status_pengajuan == 'Ditolak' ? 'bg-danger' : 'bg-warning') }}">
+                    <span class="badge 
+                        {{ $pengajuan->status_pengajuan == 'Disetujui' ? 'bg-success' : 
+                           ($pengajuan->status_pengajuan == 'Ditolak' ? 'bg-danger' : 
+                           ($pengajuan->status_pengajuan == 'Done' ? 'bg-primary' : 'bg-warning')) }}">
                         {{ $pengajuan->status_pengajuan }}
                     </span>
                 </td>
@@ -47,18 +50,19 @@
                 <td>{{ $pengajuan->catatan_kaprodi ?? '-' }}</td>
                 <td>{{ $pengajuan->catatan_tu ?? '-' }}</td>
                 <td>
-                    @if ($pengajuan->status_pengajuan == 'Disetujui' && $pengajuan->file_surat)
-                        <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary btn-sm" target="_blank">Download</a>
-                    @else
-                        <span class="text-muted"></span>
-                    @endif                
-                    <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                    <a href="{{ route('mahasiswa.pengajuan.edit', $pengajuan->id_pengajuan) }}" class="btn btn-warning btn-sm"> <i class="fas fa-edit"></i></a>
-
-                    <button class="btn btn-danger btn-sm delete-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
-                        <i class="fas fa-trash"></i>
-                    </button>
-
+                    @if ($pengajuan->status_pengajuan == 'Done' && $pengajuan->file_surat)
+                        <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-download"></i></a>
+                    @endif
+                    @if ($pengajuan->status_pengajuan == 'Disetujui')
+                        <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                    @endif
+                    @if ($pengajuan->status_pengajuan == 'Pending' || $pengajuan->status_pengajuan == 'Ditolak')
+                        <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('mahasiswa.pengajuan.edit', $pengajuan->id_pengajuan) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                        <button class="btn btn-danger btn-sm delete-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    @endif
                 </td>
                 
             </tr>

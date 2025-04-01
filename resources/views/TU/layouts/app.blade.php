@@ -40,16 +40,17 @@
     <link href="{{ asset('template') }}/css/examples.css" rel="stylesheet">
     <script src="{{ asset('template') }}/js/config.js"></script>
     <script src="{{ asset('template') }}/js/color-modes.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="{{ asset('template') }}/vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
   </head>
   <body>
-    @include('admin.layouts.sidebar')
+    @include('TU.layouts.sidebar')
     <div class="wrapper d-flex flex-column min-vh-100">
-      @include('admin.layouts.header')
+      @include('TU.layouts.header')
       <div class="body flex-grow-1">
         @yield('content')
       </div>
-      @include('admin.layouts.footer')
+      @include('TU.layouts.footer')
     </div>
     @yield('scripts')
 

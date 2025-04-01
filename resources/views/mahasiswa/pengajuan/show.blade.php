@@ -4,7 +4,7 @@
 <div class="container">
     <h2 class="mb-4">Detail Pengajuan Surat</h2>
 
-    <div class="card shadow-lg">
+    <div class="card shadow-lg p-3">
         <div class="card-body">
             <h5 class="card-title mb-3">Informasi Pengajuan</h5>
             <table class="table table-bordered table-striped">
@@ -18,6 +18,8 @@
                             <span class="badge bg-danger">{{ $pengajuan->status_pengajuan }}</span>
                         @elseif($pengajuan->status_pengajuan === 'pending')
                             <span class="badge bg-warning text-dark">{{ $pengajuan->status_pengajuan }}</span>
+                        @elseif($pengajuan->status_pengajuan === 'Done')
+                            <span class="badge bg-primary">{{ $pengajuan->status_pengajuan }}</span>
                         @else
                             <span class="badge bg-secondary">{{ $pengajuan->status_pengajuan }}</span>
                         @endif
@@ -33,13 +35,19 @@
                     <td>{{ $pengajuan->catatan_kaprodi ? $pengajuan->catatan_kaprodi : '-' }}</td>
                 </tr>
 
+             
+
             </table>
+            @if($pengajuan->file_surat && $pengajuan->status_pengajuan === 'Done')
+                <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary" target="_blank">Download Surat</a>
+            
+            @endif
 
 
         </div>
     </div>
 
-    <div class="card mt-4 shadow-lg">
+    <div class="card mt-4 shadow-lg p-3">
         <div class="card-body">
             <h5 class="card-title mb-3">Detail Surat</h5>
             <table class="table table-bordered table-striped">
@@ -67,11 +75,13 @@
                 @endif
             </table>
 
+            
+
            
         </div>
     </div>
 
-    <a href="{{ route('mahasiswa.pengajuan') }}" class="btn btn-primary mt-4">Kembali</a>
+    <a href="{{ route('mahasiswa.pengajuan') }}" class="btn btn-primary mt-4 mb-4">Kembali</a>
 </div>
 
 <script>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Kaprodi\KaprodiPengajuanController;
+use App\Http\Controllers\TU\PengajuanController as TUPengajuanController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
@@ -62,6 +63,16 @@ Route::middleware(['auth', 'verified', 'rolemanager:tu'])->group(function () {
     Route::prefix('tu')->group(function() {
         Route::controller(TUController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('tu.dashboard');
+            Route::get('/profile', 'profile')->name('tu.profile');
+            Route::put('/user/update/{nomor_induk}', 'updateProfile')->name('tu.user.update');
+        });
+
+        Route::controller(TUPengajuanController::class)->group(function() {
+            Route::get('/pengajuan', 'index')->name('tu.pengajuan');
+            Route::get('/pengajuan/{id_pengajuan}', 'show')->name('tu.pengajuan.show');
+            Route::get('/pengajuan/edit/{id_pengajuan}', 'edit')->name('tu.pengajuan.edit');
+            Route::put('/pengajuan/update/{id_pengajuan}', 'update')->name('tu.pengajuan.update');
+            Route::post('/pengajuan/{id_pengajuan}/upload', 'uploadSurat')->name('tu.pengajuan.upload');
         });
 
 
@@ -72,28 +83,33 @@ Route::middleware(['auth', 'verified', 'rolemanager:kaprodi'])->group(function (
     Route::prefix('kaprodi')->group(function() {
         Route::controller(KaprodiController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('kaprodi.dashboard');
+            Route::get('/profile', 'profile')->name('kaprodi.profile');
+            Route::put('/user/update/{nomor_induk}', 'updateProfile')->name('kaprodi.user.update');
+
+        });
+        Route::controller(KaprodiPengajuanController::class)->group(function() {
+            Route::get('/pengajuan', 'index')->name('kaprodi.pengajuan');
+            Route::get('/pengajuan/{id_pengajuan}', 'show')->name('kaprodi.pengajuan.show');
+            Route::get('/pengajuan/edit/{id_pengajuan}', 'edit')->name('kaprodi.pengajuan.edit');
+            Route::put('/pengajuan/update/{id_pengajuan}', 'update')->name('kaprodi.pengajuan.update');
+            Route::post('/pengajuan/{id_pengajuan}/approve', 'approve')->name('kaprodi.pengajuan.approve');
+            Route::post('/pengajuan/{id_pengajuan}/reject', 'reject')->name('kaprodi.pengajuan.reject');
+            Route::delete('/pengajuan/delete/{id_pengajuan}', 'destroy')->name('kaprodi.pengajuan.destroy');
         });
     });
 
-    Route::controller(KaprodiPengajuanController::class)->group(function() {
-        Route::get('/pengajuan', 'index')->name(name: 'kaprodi.pengajuan');
-        Route::get('/pengajuan/{id}', 'show')->name(name: 'kaprodi.pengajuan.show');
-        Route::get('/pengajuan/edit/{id}', 'edit')->name('kaprodi.pengajuan.edit');
-        Route::put('/pengajuan/update/{id}', 'update')->name('kaprodi.pengajuan.update');
-        Route::post('/pengajuan/{id}/approve', 'approve')->name('kaprodi.pengajuan.approve');
-        Route::post('/pengajuan/{id}/reject', 'reject')->name('kaprodi.pengajuan.reject');
-
-        Route::delete('/pengajuan/delete/{id}', 'destroy')->name('kaprodi.pengajuan.destroy');
-    });
+    
 });
 
 Route::middleware(['auth', 'verified', 'rolemanager:mahasiswa'])->group(function () {
     Route::prefix('mahasiswa')->group(function() {
         Route::controller(MahasiswaController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('mahasiswa.dashboard');
+            Route::get('/profile', 'profile')->name('mahasiswa.profile');
+            Route::put('/user/update/{nomor_induk}', 'updateProfile')->name('mahasiswa.user.update');
+
+
         });
-    });
-    Route::prefix('mahasiswa')->group(function() {
         Route::controller(PengajuanController::class)->group(function() {
             Route::get('/pengajuan', 'index')->name('mahasiswa.pengajuan.history');
             Route::get('/pengajuan/create', 'create')->name('mahasiswa.pengajuan');
@@ -106,6 +122,7 @@ Route::middleware(['auth', 'verified', 'rolemanager:mahasiswa'])->group(function
 
         });
     });
+    
 });
 
 

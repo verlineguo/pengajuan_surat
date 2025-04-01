@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('kaprodi.layouts.app')
 
 @section('header')
 <div class="container-fluid px-4">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb my-0">
-        <li class="breadcrumb-item text-white"><a href="{{ route('admin.dashboard')}}" data-coreui-i18n="home">Home</a>
+        <li class="breadcrumb-item text-white"><a href="{{ route('kaprodi.dashboard')}}" data-coreui-i18n="home">Home</a>
         </li>
         <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Profile</span>
         </li>
@@ -36,7 +36,7 @@
 
             <div class="card shadow border-0">
                 <div class="card-header bg-primary text-white py-3">
-                    <h4 class="card-title mb-0 text-center">Profil admin</h4>
+                    <h4 class="card-title mb-0 text-center">Profil Kaprodi</h4>
                 </div>
                 
                 <div class="card-body p-0">
@@ -64,8 +64,8 @@
                                 <div class="col-md-4 mb-4 mb-md-0">
                                     <div class="text-center">
                                         <div class="position-relative d-inline-block mb-3">
-                                            @if($user->profile)
-                                                <img src="{{ asset('storage/' . $user->profile) }}" 
+                                            @if($kaprodi->profile)
+                                                <img src="{{ asset('storage/' . $kaprodi->profile) }}" 
                                                      alt="Profile Picture" 
                                                      class="img-thumbnail rounded-circle" 
                                                      width="180" height="180" 
@@ -82,8 +82,8 @@
                                             </div>
                                         </div>
                                         
-                                        <h5 class="mb-1">{{ $user->name }}</h5>
-                                        <p class="text-muted">{{ $user->role->name }}</p>
+                                        <h5 class="mb-1">{{ $kaprodi->name }}</h5>
+                                        <p class="text-muted">{{ $kaprodi->role->name }}</p>
                                     </div>
                                 </div>
                                 
@@ -95,7 +95,7 @@
                                                     <h6 class="card-subtitle mb-2 text-muted">
                                                         <i class="fas fa-id-card me-2"></i>Nomor Induk
                                                     </h6>
-                                                    <p class="card-text fw-bold">{{ $user->nomor_induk }}</p>
+                                                    <p class="card-text fw-bold">{{ $kaprodi->nomor_induk }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,7 +106,7 @@
                                                     <h6 class="card-subtitle mb-2 text-muted">
                                                         <i class="fas fa-envelope me-2"></i>Email
                                                     </h6>
-                                                    <p class="card-text fw-bold">{{ $user->email }}</p>
+                                                    <p class="card-text fw-bold">{{ $kaprodi->email }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,7 +118,7 @@
                                                         <i class="fas fa-phone me-2"></i>Telepon
                                                     </h6>
                                                     <p class="card-text fw-bold">
-                                                        {{ $user->phone ?: 'Belum diisi' }}
+                                                        {{ $kaprodi->phone ?: 'Belum diisi' }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -131,7 +131,7 @@
                                                         <i class="fas fa-user-tag me-2"></i>Role
                                                     </h6>
                                                     <p class="card-text">
-                                                        <span class="badge bg-info">{{ $user->role->name }}</span>
+                                                        <span class="badge bg-info">{{ $kaprodi->role->name }}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -144,7 +144,7 @@
                                                         <i class="fas fa-map-marker-alt me-2"></i>Alamat
                                                     </h6>
                                                     <p class="card-text">
-                                                        {{ $user->address ?: 'Belum diisi' }}
+                                                        {{ $kaprodi->address ?: 'Belum diisi' }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -156,7 +156,7 @@
                         
                         <!-- Edit Profil -->
                         <div class="tab-pane fade" id="edit-profile" role="tabpanel">
-                            <form action="{{ route('admin.user.update', $user->nomor_induk) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('kaprodi.user.update', $kaprodi->nomor_induk) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 
@@ -167,8 +167,8 @@
                                             <div class="d-flex justify-content-center mb-3">
                                                 <div class="position-relative">
                                                    
-                                                         @if($user->profile)
-                                                <img id="profilePreview" src="{{ asset('storage/' . $user->profile) }}" 
+                                                         @if($kaprodi->profile)
+                                                <img id="profilePreview" src="{{ asset('storage/' . $kaprodi->profile) }}" 
                                                      alt="Profile Picture" 
                                                      class="img-thumbnail rounded-circle" 
                                                      width="180" height="180" 
@@ -196,28 +196,28 @@
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" id="nomorInduk" value="{{ $user->nomor_induk }}" disabled>
+                                                    <input type="text" class="form-control" id="nomorInduk" value="{{ $kaprodi->nomor_induk }}" disabled>
                                                     <label for="nomorInduk">Nomor Induk</label>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" id="nama" value="{{ $user->name }}" disabled>
+                                                    <input type="text" class="form-control" id="nama" value="{{ $kaprodi->name }}" disabled>
                                                     <label for="nama">Nama</label>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input type="email" class="form-control" id="email" value="{{ $user->email }}" disabled>
+                                                    <input type="email" class="form-control" id="email" value="{{ $kaprodi->email }}" disabled>
                                                     <label for="email">Email</label>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input class="form-control @error('phone') is-invalid @enderror" id="phone" type="text" name="phone" value="{{ old('phone', $user->phone) }}" placeholder="Telepon">
+                                                    <input class="form-control @error('phone') is-invalid @enderror" id="phone" type="text" name="phone" value="{{ old('phone', $kaprodi->phone) }}" placeholder="Telepon">
                                                     <label for="phone">Telepon</label>
                                                     @error('phone')
                                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -237,7 +237,7 @@
                                             
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" style="height: 100px" placeholder="Alamat">{{ old('address', $user->address) }}</textarea>
+                                                    <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" style="height: 100px" placeholder="Alamat">{{ old('address', $kaprodi->address) }}</textarea>
                                                     <label for="address">Alamat</label>
                                                     @error('address')
                                                         <div class="invalid-feedback">{{ $message }}</div>

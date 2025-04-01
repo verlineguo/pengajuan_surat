@@ -1,10 +1,23 @@
 @extends('kaprodi.layouts.app') {{-- Ganti layout admin --}}
 
 @section('content')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 <div class="container">
     <h2 class="mb-4">Kelola Pengajuan Surat Mahasiswa</h2>
-
-    <table class="table table-striped">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="mb-3">
+            <select id="filter" class="form-control">
+                <option value="">Semua status</option>
+                <option value="pending" selected>Pending</option>
+                <option value="Disetujui">Disetujui</option>
+                <option value="Ditolak">Ditolak</option>
+            </select>
+        </div>
+    </div>
+    <table class="table table-striped" id="pengajuanTable">
         <thead>
             <tr>
                 <th>No</th>
@@ -43,21 +56,17 @@
                     </a>
 
                     @if ($pengajuan->status_pengajuan == 'pending')
-                        <a href="{{ route('kaprodi.pengajuan.approve', $pengajuan->id_pengajuan) }}" class="btn" style="background-color: #47C97F; color: #000000">
+                        <button type="button" class="btn btn-success approve-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
                             <i class="fas fa-check-circle"></i>
-                        </a>
-                        <a href="{{ route('kaprodi.pengajuan.reject', $pengajuan->id_pengajuan) }}" class="btn btn-danger" style="background-color: #FA3F68">
+                        </button>
+                        
+                        <button type="button" class="btn btn-danger reject-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
                             <i class="fas fa-times-circle"></i>
-                        </a>
+                        </button>
+                
                     @endif
 
-                    <form action="{{ route('kaprodi.pengajuan.destroy', $pengajuan->id_pengajuan) }}" method="POST" style="display:inline; background-color: #FBB65F;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-dark" onclick="return confirm('Yakin ingin menghapus pengajuan ini?');">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
+                
                 </td>
                 
             </tr>
@@ -65,4 +74,99 @@
         </tbody>
     </table>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        $('.table').DataTable();
+
+        var table = $('#pengajuanTable').DataTable();
+        table.column(5).search('pending').draw();
+
+
+        $('#filter').on('change', function () {
+            var selectedStatus = $(this).val();
+            table.column(5).search(selectedStatus).draw();
+        });
+
+        $('.approve-btn').click(function () {
+            var pengajuanId = $(this).data('id_pengajuan');
+
+            Swal.fire({
+                title: 'Setujui Pengajuan?',
+                text: "Anda akan menyetujui pengajuan ini.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Setujui!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("/pengajuan/" + pengajuanId + "/approve", {
+                        _token: '{{ csrf_token() }}'
+                    }, function (data) {
+                        Swal.fire(
+                            'Berhasil!',
+                            'Pengajuan telah disetujui.',
+                            'success'
+                        ).then(() => location.reload());
+                    }).fail(function () {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menyetujui.',
+                            'error'
+                        );
+                    });
+                }
+            });
+        });
+
+        $('.reject-btn').click(function () {
+            var pengajuanId = $(this).data('id');
+
+            Swal.fire({
+                title: 'Tolak Pengajuan?',
+                text: "Anda akan menolak pengajuan ini.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Tolak!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("/pengajuan/" + pengajuanId + "/reject", {
+                        _token: '{{ csrf_token() }}'
+                    }, function (data) {
+                        Swal.fire(
+                            'Ditolak!',
+                            'Pengajuan telah ditolak.',
+                            'success'
+                        ).then(() => location.reload());
+                    }).fail(function () {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menolak.',
+                            'error'
+                        );
+                    });
+                }
+            });
+        });
+    });
+</script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session("success") }}',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
 @endsection
+

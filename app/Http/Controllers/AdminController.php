@@ -14,6 +14,8 @@ class AdminController extends Controller
     public function index() {
 
         $users = User::all();
+        $user = Auth::user();
+
         $totalMahasiswa = User::whereHas('role', function ($query) {
             $query->where('name', 'mahasiswa');
         })->count();
@@ -25,7 +27,7 @@ class AdminController extends Controller
         $totalSurat = Surat::count();
         $totalMataKuliah = MataKuliah::count();
     
-        return view('admin.dashboard', compact('users', 'totalMahasiswa', 'totalKaryawan', 'totalSurat', 'totalMataKuliah'));
+        return view('admin.dashboard', compact('users','user', 'totalMahasiswa', 'totalKaryawan', 'totalSurat', 'totalMataKuliah'));
     }
     public function profile() {
         $user = Auth::user();        

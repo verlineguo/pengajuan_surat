@@ -4,21 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MataKuliahController extends Controller
 {
     public function index() {
+        $user = Auth::user();        
         $matakuliahs = MataKuliah::all();
-        return view('admin.matakuliah.index', compact('matakuliahs'));
+        return view('admin.matakuliah.index', compact('matakuliahs', 'user'));
     }
 
     public function create(){
-        return view('admin.matakuliah.create');
+        $user = Auth::user();
+        return view('admin.matakuliah.create', compact('user'));
     }
 
     public function edit($id) {
+        $user = Auth::user();
         $matakuliah = MataKuliah::findOrFail($id);
-        return view('admin.matakuliah.edit', compact('matakuliah'));
+        return view('admin.matakuliah.edit', compact('matakuliah', 'user'));
     }
 
     public function store(Request $request) {

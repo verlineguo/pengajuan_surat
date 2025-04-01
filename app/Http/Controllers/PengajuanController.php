@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Storage;
 class PengajuanController extends Controller
 {
     public function index() {
+        $mahasiswa = Auth::user();
         $surats = Surat::all();
         $pengajuans = Pengajuan::where('nrp', Auth::user()->nomor_induk)->get();
-        return view('mahasiswa.pengajuan.index', compact('pengajuans', 'surats'));
+        return view('mahasiswa.pengajuan.index', compact('mahasiswa', 'pengajuans', 'surats'));
     }
 
     public function create() {
@@ -136,6 +137,7 @@ class PengajuanController extends Controller
     
     public function show($id_pengajuan)
     {
+        $mahasiswa = Auth::user();
         $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'detailSurat')->findOrFail($id_pengajuan);
         $pengajuan->tanggal_pengajuan = Carbon::parse($pengajuan->tanggal_pengajuan);
         if ($pengajuan->tanggal_persetujuan) {
@@ -144,7 +146,7 @@ class PengajuanController extends Controller
         if ($pengajuan->detailSurat->tanggal_kelulusan) {
             $pengajuan->detailSurat->tanggal_kelulusan = Carbon::parse($pengajuan->detailSurat->tanggal_kelulusan);
         }
-        return view('mahasiswa.pengajuan.show', compact('pengajuan'));
+        return view('mahasiswa.pengajuan.show', compact('pengajuan', 'mahasiswa'));
         
     }
 
@@ -166,30 +168,25 @@ class PengajuanController extends Controller
     }
 
 
-    public function approve($id) {
-        $pengajuan = Pengajuan::findOrFail($id);
+    public function approve($id_pengajuan) {
+        
+        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
         $pengajuan->update([
             'status_pengajuan' => 'Disetujui',
             'tanggal_persetujuan' => now(),
         ]);
-        return redirect()->route('admin.pengajuan')->with('success', 'Pengajuan berhasil disetujui.');
+        return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil disetujui.');
     }
 
-    public function reject($id, Request $request) {
-        $request->validate([
-            'catatan_kaprodi' => 'nullable|string',
-            'catatan_tu' => 'nullable|string',
-        ]);
-
-        $pengajuan = Pengajuan::findOrFail($id);
+    public function reject($id_pengajuan, Request $request) {
+    
+        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
         $pengajuan->update([
             'status_pengajuan' => 'Ditolak',
             'catatan_kaprodi' => $request->catatan_kaprodi,
         ]);
 
-        return redirect()->route('admin.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
+        return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
     }
-
-
 
 }

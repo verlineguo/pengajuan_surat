@@ -138,8 +138,14 @@
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <div class="avatar avatar-md"><img class="avatar-img" src="{{ asset('template') }}/assets/img/avatars/8.jpg" alt="user@email.com"></div>
-              </a>
+              <div class="avatar avatar-md">
+                @if($user->profile)
+                  <img src="{{ asset('storage/' . $user->profile) }}" alt="Profile" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
+                @else
+                    <i class="fas fa-user-circle fa-3x text-secondary"></i>
+                @endif
+              </div>
+            </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2" data-coreui-i18n="settings">Settings</div><a class="dropdown-item" href="#">

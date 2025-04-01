@@ -138,14 +138,20 @@
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <div class="avatar avatar-md"><img class="avatar-img" src="{{ asset('template') }}/assets/img/avatars/8.jpg" alt="user@email.com"></div>
+                <div class="avatar avatar-md">
+                  @if($tu->profile)
+                    <img src="{{ asset('storage/' . $tu->profile) }}" alt="Profile" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
+                  @else
+                      <i class="fas fa-user-circle fa-3x text-secondary"></i>
+                  @endif
+                </div>
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2" data-coreui-i18n="settings">Settings</div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
                     <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-                  </svg><span data-coreui-i18n="profile">Profile</span></a><a class="dropdown-item" href="#">
+                  </svg><a href="{{ route('tu.profile') }}"><span data-coreui-i18n="profile">Profile</span></a>
                   <svg class="icon me-2">
                     <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
                   </svg><span data-coreui-i18n="settings">Settings</span></a><a class="dropdown-item" href="#">
@@ -170,7 +176,7 @@
         <div class="container-fluid px-4">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0">
-              <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}" data-coreui-i18n="home">Home</a>
+              <li class="breadcrumb-item"><a href="{{ route('tu.dashboard')}}" data-coreui-i18n="home">Home</a>
               </li>
               <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Dashboard</span>
               </li>

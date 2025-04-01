@@ -6,15 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Pengajuan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KaprodiPengajuanController extends Controller
 {
     public function index() {
+        $kaprodi = Auth::user();
         $pengajuans = Pengajuan::with('mahasiswa', 'surat')->get();
-        return view('kaprodi.pengajuan.index', compact('pengajuans'));
+        return view('kaprodi.pengajuan.index', compact('kaprodi','pengajuans'));
     }
 
     public function show($id) {
+        $kaprodi = Auth::user();
         $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'detailSurat')->findOrFail($id);
 
         $pengajuan->tanggal_pengajuan = Carbon::parse($pengajuan->tanggal_pengajuan);
@@ -27,7 +30,7 @@ class KaprodiPengajuanController extends Controller
             $pengajuan->detailSurat->tanggal_kelulusan = Carbon::parse($pengajuan->detailSurat->tanggal_kelulusan);
         }
 
-        return view('kaprodi.pengajuan.show', compact('pengajuan'));
+        return view('kaprodi.pengajuan.show', compact('kaprodi','pengajuan'));
 
 
     }
