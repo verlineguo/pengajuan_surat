@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('nomor_induk', 10)->primary();
             $table->string('name');
+            $table->string('kode_prodi', 10); 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('address')->nullable();
 
             $table->foreign('role_id')->references('id')->on('role');
+            $table->foreign('kode_prodi')->references('kode_prodi')->on('prodi'); // Jika prodi dihapus, set null
 
             $table->rememberToken();
             $table->timestamps();

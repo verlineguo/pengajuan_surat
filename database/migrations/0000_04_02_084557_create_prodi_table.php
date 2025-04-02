@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('surat', function (Blueprint $table) {
-            $table->string('file_path')->nullable()->after('nama_jenis_surat');
-        });
+        Schema::create('prodi', function (Blueprint $table) {
+            $table->string('kode_prodi', 10)->primary();
+            $table->string('nama_prodi', 50);
         
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('surat', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('prodi');
     }
 };

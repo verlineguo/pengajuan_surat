@@ -56,7 +56,7 @@
                     @if ($pengajuan->status_pengajuan == 'Disetujui')
                         <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                     @endif
-                    @if ($pengajuan->status_pengajuan == 'Pending' || $pengajuan->status_pengajuan == 'Ditolak')
+                    @if ($pengajuan->status_pengajuan == 'pending' || $pengajuan->status_pengajuan == 'Ditolak')
                         <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                         <a href="{{ route('mahasiswa.pengajuan.edit', $pengajuan->id_pengajuan) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                         <button class="btn btn-danger btn-sm delete-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">

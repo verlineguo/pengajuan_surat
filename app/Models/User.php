@@ -50,13 +50,10 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'id')->from('role');;
     }
 
-    // public function prodiSebagaiKaprodi()
-    // {
-    //     return $this->hasOne(Prodi::class, 'kaprodi_id', 'nomor_induk');
-    // }
 
-    // public function prodiSebagaiTU()
-    // {
-    //     return $this->hasOne(Prodi::class, 'tu_id', 'nomor_induk');
-    // }
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'kode_prodi', 'kode_prodi');
+    }
+    
 }

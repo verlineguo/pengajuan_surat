@@ -6,32 +6,39 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\Prodi;
 class UserController extends Controller
 {
     public function index() {
         $users = User::with('role')->get();
+    
         $roles = Role::all(); 
+        $prodis = Prodi::all();
 
-        return view('admin.user.index', compact('users', 'roles'));
+        return view('admin.user.index', compact('users', 'roles', 'prodis'));
     }
 
     public function create(){
         $roles = Role::all(); 
-        return view('admin.user.create', compact('roles'));
+        $prodis = Prodi::all();
+
+        return view('admin.user.create', compact('roles', 'prodis'));
     }
 
 
     public function edit($nomor_induk) {
         $user = User::findOrFail($nomor_induk);
         $roles = Role::all(); // Ambil semua role untuk pilihan dropdown
-        return view('admin.user.edit', compact('user', 'roles'));
+        $prodis = Prodi::all();
+
+        return view('admin.user.edit', compact('user', 'roles', 'prodis'));
     }
 
     public function store(Request $request) {
         $request->validate([
             'nomor_induk' => 'required|string|max:10|unique:users,nomor_induk',
             'name' => 'required|string|max:255',
+            'kode_prodi' => 'nullable|exists:prodi,kode_prodi',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'role_id' => 'required|exists:role,id',
@@ -48,6 +55,7 @@ class UserController extends Controller
         User::create([
             'nomor_induk' => $request->nomor_induk,
             'name' => $request->name,
+            'kode_prodi' => $request->kode_prodi,
             'email' => $request->email,
             'password' => Hash::make($request->password), // Hash password
             'role_id' => $request->role_id,
@@ -66,6 +74,7 @@ class UserController extends Controller
         $request->validate([
             'nomor_induk' => 'required|unique:users,nomor_induk,'.$user->nomor_induk.',nomor_induk',
             'name' => 'required|string|max:255',
+            'kode_prodi' => 'required|exists:prodi,kode_prodi',
             'email' => 'required|email|unique:users,email,' . $nomor_induk . ',nomor_induk',
             'role_id' => 'required|exists:role,id',
             'phone' => 'nullable|string|max:15',
@@ -85,6 +94,7 @@ class UserController extends Controller
 
         $data = [
             'nomor_induk' => $request->nomor_induk,
+            'kode_prodi' => $request->kode_prodi,
             'name' => $request->name,
             'email' => $request->email,
             'role_id' => $request->role_id,

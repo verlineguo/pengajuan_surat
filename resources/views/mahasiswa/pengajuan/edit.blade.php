@@ -57,43 +57,43 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Semester</label>
-                            <input class="form-control" type="number" name="semester" value="{{ $pengajuan->detailSurat->semester }}" required>
+                            <input class="form-control" type="number" name="semester" value="{{ $pengajuan->skma->semester }}" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Alamat Lengkap di Bandung</label>
-                            <input class="form-control" type="text" name="alamat_bandung" value="{{ $pengajuan->detailSurat->alamat_bandung }}" required>
+                            <input class="form-control" type="text" name="alamat_bandung" value="{{ $pengajuan->skma->alamat_bandung }}" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Keperluan Pengajuan</label>
-                            <textarea class="form-control" name="keperluan" required>{{ $pengajuan->detailSurat->keperluan }}</textarea>
+                            <textarea class="form-control" name="keperluan" required>{{ $pengajuan->skma->keperluan }}</textarea>
                         </div>
                     @elseif ($pengajuan->surat->nama_jenis_surat === 'Surat Pengantar Tugas Mata Kuliah')
                         <div class="mb-3">
                             <label class="form-label">Surat Ditujukan Kepada</label>
-                            <input class="form-control" type="text" name="tujukan" value="{{ $pengajuan->detailSurat->tujukan }}" required>
+                            <input class="form-control" type="text" name="tujukan" value="{{ $pengajuan->sptmk->tujukan }}" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nama Mata Kuliah - Kode Mata Kuliah</label>
                             <div class="form-text">Contoh: Proses Bisnis - IN255</div>
-                            <input class="form-control" type="text" name="mata_kuliah" value="{{ $pengajuan->detailSurat->mata_kuliah }}" required>
+                            <input class="form-control" type="text" name="mata_kuliah" value="{{ $pengajuan->sptmk->mata_kuliah }}" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Semester</label>
                             <div class="form-text">Isikan dengan semester yang sedang ditempuh saat ini (contoh: Semester Genap 23/24)</div>
-                            <input class="form-control" type="text" name="semester" value="{{ $pengajuan->detailSurat->semester }}" required>
+                            <input class="form-control" type="text" name="semester" value="{{ $pengajuan->sptmk->semester }}" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Data Mahasiswa</label>
                             <div class="form-text">Informasikan nama dan NRP tiap mahasiswa (contoh: Mahasiswa 1 - 15720xx; Mahasiswa 2 - 15720xx; Mahasiswa 3 - 15720xx; dst)</div>
-                            <input class="form-control" type="text" name="data_mahasiswa" value="{{ $pengajuan->detailSurat->data_mahasiswa }}" required>
+                            <input class="form-control" type="text" name="data_mahasiswa" value="{{ $pengajuan->sptmk->data_mahasiswa }}" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tujuan</label>
-                            <input class="form-control" name="tujuan" value="{{ $pengajuan->detailSurat->tujuan }}" required>
+                            <input class="form-control" name="tujuan" value="{{ $pengajuan->sptmk->tujuan }}" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Topik</label>
-                            <textarea class="form-control" name="topik" required>{{ $pengajuan->detailSurat->topik }}</textarea>
+                            <textarea class="form-control" name="topik" required>{{ $pengajuan->sptmk->topik }}</textarea>
                         </div>
                     @elseif ($pengajuan->surat->nama_jenis_surat === 'Surat Keterangan Lulus')
                         <div class="mb-3">
@@ -107,7 +107,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tanggal Kelulusan</label>
-                            <input class="form-control" type="date" name="tanggal_kelulusan" value="{{ $pengajuan->detailSurat->tanggal_kelulusan }}" required>
+                            <input class="form-control" type="date" name="tanggal_kelulusan" value="{{ $pengajuan->skl->tanggal_kelulusan }}" required>
                         </div>
                     @elseif ($pengajuan->surat->nama_jenis_surat === 'Laporan Hasil Studi')
                         <div class="mb-3">
@@ -121,7 +121,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Keperluan Pembuatan LHS</label>
-                            <textarea class="form-control" name="keperluan" required>{{ $pengajuan->detailSurat->keperluan }}</textarea>
+                            <textarea class="form-control" name="keperluan" required>{{ $pengajuan->lhs->keperluan }}</textarea>
                         </div>
                     @endif
 

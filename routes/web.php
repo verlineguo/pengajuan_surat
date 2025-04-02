@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Kaprodi\KaprodiPengajuanController;
-use App\Http\Controllers\TU\TuPengajuanController;
+use App\Http\Controllers\TU\PengajuanController as TUPengajuanController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
@@ -74,9 +74,6 @@ Route::middleware(['auth', 'verified', 'rolemanager:tu'])->group(function () {
             Route::post('/pengajuan/{id_pengajuan}/upload', 'uploadSurat')->name('tu.pengajuan.upload');
         });
         
-        Route::controller(TuPengajuanController::class)->group(function() {
-            Route::get('/pengajuan', 'index')->name(name: 'tu.pengajuan');
-        });
     });
         
 });

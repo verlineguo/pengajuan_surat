@@ -12,13 +12,21 @@ class KaprodiPengajuanController extends Controller
 {
     public function index() {
         $kaprodi = Auth::user();
-        $pengajuans = Pengajuan::with('mahasiswa', 'surat')->get();
+        $pengajuans = Pengajuan::with('mahasiswa', 'surat')
+        ->whereHas('mahasiswa', function ($query) use ($kaprodi) {
+            $query->where('kode_prodi', $kaprodi->kode_prodi);
+        })
+        ->get();
         return view('kaprodi.pengajuan.index', compact('kaprodi','pengajuans'));
     }
 
-    public function show($id) {
+    public function show($id_pengajuan) {
         $kaprodi = Auth::user();
-        $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'detailSurat')->findOrFail($id);
+        $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'lhs', 'skl', 'skma', 'sptmk')
+        ->whereHas('mahasiswa', function ($query) use ($kaprodi) {
+            $query->where('kode_prodi', $kaprodi->kode_prodi);
+        })
+        ->findOrFail($id_pengajuan);
 
         $pengajuan->tanggal_pengajuan = Carbon::parse($pengajuan->tanggal_pengajuan);
     
@@ -26,8 +34,8 @@ class KaprodiPengajuanController extends Controller
             $pengajuan->tanggal_persetujuan = Carbon::parse($pengajuan->tanggal_persetujuan);
         }
 
-        if ($pengajuan->detailSurat->tanggal_kelulusan) {
-            $pengajuan->detailSurat->tanggal_kelulusan = Carbon::parse($pengajuan->detailSurat->tanggal_kelulusan);
+        if ($pengajuan->skl && $pengajuan->skl->tanggal_kelulusan) {
+            $pengajuan->skl->tanggal_kelulusan = Carbon::parse($pengajuan->skl->tanggal_kelulusan);
         }
 
         return view('kaprodi.pengajuan.show', compact('kaprodi','pengajuan'));
@@ -35,8 +43,11 @@ class KaprodiPengajuanController extends Controller
 
     }
 
-    public function approve($id) {
-        $pengajuan = Pengajuan::findOrFail($id);
+    public function approve($id_pengajuan) {
+        $kaprodi = Auth::user();
+        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($kaprodi) {
+            $query->where('kode_prodi', $kaprodi->kode_prodi);
+        })->findOrFail($id_pengajuan);
         $pengajuan->update([
             'status_pengajuan' => 'Disetujui',
             'tanggal_persetujuan' => now(),
@@ -44,13 +55,17 @@ class KaprodiPengajuanController extends Controller
         return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil disetujui.');
     }
 
-    public function reject($id, Request $request) {
+    public function reject($id_pengajuan, Request $request) {
         $request->validate([
             'catatan_kaprodi' => 'nullable|string',
             'catatan_tu' => 'nullable|string',
         ]);
 
-        $pengajuan = Pengajuan::findOrFail($id);
+        $kaprodi = Auth::user();
+        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($kaprodi) {
+            $query->where('kode_prodi', $kaprodi->kode_prodi);
+        })->findOrFail($id_pengajuan);
+                
         $pengajuan->update([
             'status_pengajuan' => 'Ditolak',
             'catatan_kaprodi' => $request->catatan_kaprodi,
@@ -60,9 +75,9 @@ class KaprodiPengajuanController extends Controller
         return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_pengajuan)
     {
-        $pengajuan = Pengajuan::findOrFail($id);
+        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
         $pengajuan->status_pengajuan = $request->status_pengajuan;
         $pengajuan->catatan_kaprodi = $request->catatan_kaprodi; // Simpan catatan Kaprodi
         $pengajuan->save();
@@ -72,8 +87,8 @@ class KaprodiPengajuanController extends Controller
 
 
 
-    public function destroy($id) {
-        $pengajuan = Pengajuan::findOrFail($id);
+    public function destroy($id_pengajuan) {
+        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
         $pengajuan->delete();
 
         return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil dihapus.');

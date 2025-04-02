@@ -12,22 +12,33 @@ class PengajuanController extends Controller
 {
     public function index() {
         $tu = Auth::user();
-        $pengajuans = Pengajuan::with('mahasiswa', 'surat')->get();
+        $pengajuans = Pengajuan::with('mahasiswa', 'surat')
+        ->whereHas('mahasiswa', function ($query) use ($tu) {
+            $query->where('kode_prodi', $tu->kode_prodi);
+        })
+        ->get();
+
         return view('TU.pengajuan.index', compact('tu','pengajuans'));
     }
 
     public function show($id_pengajuan) {
         $tu = Auth::user();
-        $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'detailSurat')->findOrFail($id_pengajuan);
 
+        $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'lhs', 'skl', 'skma', 'sptmk')
+        ->whereHas('mahasiswa', function ($query) use ($tu) {
+            $query->where('kode_prodi', $tu->kode_prodi);
+        })
+        ->findOrFail($id_pengajuan);
+
+        
         $pengajuan->tanggal_pengajuan = Carbon::parse($pengajuan->tanggal_pengajuan);
     
         if ($pengajuan->tanggal_persetujuan) {
             $pengajuan->tanggal_persetujuan = Carbon::parse($pengajuan->tanggal_persetujuan);
         }
 
-        if ($pengajuan->detailSurat->tanggal_kelulusan) {
-            $pengajuan->detailSurat->tanggal_kelulusan = Carbon::parse($pengajuan->detailSurat->tanggal_kelulusan);
+        if ($pengajuan->skl && $pengajuan->skl->tanggal_kelulusan) {
+            $pengajuan->skl->tanggal_kelulusan = Carbon::parse($pengajuan->skl->tanggal_kelulusan);
         }
 
         return view('TU.pengajuan.show', compact('tu','pengajuan'));
@@ -38,7 +49,12 @@ class PengajuanController extends Controller
     
     public function update(Request $request, $id_pengajuan)
     {
-        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
+        $tu = Auth::user();
+
+        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($tu) {
+            $query->where('kode_prodi', $tu->kode_prodi);
+        })->findOrFail($id_pengajuan);
+    
         $pengajuan->status_pengajuan = $request->status_pengajuan;
         $pengajuan->catatan_tu = $request->catatan_tu; 
         $pengajuan->save();
@@ -52,9 +68,12 @@ class PengajuanController extends Controller
             'file_surat' => 'required|mimes:pdf|max:2048', // Hanya menerima file PDF dengan ukuran maksimal 2MB
             'catatan_tu' => 'nullable|string|max:255', // Catatan TU opsional
         ]);
+        $tu = Auth::user();
 
-        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
-
+        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($tu) {
+            $query->where('kode_prodi', $tu->kode_prodi);
+        })->findOrFail($id_pengajuan);
+    
         // Hapus file surat lama jika ada
         if ($pengajuan->file_surat) {
             $oldFilePath = public_path('uploads/surat/' . $pengajuan->file_surat);

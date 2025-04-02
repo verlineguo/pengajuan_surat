@@ -48,6 +48,16 @@
                     <label class="form-label" for="name">Nama</label>
                     <input class="form-control" id="name" type="text" name="name" required>
                 </div>
+                <div class="mb-3">
+                    <label class="form-label" for="kode_prodi">Prodi</label>
+                    <select class="form-select" id="kode_prodi" name="kode_prodi" required>
+                        <option value="">Pilih Prodi</option>
+                        @foreach($prodis as $prodi)
+                            <option value="{{ $prodi->kode_prodi }}">{{ $prodi->nama_prodi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                
                 
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>

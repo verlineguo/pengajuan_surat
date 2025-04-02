@@ -64,11 +64,11 @@
             formSurat.innerHTML = `
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
-                    <input class="form-control" type="text" name="name" value="{{ $mahasiswa->name }}" required>
+                    <input class="form-control" type="text" name="name" value="{{ $mahasiswa->name }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">NRP</label>
-                    <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->nomor_induk }}" required>
+                    <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->nomor_induk }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Semester</label>
@@ -121,11 +121,11 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
                     <div class="form-text"> Isikan dengan nama lengkap dalam format Huruf Besar - Huruf Kecil (contoh: Susi Susanti)</div>
-                    <input class="form-control" type="text" name="nama"  value="{{ $mahasiswa->name }}" required>
+                    <input class="form-control" type="text" name="nama"  value="{{ $mahasiswa->name }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">NRP</label>
-                    <input class="form-control" type="text" name="nrp"  value="{{ $mahasiswa->nomor_induk }}" required>
+                    <input class="form-control" type="text" name="nrp"  value="{{ $mahasiswa->nomor_induk }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tanggal Kelulusan</label>
@@ -137,11 +137,11 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
                     <div class="form-text"> Isikan dengan nama lengkap dalam format Huruf Besar - Huruf Kecil (contoh: Susi Susanti)</div>
-                    <input class="form-control" type="text" name="nama" required>
+                    <input class="form-control" type="text" name="nama"  value="{{ $mahasiswa->name }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">NRP</label>
-                    <input class="form-control" type="text" name="nrp" required>
+                    <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->name }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Keperluan Pembuatan LHS</label>
