@@ -15,12 +15,12 @@
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
             </svg><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
-        <li class="nav-title" data-coreui-i18n="theme">kaprodi</li>
+        <li class="nav-title" data-coreui-i18n="theme">Kaprodi</li>
        
         <li class="nav-item"><a class="nav-link" href="{{ route('kaprodi.pengajuan') }}">
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
-            </svg><span data-coreui-i18n="typography">daftar pengajuan</span></a></li>
+            </svg><span data-coreui-i18n="typography">Daftar Pengajuan</span></a></li>
 
         
         

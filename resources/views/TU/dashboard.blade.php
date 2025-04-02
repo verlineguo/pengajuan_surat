@@ -497,4 +497,151 @@
           </div>
           <!-- /.row-->
         </div>
+<<<<<<< Updated upstream
+=======
+        <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
+          <canvas class="chart" id="card-chart1" height="70" width="256" style="display: block; box-sizing: border-box; height: 70px; width: 256px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-->
+    <div class="col-sm-6 col-xl-3">
+      <div class="card text-white bg-info-gradient">
+        <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+          <div>
+            <div class="fs-4 fw-semibold">{{ $pengajuanDiterima->count() }} <span class="fs-6 fw-normal">
+              </span></div>
+            <div data-coreui-i18n="income">Pengajuan surat diterima</div>
+          </div>
+
+        </div>
+        <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
+          <canvas class="chart" id="card-chart2" height="70" width="256" style="display: block; box-sizing: border-box; height: 70px; width: 256px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-->
+    <div class="col-sm-6 col-xl-3">
+      <div class="card text-white bg-warning-gradient">
+        <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+          <div>
+            <div class="fs-4 fw-semibold">{{ $pengajuanPending->count() }} </div>
+            <div data-coreui-i18n="conversionRate">Pengajuan surat pending</div>
+          </div>
+
+        </div>
+        <div class="c-chart-wrapper mt-3" style="height:70px;">
+          <canvas class="chart" id="card-chart3" height="70" width="288" style="display: block; box-sizing: border-box; height: 70px; width: 288px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-->
+    <div class="col-sm-6 col-xl-3">
+      <div class="card text-white bg-danger-gradient">
+        <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+          <div>
+            <div class="fs-4 fw-semibold">{{ $pengajuanDitolak->count() }} </div>
+            <div data-coreui-i18n="sessions">Pengajuan surat ditolak</div>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <svg class="icon">
+                <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-options"></use>
+              </svg>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#" data-coreui-i18n="action">action</a><a class="dropdown-item" href="#" data-coreui-i18n="anotherAction">anotherAction</a><a class="dropdown-item" href="#" data-coreui-i18n="somethingElseHere">somethingElseHere</a></div>
+          </div>
+        </div>
+        <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
+          <canvas class="chart" id="card-chart4" height="70" width="256" style="display: block; box-sizing: border-box; height: 70px; width: 256px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-->
+  </div>
+  <!-- /.row-->
+
+  <!-- /.card.mb-4-->
+
+  <!-- /.row-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-header" data-coreui-i18n="trafficAndSales">History Pengajuan</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table border mb-0">
+              <thead class="fw-semibold text-nowrap">
+                <tr class="align-middle">
+                  <th>No</th>
+                  <th>NRP</th>
+                  <th>Nama Mahasiswa</th>
+                  <th>Jenis Surat</th>
+                  <th>Tanggal Pengajuan</th>
+                  <th>Tanggal Persetujuan</th>
+                  <th>Status</th>
+                  <th>Catatan</th>
+
+
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($pengajuans as $index => $pengajuan)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $pengajuan->mahasiswa->nomor_induk }}</td> 
+                    <td>{{ $pengajuan->mahasiswa->name }}</td> 
+                    <td>{{ $pengajuan->surat->nama_jenis_surat }}</td>
+                    <td>{{ $pengajuan->tanggal_pengajuan }}</td>
+                    <td>{{ $pengajuan->tanggal_persetujuan ?? '-' }}</td>
+                    <td>
+                        <span class="badge 
+                            {{ $pengajuan->status_pengajuan == 'Disetujui' ? 'bg-success' : 
+                               ($pengajuan->status_pengajuan == 'Ditolak' ? 'bg-danger' : 
+                               ($pengajuan->status_pengajuan == 'Done' ? 'bg-primary' : 'bg-warning')) }}">
+                            {{ $pengajuan->status_pengajuan }}
+                        </span>
+                    </td>
+                    <td>
+                        @if ($pengajuan->status_pengajuan == 'pending')
+                            Masih menunggu persetujuan kaprodi
+                        @elseif ($pengajuan->status_pengajuan == 'Disetujui')
+                            Tunggu upload dari TU
+                        @elseif ($pengajuan->status_pengajuan == 'Ditolak')
+                            {{ $pengajuan->catatan_kaprodi ?? 'Alasan tidak tersedia' }}
+                        @else
+                            -
+                        @endif
+                    </td>
+                    
+                    
+                </tr>
+                @endforeach
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-->
+  </div>
+  <!-- /.row-->
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session("success") }}',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
+
+>>>>>>> Stashed changes
 @endsection
