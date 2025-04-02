@@ -14,7 +14,7 @@
     <meta name="description" content="CoreUI - Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,SCSS,HTML,RWD,Dashboard">
-    <title>CoreUI Bootstrap Admin Template</title>
+    <title>HaloSurat</title>
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('template') }}/assets/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('template') }}/assets/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('template') }}/assets/favicon/apple-icon-72x72.png">

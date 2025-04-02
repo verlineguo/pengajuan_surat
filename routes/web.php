@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Kaprodi\KaprodiPengajuanController;
-use App\Http\Controllers\TU\PengajuanController as TUPengajuanController;
+use App\Http\Controllers\TU\TuPengajuanController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\TUController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProdiController;
 
 
 Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () {
@@ -53,8 +54,6 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
 
         });
 
-        
-
     });
     
 });
@@ -74,9 +73,12 @@ Route::middleware(['auth', 'verified', 'rolemanager:tu'])->group(function () {
             Route::put('/pengajuan/update/{id_pengajuan}', 'update')->name('tu.pengajuan.update');
             Route::post('/pengajuan/{id_pengajuan}/upload', 'uploadSurat')->name('tu.pengajuan.upload');
         });
-
-
+        
+        Route::controller(TuPengajuanController::class)->group(function() {
+            Route::get('/pengajuan', 'index')->name(name: 'tu.pengajuan');
+        });
     });
+        
 });
 
 Route::middleware(['auth', 'verified', 'rolemanager:kaprodi'])->group(function () {

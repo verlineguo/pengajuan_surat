@@ -1,11 +1,11 @@
 <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
       <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">
-          <svg class="sidebar-brand-full" width="110" height="32" alt="CoreUI Logo">
-            <use xlink:href="{{ asset('template') }}/assets/brand/coreui.svg#full"></use>
+          <svg class="sidebar-brand-full" width="110" height="32" alt="Logo HaloSurat">
+            <use xlink:href="{{ asset('template') }}/assets/brand/Logo.svg#full"></use>
           </svg>
-          <svg class="sidebar-brand-narrow" width="32" height="32" alt="CoreUI Logo">
-            <use xlink:href="{{ asset('template') }}/assets/brand/coreui.svg#signet"></use>
+          <svg class="sidebar-brand-narrow" width="32" height="32" alt="Logo HaloSurat">
+            <use xlink:href="{{ asset('template') }}/assets/brand/Logo.svg#signet"></use>
           </svg>
         </div>
         <button class="btn-close d-lg-none" type="button" data-coreui-theme="dark" aria-label="Close"></button>
@@ -15,12 +15,12 @@
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
             </svg><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
-        <li class="nav-title" data-coreui-i18n="theme">kaprodi</li>
+        <li class="nav-title" data-coreui-i18n="theme">Kaprodi</li>
        
         <li class="nav-item"><a class="nav-link" href="{{ route('kaprodi.pengajuan') }}">
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
-            </svg><span data-coreui-i18n="typography">daftar pengajuan</span></a></li>
+            </svg><span data-coreui-i18n="typography">Daftar Pengajuan</span></a></li>
 
         
         
