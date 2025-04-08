@@ -1,4 +1,4 @@
-@extends('TU.layouts.app') {{-- Ganti layout admin --}}
+@extends('TU.layouts.app') 
 
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -80,72 +80,8 @@
             table.column(5).search(selectedStatus).draw();
         });
 
-        $('.approve-btn').click(function () {
-            var pengajuanId = $(this).data('id_pengajuan');
-
-            Swal.fire({
-                title: 'Setujui Pengajuan?',
-                text: "Anda akan menyetujui pengajuan ini.",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#28a745',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Setujui!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.post("/pengajuan/" + pengajuanId + "/approve", {
-                        _token: '{{ csrf_token() }}'
-                    }, function (data) {
-                        Swal.fire(
-                            'Berhasil!',
-                            'Pengajuan telah disetujui.',
-                            'success'
-                        ).then(() => location.reload());
-                    }).fail(function () {
-                        Swal.fire(
-                            'Error!',
-                            'Terjadi kesalahan saat menyetujui.',
-                            'error'
-                        );
-                    });
-                }
-            });
-        });
-
-        $('.reject-btn').click(function () {
-            var pengajuanId = $(this).data('id');
-
-            Swal.fire({
-                title: 'Tolak Pengajuan?',
-                text: "Anda akan menolak pengajuan ini.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Tolak!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.post("/pengajuan/" + pengajuanId + "/reject", {
-                        _token: '{{ csrf_token() }}'
-                    }, function (data) {
-                        Swal.fire(
-                            'Ditolak!',
-                            'Pengajuan telah ditolak.',
-                            'success'
-                        ).then(() => location.reload());
-                    }).fail(function () {
-                        Swal.fire(
-                            'Error!',
-                            'Terjadi kesalahan saat menolak.',
-                            'error'
-                        );
-                    });
-                }
-            });
-        });
-    });
+      
+   });
 </script>
 @if(session('success'))
     <script>

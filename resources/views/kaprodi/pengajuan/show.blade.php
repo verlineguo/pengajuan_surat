@@ -47,8 +47,14 @@
                     <textarea name="catatan_kaprodi" id="catatan_kaprodi" class="form-control"></textarea>
                 </div>
             
-                <button type="button" class="btn btn-success text-white" onclick="submitForm('Disetujui')">Setujui</button>
-                <button type="button" class="btn btn-danger text-white" onclick="submitForm('Ditolak')">Tolak</button>
+
+                <button type="button" class="btn btn-success approve-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
+                    Setujui
+                </button>
+                
+                <button type="button" class="btn btn-danger reject-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
+                    Menolak
+                </button>
             </form>
             
         
@@ -98,7 +104,88 @@
         document.getElementById('status_pengajuan').value = status;
         document.getElementById('pengajuanForm').submit();
     }
+
+    
+    $('.approve-btn').click(function () {
+            var pengajuanId = $(this).data('id_pengajuan');
+
+            Swal.fire({
+                title: 'Setujui Pengajuan?',
+                text: "Anda akan menyetujui pengajuan ini.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Setujui!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("/pengajuan/" + pengajuanId + "/approve", {
+                        _token: '{{ csrf_token() }}'
+                    }, function (data) {
+                        Swal.fire(
+                            'Berhasil!',
+                            'Pengajuan telah disetujui.',
+                            'success'
+                        ).then(() => location.reload());
+                    }).fail(function () {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menyetujui.',
+                            'error'
+                        );
+                    });
+                }
+            });
+        });
+
+        $('.reject-btn').click(function () {
+            var pengajuanId = $(this).data('id');
+
+            Swal.fire({
+                title: 'Tolak Pengajuan?',
+                text: "Anda akan menolak pengajuan ini.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Tolak!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("/pengajuan/" + pengajuanId + "/reject", {
+                        _token: '{{ csrf_token() }}'
+                    }, function (data) {
+                        Swal.fire(
+                            'Ditolak!',
+                            'Pengajuan telah ditolak.',
+                            'success'
+                        ).then(() => location.reload());
+                    }).fail(function () {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menolak.',
+                            'error'
+                        );
+                    });
+                }
+            });
+        });
+    
+
 </script>
 
+
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session("success") }}',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
 
 @endsection
