@@ -149,12 +149,9 @@
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2" data-coreui-i18n="settings">Settings</div><a class="dropdown-item" href="#">
-                  <svg class="icon me-2">
+                  <a class="dropdown-item" href="{{ route('kaprodi.profile') }}"> <svg class="icon me-2">
                     <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-                  </svg><span data-coreui-i18n="profile">Profile</span></a><a class="dropdown-item" href="{{ route('kaprodi.profile') }}">
-                  <svg class="icon me-2">
-                    <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
-                  </svg><span data-coreui-i18n="settings">Settings</span></a><a class="dropdown-item" href="#">
+                  </svg><span data-coreui-i18n="profile">Profile</span></a>
             
                 <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -11,7 +11,7 @@
               <svg class="icon">
                   <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
                 </svg></div>
-            <div data-coreui-i18n="users">total mahasiswa</div>
+            <div data-coreui-i18n="users">Total mahasiswa</div>
           </div>
   
         </div>
@@ -29,7 +29,7 @@
               <svg class="icon">
                   <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-arrow-top"></use>
                 </svg></div>
-            <div data-coreui-i18n="income">daftar karyawan</div>
+            <div data-coreui-i18n="income">Daftar karyawan</div>
           </div>
    
         </div>
@@ -65,7 +65,7 @@
               <svg class="icon">
                   <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
                 </svg></div>
-            <div data-coreui-i18n="sessions">daftar mata kuliah</div>
+            <div data-coreui-i18n="sessions">Daftar mata kuliah</div>
           </div>
 
         </div>

@@ -23,7 +23,7 @@
           <div>
             <div class="fs-4 fw-semibold">{{ $pengajuanDiterima->count() }} <span class="fs-6 fw-normal">
               </span></div>
-            <div data-coreui-i18n="income">pengajuan surat diterima</div>
+            <div data-coreui-i18n="income">Pengajuan surat diterima</div>
           </div>
 
         </div>
@@ -38,7 +38,7 @@
         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
           <div>
             <div class="fs-4 fw-semibold">{{ $pengajuanPending->count() }} </div>
-            <div data-coreui-i18n="conversionRate">pengajuan surat pending</div>
+            <div data-coreui-i18n="conversionRate">Pengajuan surat pending</div>
           </div>
 
         </div>
