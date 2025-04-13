@@ -1,7 +1,7 @@
 @extends('mahasiswa.layouts.app') 
 
 @section('content')
-<div class="container">
+<div class="container p-5">
     <h2 class="mb-4">Detail Pengajuan Surat</h2>
 
     <div class="card shadow-lg rounded-3 mb-4 border-0 overflow-hidden">
@@ -110,37 +110,76 @@
         </div>
     </div>
 
-    <div class="card mt-4 shadow-lg p-3">
+    <div class="card mt-4 shadow-lg">
         <div class="card-body">
             <h5 class="card-title mb-3">Detail Surat</h5>
             <table class="table table-bordered table-striped">
                 @if ($pengajuan->surat->nama_jenis_surat === 'Surat Keterangan Mahasiswa Aktif')
-                    <tr class="bg-light"><td><strong>Semester</strong></td><td>{{ $pengajuan->skma->semester }}</td></tr>
-                    <tr><td><strong>Alamat Bandung</strong></td><td>{{ $pengajuan->skma->alamat_bandung }}</td></tr>
-                    <tr class="bg-light"><td><strong>Keperluan</strong></td><td>{{ $pengajuan->skma->keperluan }}</td></tr>
+                    <tr class="bg-light">
+                        <td><strong>Semester</strong></td>
+                        <td>{{ $pengajuan->skma->semester }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alamat Bandung</strong></td>
+                        <td>{{ $pengajuan->skma->alamat_bandung }}</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td><strong>Keperluan</strong></td>
+                        <td>{{ $pengajuan->skma->keperluan }}</td>
+                    </tr>
                 @elseif ($pengajuan->surat->nama_jenis_surat === 'Surat Pengantar Tugas Mata Kuliah')
-                    <tr class="bg-light"><td><strong>Surat Ditujukan Kepada</strong></td><td>{{ $pengajuan->sptmk->tujukan }}</td></tr>
-                    <tr><td><strong>Mata Kuliah</strong></td><td>{{ $pengajuan->sptmk->mata_kuliah }}</td></tr>
-                    <tr class="bg-light"><td><strong>Semester</strong></td><td>{{ $pengajuan->sptmk->semester }}</td></tr>
-                    <tr><td><strong>Data Mahasiswa</strong></td><td>{{ $pengajuan->sptmk->data_mahasiswa }}</td></tr>
-                    <tr class="bg-light"><td><strong>Tujuan</strong></td><td>{{ $pengajuan->sptmk->tujuan }}</td></tr>
-                    <tr><td><strong>Topik</strong></td><td>{{ $pengajuan->sptmk->topik }}</td></tr>
+                    <tr class="bg-light">
+                        <td><strong>Surat Ditujukan Kepada</strong></td>
+                        <td>{{ $pengajuan->sptmk->tujukan }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mata Kuliah</strong></td>
+                        <td>{{ $pengajuan->sptmk->mata_kuliah }}</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td><strong>Semester</strong></td>
+                        <td>{{ $pengajuan->sptmk->semester }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Mahasiswa</strong></td>
+                        <td>{{ $pengajuan->sptmk->data_mahasiswa }}</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td><strong>Tujuan</strong></td>
+                        <td>{{ $pengajuan->sptmk->tujuan }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topik</strong></td>
+                        <td>{{ $pengajuan->sptmk->topik }}</td>
+                    </tr>
                 @elseif ($pengajuan->surat->nama_jenis_surat === 'Surat Keterangan Lulus')
-                    <tr class="bg-light"><td><strong>Nama</strong></td><td>{{ $pengajuan->mahasiswa->name }}</td></tr>
-                    <tr><td><strong>NRP</strong></td><td>{{ $pengajuan->mahasiswa->nomor_induk }}</td></tr>
-                    <tr class="bg-light"><td><strong>Tanggal Kelulusan</strong></td>
+                    <tr class="bg-light">
+                        <td><strong>Nama</strong></td>
+                        <td>{{ $pengajuan->mahasiswa->name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NRP</strong></td>
+                        <td>{{ $pengajuan->mahasiswa->nomor_induk }}</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td><strong>Tanggal Kelulusan</strong></td>
                         <td>{{ $pengajuan->skl->tanggal_kelulusan ? $pengajuan->skl->tanggal_kelulusan->format('d-m-Y') : '-' }}</td>
                     </tr>
                 @elseif ($pengajuan->surat->nama_jenis_surat === 'Laporan Hasil Studi')
-                    <tr class="bg-light"><td><strong>Nama</strong></td><td>{{ $pengajuan->mahasiswa->name }}</td></tr>
-                    <tr><td><strong>NRP</strong></td><td>{{ $pengajuan->mahasiswa->nomor_induk }}</td></tr>
-                    <tr class="bg-light"><td><strong>Keperluan</strong></td><td>{{ $pengajuan->lhs->keperluan }}</td></tr>
+                    <tr class="bg-light">
+                        <td><strong>Nama</strong></td>
+                        <td>{{ $pengajuan->mahasiswa->name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NRP</strong></td>
+                        <td>{{ $pengajuan->mahasiswa->nomor_induk }}</td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td><strong>Keperluan</strong></td>
+                        <td>{{ $pengajuan->lhs->keperluan }}</td>
+                    </tr>
                 @endif
             </table>
-
-            
-
-           
         </div>
     </div>
 

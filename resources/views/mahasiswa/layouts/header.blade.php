@@ -149,7 +149,7 @@
         <div class="dropdown-menu dropdown-menu-end pt-0">
           
           <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2" data-coreui-i18n="settings">Settings</div><a class="dropdown-item" href={{ route('mahasiswa.profile') }}>  
-            <a class="dropdown-item" href="{{ route('mahasiswa.profile') }}"> <svg class="icon me-2">
+            <a class="dropdown-item" href="{{ route('profile', ['role' => 'mahasiswa']) }}"> <svg class="icon me-2">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
             </svg><span data-coreui-i18n="profile">Profile</span></a>
       

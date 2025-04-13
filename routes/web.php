@@ -113,7 +113,6 @@ Route::middleware(['auth', 'verified', 'rolemanager:mahasiswa'])->group(function
     Route::prefix('mahasiswa')->group(function() {
         Route::controller(MahasiswaController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('mahasiswa.dashboard');
-            Route::get('/profile', 'profile')->name('mahasiswa.profile');
 
 
         });

@@ -11,20 +11,20 @@ use Illuminate\Support\Facades\Auth;
 class KaprodiPengajuanController extends Controller
 {
     public function index() {
-        $kaprodi = Auth::user();
+        $user = Auth::user();
         $pengajuans = Pengajuan::with('mahasiswa', 'surat')
-        ->whereHas('mahasiswa', function ($query) use ($kaprodi) {
-            $query->where('kode_prodi', $kaprodi->kode_prodi);
+        ->whereHas('mahasiswa', function ($query) use ($user) {
+            $query->where('kode_prodi', $user->kode_prodi);
         })
         ->get();
-        return view('kaprodi.pengajuan.index', compact('kaprodi','pengajuans'));
+        return view('kaprodi.pengajuan.index', compact('user','pengajuans'));
     }
 
     public function show($id_pengajuan) {
-        $kaprodi = Auth::user();
+        $user = Auth::user();
         $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'lhs', 'skl', 'skma', 'sptmk')
-        ->whereHas('mahasiswa', function ($query) use ($kaprodi) {
-            $query->where('kode_prodi', $kaprodi->kode_prodi);
+        ->whereHas('mahasiswa', function ($query) use ($user) {
+            $query->where('kode_prodi', $user->kode_prodi);
         })
         ->findOrFail($id_pengajuan);
 
@@ -38,15 +38,15 @@ class KaprodiPengajuanController extends Controller
             $pengajuan->skl->tanggal_kelulusan = Carbon::parse($pengajuan->skl->tanggal_kelulusan);
         }
 
-        return view('kaprodi.pengajuan.show', compact('kaprodi','pengajuan'));
+        return view('kaprodi.pengajuan.show', compact('user','pengajuan'));
 
 
     }
 
     public function approve($id_pengajuan) {
-        $kaprodi = Auth::user();
-        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($kaprodi) {
-            $query->where('kode_prodi', $kaprodi->kode_prodi);
+        $user = Auth::user();
+        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($user) {
+            $query->where('kode_prodi', $user->kode_prodi);
         })->findOrFail($id_pengajuan);
         $pengajuan->update([
             'status_pengajuan' => 'Disetujui',
@@ -61,9 +61,9 @@ class KaprodiPengajuanController extends Controller
             'catatan_tu' => 'nullable|string',
         ]);
 
-        $kaprodi = Auth::user();
-        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($kaprodi) {
-            $query->where('kode_prodi', $kaprodi->kode_prodi);
+        $user = Auth::user();
+        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($user) {
+            $query->where('kode_prodi', $user->kode_prodi);
         })->findOrFail($id_pengajuan);
                 
         $pengajuan->update([

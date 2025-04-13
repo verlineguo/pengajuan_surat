@@ -16,22 +16,38 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- SweetAlert2 CSS and JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.all.min.js"></script>
 
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: "{{ session('success') }}",
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                    });
+                </script>
             @endif
             
             @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: "{{ session('error') }}",
+                            showConfirmButton: true
+                        });
+                    });
+                </script>
             @endif
 
             <div class="card shadow border-0">
@@ -64,8 +80,8 @@
                                 <div class="col-md-4 mb-4 mb-md-0">
                                     <div class="text-center">
                                         <div class="position-relative d-inline-block mb-3">
-                                            @if($tu->profile)
-                                                <img src="{{ asset('storage/' . $tu->profile) }}" 
+                                            @if($user->profile)
+                                                <img src="{{ asset('storage/' . $user->profile) }}?v={{ time() }}" 
                                                      alt="Profile Picture" 
                                                      class="img-thumbnail rounded-circle" 
                                                      width="180" height="180" 
@@ -82,8 +98,8 @@
                                             </div>
                                         </div>
                                         
-                                        <h5 class="mb-1">{{ $tu->name }}</h5>
-                                        <p class="text-muted">{{ $tu->role->name }}</p>
+                                        <h5 class="mb-1">{{ $user->name }}</h5>
+                                        <p class="text-muted">{{ $user->role->name }}</p>
                                     </div>
                                 </div>
                                 
@@ -95,7 +111,7 @@
                                                     <h6 class="card-subtitle mb-2 text-muted">
                                                         <i class="fas fa-id-card me-2"></i>Nomor Induk
                                                     </h6>
-                                                    <p class="card-text fw-bold">{{ $tu->nomor_induk }}</p>
+                                                    <p class="card-text fw-bold">{{ $user->nomor_induk }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,7 +122,7 @@
                                                     <h6 class="card-subtitle mb-2 text-muted">
                                                         <i class="fas fa-envelope me-2"></i>Email
                                                     </h6>
-                                                    <p class="card-text fw-bold">{{ $tu->email }}</p>
+                                                    <p class="card-text fw-bold">{{ $user->email }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,7 +134,7 @@
                                                         <i class="fas fa-phone me-2"></i>Telepon
                                                     </h6>
                                                     <p class="card-text fw-bold">
-                                                        {{ $tu->phone ?: 'Belum diisi' }}
+                                                        {{ $user->phone ?: 'Belum diisi' }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -131,7 +147,7 @@
                                                         <i class="fas fa-user-tag me-2"></i>Role
                                                     </h6>
                                                     <p class="card-text">
-                                                        <span class="badge bg-info">{{ $tu->role->name }}</span>
+                                                        <span class="badge bg-info">{{ $user->role->name }}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -144,7 +160,7 @@
                                                         <i class="fas fa-map-marker-alt me-2"></i>Alamat
                                                     </h6>
                                                     <p class="card-text">
-                                                        {{ $tu->address ?: 'Belum diisi' }}
+                                                        {{ $user->address ?: 'Belum diisi' }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -156,8 +172,7 @@
                         
                         <!-- Edit Profil -->
                         <div class="tab-pane fade" id="edit-profile" role="tabpanel">
-                            <form action="{{ route('tu.user.update', $tu->nomor_induk) }}" method="POST" enctype="multipart/form-data">
-                                @csrf
+                            <form action="{{ route('profile.update', ['role' => 'tu']) }}" method="POST" enctype="multipart/form-data" id="profileForm">                                @csrf
                                 @method('PUT')
                                 
                                 <div class="row">
@@ -166,19 +181,19 @@
                                             <label class="form-label fw-bold">Foto Profil</label>
                                             <div class="d-flex justify-content-center mb-3">
                                                 <div class="position-relative">
-                                                   
-                                                         @if($tu->profile)
-                                                <img id="profilePreview" src="{{ asset('storage/' . $tu->profile) }}" 
-                                                     alt="Profile Picture" 
-                                                     class="img-thumbnail rounded-circle" 
-                                                     width="180" height="180" 
-                                                     style="object-fit: cover; aspect-ratio: 1 / 1;">
-                                            @else
-                                                <div class="rounded-circle d-flex align-items-center justify-content-center" 
-                                                     style="width: 180px; height: 180px;">
-                                                    <i class="fas fa-user-circle fa-5x text-secondary"></i>
-                                                </div>
-                                            @endif
+                                                    @if($user->profile)
+                                                        <img id="profilePreview" src="{{ asset('storage/' . $user->profile) }}?v={{ time() }}" 
+                                                             alt="Profile Picture" 
+                                                             class="img-thumbnail rounded-circle" 
+                                                             width="180" height="180" 
+                                                             style="object-fit: cover; aspect-ratio: 1 / 1;">
+                                                    @else
+                                                        <img id="profilePreview" src="{{ asset('template/assets/toppng.com-instagram-default-profile-picture-2083x2083.png') }}"
+                                                             alt="Default Profile" 
+                                                             class="img-thumbnail rounded-circle" 
+                                                             width="180" height="180" 
+                                                             style="object-fit: cover; aspect-ratio: 1 / 1;">
+                                                    @endif
                                                     
                                                     <div class="position-absolute bottom-0 end-0">
                                                         <label for="profileUpload" class="btn btn-sm btn-primary rounded-circle p-2" style="cursor: pointer;">
@@ -187,7 +202,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input id="profileUpload" class="form-control d-none" type="file" name="profile" onchange="previewImage(event)">
+                                            <input id="profileUpload" class="form-control d-none" type="file" name="profile" accept="image/*" onchange="previewImage(event)">
                                             <div class="small text-muted">Klik ikon kamera untuk mengubah foto</div>
                                         </div>
                                     </div>
@@ -196,28 +211,28 @@
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" id="nomorInduk" value="{{ $tu->nomor_induk }}" disabled>
+                                                    <input type="text" class="form-control" id="nomorInduk" value="{{ $user->nomor_induk }}" disabled>
                                                     <label for="nomorInduk">Nomor Induk</label>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" id="nama" value="{{ $tu->name }}" disabled>
+                                                    <input type="text" class="form-control" id="nama" value="{{ $user->name }}" disabled>
                                                     <label for="nama">Nama</label>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input type="email" class="form-control" id="email" value="{{ $tu->email }}" disabled>
+                                                    <input type="email" class="form-control" id="email" value="{{ $user->email }}" disabled>
                                                     <label for="email">Email</label>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input class="form-control @error('phone') is-invalid @enderror" id="phone" type="text" name="phone" value="{{ old('phone', $tu->phone) }}" placeholder="Telepon">
+                                                    <input class="form-control @error('phone') is-invalid @enderror" id="phone" type="text" name="phone" value="{{ old('phone', $user->phone) }}" placeholder="Telepon">
                                                     <label for="phone">Telepon</label>
                                                     @error('phone')
                                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -225,19 +240,10 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-12">
-                                                <div class="form-floating mb-3">
-                                                    <input class="form-control @error('password') is-invalid @enderror" id="password" type="password" name="password" placeholder="Password">
-                                                    <label for="password">Password (Kosongkan jika tidak ingin diubah)</label>
-                                                    @error('password')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
                                             
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" style="height: 100px" placeholder="Alamat">{{ old('address', $tu->address) }}</textarea>
+                                                    <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" style="height: 100px" placeholder="Alamat">{{ old('address', $user->address) }}</textarea>
                                                     <label for="address">Alamat</label>
                                                     @error('address')
                                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -249,10 +255,7 @@
                                 </div>
                                 
                                 <div class="d-flex justify-content-end mt-4">
-                                    <button type="button" class="btn btn-outline-secondary me-2" data-bs-toggle="tab" data-bs-target="#view-profile">
-                                        <i class="fas fa-times me-1"></i> Batal
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" id="saveProfileBtn">
                                         <i class="fas fa-save me-1"></i> Simpan Perubahan
                                     </button>
                                 </div>
@@ -278,15 +281,41 @@
         }
     }
 
-    // Auto-close alerts after 5 seconds
+    // Add form submission handling with SweetAlert
     document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(function(alert) {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
+        const profileForm = document.getElementById('profileForm');
+        
+        if (profileForm) {
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah Anda yakin ingin menyimpan perubahan?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Simpan',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show loading state
+                        Swal.fire({
+                            title: 'Menyimpan...',
+                            html: 'Mohon tunggu sebentar',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        
+                        // Submit the form
+                        profileForm.submit();
+                    }
+                });
             });
-        }, 5000);
+        }
     });
 </script>
 @endsection

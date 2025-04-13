@@ -5,7 +5,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-<div class="container">
+<div class="container p-5">
     <h2 class="mb-4">Kelola Pengajuan Surat Mahasiswa</h2>
     <div class="d-flex justify-content-between align-items-center">
         <div class="mb-3">

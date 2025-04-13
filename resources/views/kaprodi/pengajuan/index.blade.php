@@ -1,11 +1,21 @@
 @extends('kaprodi.layouts.app') {{-- Ganti layout admin --}}
+@section('header')
+<div class="container-fluid px-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb my-0">
+        <li class="breadcrumb-item text-white"><a href="{{ route('kaprodi.dashboard')}}" data-coreui-i18n="home">Home</a>
+        </li>
+   
+        <li class="breadcrumb-item active"><span data-coreui-i18n="user">Pengajuan</span>
 
+      </ol>
+    </nav>
+  </div>
+@endsection
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-<div class="container">
+<div class="container p-5">
     <h2 class="mb-4">Kelola Pengajuan Surat Mahasiswa</h2>
     <div class="d-flex justify-content-between align-items-center">
         <div class="mb-3">
@@ -40,13 +50,16 @@
                 <td>{{ $pengajuan->surat->nama_jenis_surat }}</td>
                 <td>{{ $pengajuan->tanggal_pengajuan }}</td>
                 <td>
-                    <span class="badge {{ $pengajuan->status_pengajuan == 'Disetujui' ? 'bg-success' : ($pengajuan->status_pengajuan == 'Ditolak' ? 'bg-danger' : 'bg-warning') }}">
-                        {{ $pengajuan->status_pengajuan }}
-                    </span>
+                    <span class="badge 
+                    {{ $pengajuan->status_pengajuan == 'Disetujui' ? 'bg-success' : 
+                       ($pengajuan->status_pengajuan == 'Ditolak' ? 'bg-danger' : 
+                       ($pengajuan->status_pengajuan == 'Done' ? 'bg-primary' : 'bg-warning')) }}">
+                    {{ $pengajuan->status_pengajuan }}
+                </span>
                 </td>
                 <td>{{ $pengajuan->tanggal_persetujuan ?? '-' }}</td>
                 <td>{{ $pengajuan->catatan_kaprodi ?? '-' }}</td>
-                <td>
+                <td class="text-nowrap">
                     @if ($pengajuan->status_pengajuan == 'Disetujui' && $pengajuan->file_surat)
                         <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary btn-sm" target="_blank">Download</a>
                     @endif
@@ -74,7 +87,10 @@
         </tbody>
     </table>
 </div>
-
+@endsection
+@section('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
@@ -103,7 +119,7 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.post("/pengajuan/" + pengajuanId + "/approve", {
+                    $.post("{{ url('kaprodi/pengajuan') }}/" + pengajuanId + "/approve", {
                         _token: '{{ csrf_token() }}'
                     }, function (data) {
                         Swal.fire(
@@ -123,7 +139,7 @@
         });
 
         $('.reject-btn').click(function () {
-            var pengajuanId = $(this).data('id');
+            var pengajuanId = $(this).data('id_pengajuan');
 
             Swal.fire({
                 title: 'Tolak Pengajuan?',
@@ -136,7 +152,7 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.post("/pengajuan/" + pengajuanId + "/reject", {
+                    $.post("{{ url('kaprodi/pengajuan') }}/" + pengajuanId + "/reject", {
                         _token: '{{ csrf_token() }}'
                     }, function (data) {
                         Swal.fire(
