@@ -5,7 +5,7 @@
       <ol class="breadcrumb my-0">
         <li class="breadcrumb-item text-white"><a href="{{ route('admin.dashboard')}}" data-coreui-i18n="home">Home</a>
         </li>
-        <li class="breadcrumb-item active"><a href="{{ route('admin.user')}}" data-coreui-i18n="dashboard">User</a>
+        <li class="breadcrumb-item active"><a href="{{ route('admin.karyawan')}}" data-coreui-i18n="dashboard">User</a>
         </li>
         <li class="breadcrumb-item active"><span data-coreui-i18n="user">Create</span>
 
@@ -34,7 +34,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form action="{{ route('admin.user.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="user-form" action="{{ route('admin.karyawan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="mb-3">
@@ -48,6 +48,7 @@
                     <label class="form-label" for="name">Nama</label>
                     <input class="form-control" id="name" type="text" name="name" required>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label" for="kode_prodi">Prodi</label>
                     <select class="form-select" id="kode_prodi" name="kode_prodi" required>
@@ -57,6 +58,17 @@
                         @endforeach
                     </select>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="role_id">Role</label>
+                    <select class="form-select" id="role_id" name="role_id" required>
+                        <option value="">Pilih Role</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->role_id }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 
                 
                 <div class="mb-3">
@@ -68,16 +80,7 @@
                     <label class="form-label" for="password">Password</label>
                     <input class="form-control" id="password" type="password" name="password" required>
                 </div>
-                
-                <div class="mb-3">
-                    <label class="form-label" for="role">Role</label>
-                    <select class="form-select" id="role_id" name="role_id" required>
-                        <option value="">Pilih Role</option>
-                        @foreach($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                                
                 
                 <div class="mb-3">
                     <label class="form-label" for="phone">Telepon</label>
@@ -88,10 +91,60 @@
                     <label class="form-label" for="address">Alamat</label>
                     <textarea class="form-control" id="address" name="address" rows="3"></textarea>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="status">Status</label>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="aktif" {{ old('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="tidak aktif" {{ old('status') == 'tidak aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                    </select>
+                </div>
+                
                 
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session("success") }}',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
+<script>
+    $(document).ready(function () {
+        $('#user-form').on('submit', function(e) {
+            e.preventDefault(); 
+
+            Swal.fire({
+                title: 'Apakah data sudah benar?',
+                text: "Pastikan semua data sudah terisi dengan benar.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, simpan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit(); 
+                }
+            });
+        });
+    });
+</script>
+
+
 @endsection

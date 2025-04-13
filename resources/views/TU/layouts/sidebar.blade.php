@@ -1,12 +1,8 @@
 <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
   <div class="sidebar-header border-bottom">
     <div class="sidebar-brand">
-      <svg class="sidebar-brand-full" width="110" height="32" alt="Logo HaloSurat">
-        <use xlink:href="{{ asset('template') }}/assets/brand/Logo.svg#full"></use>
-      </svg>
-      <svg class="sidebar-brand-narrow" width="32" height="32" alt="Logo HaloSurat">
-        <use xlink:href="{{ asset('template') }}/assets/brand/Logo.svg#signet"></use>
-      </svg>
+      <img src="{{ asset('template') }}/assets/brand/Logo.svg" width="200" height="65" alt="Logo HaloSurat">
+
     </div>
     <button class="btn-close d-lg-none" type="button" data-coreui-theme="dark" aria-label="Close"></button>
   </div>

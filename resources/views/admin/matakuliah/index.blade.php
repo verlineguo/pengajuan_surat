@@ -28,6 +28,7 @@
                 <th>No</th>
                 <th>Kode Mata Kuliah</th>
                 <th>Nama Mata Kuliah</th>
+                <th>Program Studi</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -37,12 +38,13 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $matakuliah->kode_mk }}</td>
                 <td>{{ $matakuliah->nama_mk }}</td>
-                
+                <td>{{ $matakuliah->prodi->nama_prodi ?? '-' }}</td>
+
                 <td>
                     <a href="{{ route('admin.matakuliah.edit', $matakuliah->kode_mk) }}" class="btn btn-warning btn-sm">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $matakuliah->kode_mk }}">
+                    <button class="btn btn-danger btn-sm delete-btn" data-kode_mk="{{ $matakuliah->kode_mk }}">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>

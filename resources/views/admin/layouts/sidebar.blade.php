@@ -1,12 +1,7 @@
 <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
       <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">
-          <svg class="sidebar-brand-full" width="110" height="32" alt="Logo HaloSurat">
-            <use xlink:href="{{ asset('template') }}/assets/brand/Logo.svg#full"></use>
-          </svg>
-          <svg class="sidebar-brand-narrow" width="32" height="32" alt="Logo HaloSurat">
-            <use xlink:href="{{ asset('template') }}/assets/brand/Logo.svg#signet"></use>
-          </svg>
+          <img src="{{ asset('template') }}/assets/brand/Logo.svg" width="200" height="65" alt="Logo HaloSurat">
         </div>
         <button class="btn-close d-lg-none" type="button" data-coreui-theme="dark" aria-label="Close"></button>
       </div>
@@ -16,14 +11,15 @@
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
             </svg><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
         <li class="nav-title" data-coreui-i18n="theme">Admin</li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('admin.user') }}">
+        <li class="nav-item"><a class="nav-link" href="{{ route('admin.karyawan') }}">
             <svg class="nav-icon">
               <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-            </svg><span data-coreui-i18n="colors">Users</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('admin.surat') }}">
-            <svg class="nav-icon">
-              <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
-            </svg><span data-coreui-i18n="typography">Jenis Surat</span></a></li>
+            </svg><span data-coreui-i18n="colors">Karyawan</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.mahasiswa') }}">
+              <svg class="nav-icon">
+                <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+              </svg><span data-coreui-i18n="colors">Mahasiswa</span></a></li>
+        
        <li class="nav-item"><a class="nav-link" href="{{ route('admin.matakuliah') }}">
          <svg class="nav-icon">
            <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-drop"></use>

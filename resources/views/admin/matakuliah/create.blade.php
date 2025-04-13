@@ -46,6 +46,17 @@
                     <label class="form-label" for="nama_mk">Nama Mata Kuliah</label>
                     <input class="form-control" id="nama_mk" type="text" name="nama_mk" value="{{ old('nama_mk') }}" required>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="kode_prodi">Prodi</label>
+                    <select class="form-select" id="kode_prodi" name="kode_prodi" required>
+                        <option value="">Pilih Prodi</option>
+                        @foreach($prodis as $prodi)
+                            <option value="{{ $prodi->kode_prodi }}">{{ $prodi->nama_prodi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                
                 
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>

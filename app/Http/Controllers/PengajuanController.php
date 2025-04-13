@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\Storage;
 class PengajuanController extends Controller
 {
     public function index() {
-        $mahasiswa = Auth::user();
+        $user = Auth::user();
         $surats = Surat::all();
         $pengajuans = Pengajuan::where('nrp', Auth::user()->nomor_induk)->get();
-        return view('mahasiswa.pengajuan.index', compact('mahasiswa', 'pengajuans', 'surats'));
+        return view('mahasiswa.pengajuan.index', compact('user','pengajuans', 'surats'));
     }
 
     public function create() {
+        $user = Auth::user();
         $surats = Surat::all();
-        $mahasiswa = Auth::user();
-        return view('mahasiswa.pengajuan.create', compact('surats', 'mahasiswa'));
+        return view('mahasiswa.pengajuan.create', compact('user','surats'));
     }
 
     public function store(Request $request)
@@ -191,16 +191,11 @@ class PengajuanController extends Controller
         return redirect()->route('mahasiswa.pengajuan.history')->with('success', 'Pengajuan surat berhasil diperbarui!');
     }
 
-    public function edit($id_pengajuan) {
-        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
-        $surats = Surat::all();
-        $mahasiswa = Auth::user();
-        return view('mahasiswa.pengajuan.edit', compact('pengajuan', 'surats', 'mahasiswa'));
-    }
+
     
     public function show($id_pengajuan)
     {
-        $mahasiswa = Auth::user();
+        $user = Auth::user();
         $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'lhs', 'skl', 'skma', 'sptmk')->findOrFail($id_pengajuan);
         $pengajuan->tanggal_pengajuan = Carbon::parse($pengajuan->tanggal_pengajuan);
         if ($pengajuan->tanggal_persetujuan) {
@@ -209,7 +204,7 @@ class PengajuanController extends Controller
         if ($pengajuan->skl && $pengajuan->skl->tanggal_kelulusan) {
             $pengajuan->skl->tanggal_kelulusan = Carbon::parse($pengajuan->skl->tanggal_kelulusan);
         }
-        return view('mahasiswa.pengajuan.show', compact('pengajuan', 'mahasiswa'));
+        return view('mahasiswa.pengajuan.show', compact('pengajuan', 'user'));
         
     }
 

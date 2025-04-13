@@ -33,7 +33,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('mahasiswa.pengajuan.store') }}" method="POST">
+            <form id="pengajuanForm" action="{{ route('mahasiswa.pengajuan.store') }}" method="POST">
                 @csrf
                 
                 <div class="mb-3">
@@ -48,12 +48,15 @@
 
                 <div id="form-surat"></div>
 
-                <button type="submit" class="btn btn-primary">Kirim Pengajuan</button>
+                <button type="button" id="submitBtn" class="btn btn-primary">Kirim Pengajuan</button>
             </form>
         </div>
     </div>
 </div>
-
+@endsection
+@section('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById('jenis_surat').addEventListener('change', function () {
         let formSurat = document.getElementById('form-surat');
@@ -64,11 +67,11 @@
             formSurat.innerHTML = `
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
-                    <input class="form-control" type="text" name="name" value="{{ $mahasiswa->name }}" readonly>
+                    <input class="form-control" type="text" name="name" value="{{ $user->name }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">NRP</label>
-                    <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->nomor_induk }}" readonly>
+                    <input class="form-control" type="text" name="nrp" value="{{ $user->nomor_induk }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Semester</label>
@@ -103,7 +106,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Data Mahasiswa</label>
-                    <<div class="form-text">Informasikan nama dan NRP tiap mahasiswa (contoh: Mahasiswa 1 - 15720xx; Mahasiswa 2 - 15720xx; Mahasiswa 3 - 15720xx; dst)</div>
+                    <div class="form-text">Informasikan nama dan NRP tiap mahasiswa (contoh: Mahasiswa 1 - 15720xx; Mahasiswa 2 - 15720xx; Mahasiswa 3 - 15720xx; dst)</div>
                     <input class="form-control" type="text" name="data_mahasiswa" required>
                 </div>
                 <div class="mb-3">
@@ -121,11 +124,11 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
                     <div class="form-text"> Isikan dengan nama lengkap dalam format Huruf Besar - Huruf Kecil (contoh: Susi Susanti)</div>
-                    <input class="form-control" type="text" name="nama"  value="{{ $mahasiswa->name }}" readonly>
+                    <input class="form-control" type="text" name="nama"  value="{{ $user->name }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">NRP</label>
-                    <input class="form-control" type="text" name="nrp"  value="{{ $mahasiswa->nomor_induk }}" readonly>
+                    <input class="form-control" type="text" name="nrp"  value="{{ $user->nomor_induk }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tanggal Kelulusan</label>
@@ -137,11 +140,11 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
                     <div class="form-text"> Isikan dengan nama lengkap dalam format Huruf Besar - Huruf Kecil (contoh: Susi Susanti)</div>
-                    <input class="form-control" type="text" name="nama"  value="{{ $mahasiswa->name }}" readonly>
+                    <input class="form-control" type="text" name="nama"  value="{{ $user->name }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">NRP</label>
-                    <input class="form-control" type="text" name="nrp" value="{{ $mahasiswa->name }}" readonly>
+                    <input class="form-control" type="text" name="nrp" value="{{ $user->nomor_induk }}" readonly>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Keperluan Pembuatan LHS</label>
@@ -149,6 +152,42 @@
                 </div>
             `;
         }
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        const jenisSurat = document.getElementById('jenis_surat');
+        const jenisSuratText = jenisSurat.options[jenisSurat.selectedIndex].text;
+        
+        if (!document.getElementById('pengajuanForm').checkValidity()) {
+            document.getElementById('pengajuanForm').reportValidity();
+            return;
+        }
+
+        Swal.fire({
+            title: 'Konfirmasi Pengajuan',
+            html: `Anda akan mengajukan <b>${jenisSuratText}</b>.<br>Pastikan data yang diisi sudah benar!`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Kirim Pengajuan!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading state
+                Swal.fire({
+                    title: 'Mengirim...',
+                    html: 'Mohon tunggu, pengajuan sedang diproses.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                
+                // Submit the form
+                document.getElementById('pengajuanForm').submit();
+            }
+        });
     });
 </script>
 @endsection

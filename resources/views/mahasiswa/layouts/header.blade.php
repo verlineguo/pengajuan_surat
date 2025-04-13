@@ -139,8 +139,8 @@
       </li>
       <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
           <div class="avatar avatar-md">
-            @if($mahasiswa->profile)
-              <img src="{{ asset('storage/' . $mahasiswa->profile) }}" alt="Profile" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
+            @if($user->profile)
+              <img src="{{ asset('storage/' . $user->profile) }}" alt="Profile" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
             @else
                 <i class="fas fa-user-circle fa-3x text-secondary"></i>
             @endif

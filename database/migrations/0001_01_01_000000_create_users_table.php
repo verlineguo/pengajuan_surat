@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('profile')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->enum('status', ['aktif', 'tidak aktif'])->default('aktif');
 
             $table->foreign('role_id')->references('id')->on('role');
             $table->foreign('kode_prodi')->references('kode_prodi')->on('prodi'); // Jika prodi dihapus, set null
@@ -44,7 +45,6 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
-
             $table->foreign('user_id')->references('nomor_induk')->on('users')->onDelete('cascade');
 
         });

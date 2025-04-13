@@ -21,13 +21,13 @@
     <div class="d-flex justify-content-between align-items-center">
         <div class="mb-3">
             <select  id="filter" class="form-control">
-                <option value="">Semua role</option>
-                @foreach ($roles as $role)
-                    <option value = "{{ $role->name }}">{{ $role->name }}</option>
+                <option value="">Semua jurusan</option>
+                @foreach ($prodis as $prodi)
+                    <option value = "{{ $prodi->kode_prodi }}">{{ $prodi->nama_prodi }}</option>
                 @endforeach
             </select>
         </div>
-        <a href="{{ route('admin.user.create') }}" class="btn btn-primary mb-3">Tambah User</a>
+        <a href="{{ route('admin.mahasiswa.create') }}" class="btn btn-primary mb-3">Tambah User</a>
 
     </div>
     
@@ -38,10 +38,9 @@
                 <th>Nomor Induk</th>
                 <th>Nama</th>
                 <th>Email</th>
-                <th>Role</th>
-                <th>Phone</th>
-                <th>Alamat</th>
-                <th>Aksi</th>
+                <th>Program Studi</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -51,11 +50,10 @@
                 <td>{{ $user->nomor_induk }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ $user->role->name ?? 'Tidak Ada Role' }}</td>
-                <td>{{ $user->phone }}</td>
-                <td>{{ $user->address }}</td>
+                <td>{{ $user->prodi->nama_prodi ?? '-' }}</td>
+                <td>{{ $user->status }}</td>
                 <td>
-                    <a href="{{ route('admin.user.edit', $user->nomor_induk) }}" class="btn btn-warning btn-sm">
+                    <a href="{{ route('admin.mahasiswa.edit', $user->nomor_induk) }}" class="btn btn-warning btn-sm">
                         <i class="fas fa-edit"></i>
                     </a>
                     <button type="submit" class="btn btn-danger btn-sm delete-btn" data-id="{{ $user->nomor_induk }}">

@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function index() {
+        $user = Auth::user();
 
         $users = User::all();
-        $user = Auth::user();
 
         $totalMahasiswa = User::whereHas('role', function ($query) {
             $query->where('name', 'mahasiswa');
@@ -29,9 +29,6 @@ class AdminController extends Controller
     
         return view('admin.dashboard', compact('users','user', 'totalMahasiswa', 'totalKaryawan', 'totalSurat', 'totalMataKuliah'));
     }
-    public function profile() {
-        $user = Auth::user();        
-        return view('admin.profile', compact('user'));
-    }
+
 
 }

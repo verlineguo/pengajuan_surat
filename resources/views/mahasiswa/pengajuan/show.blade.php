@@ -4,46 +4,109 @@
 <div class="container">
     <h2 class="mb-4">Detail Pengajuan Surat</h2>
 
-    <div class="card shadow-lg p-3">
-        <div class="card-body">
-            <h5 class="card-title mb-3">Informasi Pengajuan</h5>
-            <table class="table table-bordered table-striped">
-                <tr><td><strong>Nama Surat</strong></td><td>{{ $pengajuan->surat->nama_jenis_surat }}</td></tr>
-                <tr class="bg-light">
-                    <td><strong>Status</strong></td>
-                    <td>
-                        @if($pengajuan->status_pengajuan === 'Disetujui')
-                            <span class="badge bg-success">{{ $pengajuan->status_pengajuan }}</span>
-                        @elseif($pengajuan->status_pengajuan === 'Ditolak')
-                            <span class="badge bg-danger">{{ $pengajuan->status_pengajuan }}</span>
-                        @elseif($pengajuan->status_pengajuan === 'pending')
-                            <span class="badge bg-warning text-dark">{{ $pengajuan->status_pengajuan }}</span>
-                        @elseif($pengajuan->status_pengajuan === 'Done')
-                            <span class="badge bg-primary">{{ $pengajuan->status_pengajuan }}</span>
-                        @else
-                            <span class="badge bg-secondary">{{ $pengajuan->status_pengajuan }}</span>
-                        @endif
-                    </td>
-                </tr>
+    <div class="card shadow-lg rounded-3 mb-4 border-0 overflow-hidden">
+     
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-light rounded-circle p-2 me-3">
+                            <i class="fas fa-file-signature text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted">Nama Surat</small>
+                            <p class="mb-0 fw-bold">{{ $pengajuan->surat->nama_jenis_surat }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-light rounded-circle p-2 me-3">
+                            <i class="fas fa-calendar-alt text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted">Tanggal Pengajuan</small>
+                            <p class="mb-0 fw-bold">{{ $pengajuan->tanggal_pengajuan->format('d-m-Y H:i') }}</p>
+                        </div>
+                    </div>
+                    
+                    @if($pengajuan->tanggal_persetujuan)
+                    <div class="d-flex align-items-center">
+                        <div class="bg-light rounded-circle p-2 me-3">
+                            <i class="fas fa-calendar-check text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted">Tanggal Persetujuan</small>
+                            <p class="mb-0 fw-bold">{{ $pengajuan->tanggal_persetujuan->format('d-m-Y H:i') }}</p>
+                        </div>
+                    </div>
+                    @endif
+                </div>
                 
-                <tr><td><strong>Tanggal Pengajuan</strong></td><td>{{ $pengajuan->tanggal_pengajuan->format('d-m-Y H:i') }}</td></tr>
-                @if($pengajuan->tanggal_persetujuan)
-                <tr class="bg-light"><td><strong>Tanggal Persetujuan</strong></td><td>{{ $pengajuan->tanggal_persetujuan->format('d-m-Y H:i') }}</td></tr>
-                @endif
-                <tr class="bg-light">
-                    <td><strong>Catatan Kaprodi</strong></td>
-                    <td>{{ $pengajuan->catatan_kaprodi ? $pengajuan->catatan_kaprodi : '-' }}</td>
-                </tr>
-
-             
-
-            </table>
-            @if($pengajuan->file_surat && $pengajuan->status_pengajuan === 'Done')
-                <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary" target="_blank">Download Surat</a>
-            
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-light rounded-circle p-2 me-3">
+                            <i class="fas fa-tasks text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted">Status</small>
+                            <div>
+                                @if($pengajuan->status_pengajuan === 'Disetujui')
+                                    <span class="badge bg-success fs-6"><i class="fas fa-check-circle me-1"></i>{{ $pengajuan->status_pengajuan }}</span>
+                                @elseif($pengajuan->status_pengajuan === 'Ditolak')
+                                    <span class="badge bg-danger fs-6"><i class="fas fa-times-circle me-1"></i>{{ $pengajuan->status_pengajuan }}</span>
+                                @elseif($pengajuan->status_pengajuan === 'pending')
+                                    <span class="badge bg-warning text-dark fs-6"><i class="fas fa-clock me-1"></i>{{ $pengajuan->status_pengajuan }}</span>
+                                @elseif($pengajuan->status_pengajuan === 'Done')
+                                    <span class="badge bg-primary fs-6"><i class="fas fa-check-double me-1"></i>{{ $pengajuan->status_pengajuan }}</span>
+                                @else
+                                    <span class="badge bg-secondary fs-6">{{ $pengajuan->status_pengajuan }}</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-start">
+                        <div class="bg-light rounded-circle p-2 me-3">
+                            <i class="fas fa-comment-alt text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted">Catatan Kaprodi</small>
+                            <p class="mb-0 fw-bold">{{ $pengajuan->catatan_kaprodi ? $pengajuan->catatan_kaprodi : '-' }}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            @if($pengajuan->status_pengajuan === 'disetujui' || $pengajuan->status_pengajuan === 'Done')
+            <div class="row">
+                <div class="col-md-6">
+              
+                    
+                    @if($pengajuan->tanggal_persetujuan)
+                    <div class="d-flex align-items-center">
+                        <div class="bg-light rounded-circle p-2 me-3">
+                            <i class="fas fa-calendar-check text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted">Tanggal Persetujuan</small>
+                            <p class="mb-0 fw-bold">{{ $pengajuan->tanggal_persetujuan ? $pengajuan->tanggal_persetujuan->format('d-m-Y H:i') : '-' }}</p>                        </div>
+                    </div>
+                    @endif
+                </div>
+      
+                
+               
+                
+            </div>
             @endif
-
-
+            @if($pengajuan->file_surat && $pengajuan->status_pengajuan === 'Done')
+            <div class="mt-4 text-start">
+                <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-download me-2"></i>Download Surat
+                </a>
+            </div>
+            @endif
         </div>
     </div>
 

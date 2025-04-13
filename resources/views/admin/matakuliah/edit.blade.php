@@ -48,6 +48,17 @@
                     <label class="form-label" for="nama_mk">Nama Mata Kuliah</label>
                     <input class="form-control" id="nama_mk" type="text" name="nama_mk" value="{{ old('nama_mk', $matakuliah->nama_mk) }}" required>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="kode_prodi">Prodi</label>
+                    <select class="form-select" id="kode_prodi" name="kode_prodi" required>
+                        <option value="">Pilih Prodi</option>
+                        @foreach($prodis as $prodi)
+                            <option value="{{ $prodi->kode_prodi }} " {{ $matakuliah->kode_prodi == $prodi->kode_prodi ? 'selected' : '' }}>{{ $prodi->nama_prodi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('admin.matakuliah') }}" class="btn btn-secondary">Batal</a>

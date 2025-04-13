@@ -100,8 +100,11 @@
                   <td>{{ $pengajuan->surat->nama_jenis_surat }}</td>
                   <td>{{ $pengajuan->tanggal_pengajuan }}</td>
                   <td>
-                    <span class="badge {{ $pengajuan->status_pengajuan == 'Disetujui' ? 'bg-success' : ($pengajuan->status_pengajuan == 'Ditolak' ? 'bg-danger' : 'bg-warning') }}">
-                      {{ $pengajuan->status_pengajuan }}
+                    <span class="badge 
+                        {{ $pengajuan->status_pengajuan == 'Disetujui' ? 'bg-success' : 
+                           ($pengajuan->status_pengajuan == 'Ditolak' ? 'bg-danger' : 
+                           ($pengajuan->status_pengajuan == 'Done' ? 'bg-primary' : 'bg-warning')) }}">
+                        {{ $pengajuan->status_pengajuan }}
                     </span>
                   </td>
                   <td>
@@ -109,6 +112,8 @@
                         Masih menunggu persetujuan kaprodi
                     @elseif ($pengajuan->status_pengajuan == 'Disetujui')
                         Tunggu upload dari TU
+                    @elseif ($pengajuan->status_pengajuan == 'Done')
+                        Proses sudah berakhir
                     @elseif ($pengajuan->status_pengajuan == 'Ditolak')
                         {{ $pengajuan->catatan_penolakan ?? 'Alasan tidak tersedia' }}
                     @else

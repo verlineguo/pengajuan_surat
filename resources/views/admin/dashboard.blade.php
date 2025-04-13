@@ -8,9 +8,7 @@
         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
           <div>
             <div class="fs-4 fw-semibold">{{ number_format($totalMahasiswa) }} 
-              <svg class="icon">
-                  <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
-                </svg></div>
+             </div>
             <div data-coreui-i18n="users">Total mahasiswa</div>
           </div>
   
@@ -26,9 +24,7 @@
         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
           <div>
             <div class="fs-4 fw-semibold">{{ number_format($totalKaryawan) }} 
-              <svg class="icon">
-                  <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-arrow-top"></use>
-                </svg></div>
+             </div>
             <div data-coreui-i18n="income">Daftar karyawan</div>
           </div>
    
@@ -44,9 +40,7 @@
         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
           <div>
             <div class="fs-4 fw-semibold">{{ number_format($totalSurat) }} 
-              <svg class="icon">
-                  <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-arrow-top"></use>
-                </svg></div>
+              </div>
             <div data-coreui-i18n="conversionRate">Total surat</div>
           </div>
           
@@ -62,9 +56,7 @@
         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
           <div>
             <div class="fs-4 fw-semibold">{{ number_format($totalMataKuliah) }} 
-              <svg class="icon">
-                  <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
-                </svg></div>
+              </div>
             <div data-coreui-i18n="sessions">Daftar mata kuliah</div>
           </div>
 

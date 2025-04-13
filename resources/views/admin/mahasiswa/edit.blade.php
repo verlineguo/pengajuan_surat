@@ -5,7 +5,7 @@
       <ol class="breadcrumb my-0">
         <li class="breadcrumb-item text-white"><a href="{{ route('admin.dashboard')}}" data-coreui-i18n="home">Home</a>
         </li>
-        <li class="breadcrumb-item active"><a href="{{ route('admin.user')}}" data-coreui-i18n="dashboard">User</a>
+        <li class="breadcrumb-item active"><a href="{{ route('admin.mahasiswa')}}" data-coreui-i18n="dashboard">User</a>
         </li>
         <li class="breadcrumb-item active"><span data-coreui-i18n="user">Edit</span>
 
@@ -34,7 +34,7 @@
                 </div>
             @endif
             
-            <form action="{{ route('admin.user.update', $user->nomor_induk) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.mahasiswa.update', $user->nomor_induk) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-3 text-center">
@@ -60,6 +60,16 @@
                     <input class="form-control" id="name" type="text" name="name" value="{{ old('name', $user->name) }}" required>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="kode_prodi">Prodi</label>
+                    <select class="form-select" id="kode_prodi" name="kode_prodi" required>
+                        <option value="">Pilih Prodi</option>
+                        @foreach($prodis as $prodi)
+                        <option value="{{ $prodi->kode_prodi }}" {{ $user->kode_prodi == $prodi->kode_prodi ? 'selected' : '' }}>{{ $prodi->nama_prodi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
@@ -70,17 +80,7 @@
                     <label class="form-label" for="password">Password (Kosongkan jika tidak ingin diubah)</label>
                     <input class="form-control" id="password" type="password" name="password">
                 </div>
-                
-                <div class="mb-3">
-                    <label class="form-label" for="role_id">Role</label>
-                    <select class="form-select" id="role_id" name="role_id" required>
-                        <option value="">Pilih Role</option>
-                        @foreach($roles as $role)
-                            <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                
+                     
                 <div class="mb-3">
                     <label class="form-label" for="phone">Telepon</label>
                     <input class="form-control" id="phone" type="text" name="phone" value="{{ old('phone', $user->phone) }}">
@@ -89,6 +89,13 @@
                 <div class="mb-3">
                     <label class="form-label" for="address">Alamat</label>
                     <textarea class="form-control" id="address" name="address" rows="3">{{ old('address', $user->address) }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="status">Status</label>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="aktif" {{ old('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="tidak aktif" {{ old('status') == 'tidak aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                    </select>
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Update</button>

@@ -7,6 +7,7 @@
         </li>
         <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">User</span>
         </li>
+
       </ol>
     </nav>
   </div>
@@ -16,42 +17,63 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <div class="container">
-    
-    <h2 class="mb-4">Manajemen Surat</h2>
-    
-    <div class="d-flex justify-content-end">
-        <a href="{{ route('admin.surat.create') }}" class="btn btn-primary mb-3">Tambah Surat</a>
+    <h2 class="mb-4">Manajemen User</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="mb-3">
+            <select  id="filter" class="form-control">
+                <option value="">Semua role</option>
+                @foreach ($roles as $role)
+                    <option value = "{{ $role->name }}">{{ $role->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <a href="{{ route('admin.karyawan.create') }}" class="btn btn-primary mb-3">Tambah User</a>
+
     </div>
-        
-    <table class="table table-striped">
+    
+    <table class="table table-striped" id="userTable">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nama Jenis Surat</th>
-                <th>Aksi</th>
+                <th>No</th>
+                <th>Nomor Induk</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Program Studi</th>
+                <th>Status</th>
+                <th>Action</th>
+               
             </tr>
         </thead>
         <tbody>
-            @foreach($surats as $surat)
-                <tr>
-                    <td>{{ $surat->id }}</td>
-                    <td>{{ $surat->nama_jenis_surat }}</td>
-                    <td>
-                        <a href="{{ route('admin.surat.edit', $surat->id) }}" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $surat->id }}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                    
-                </tr>
+            @foreach ($users as $index => $user)
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $user->nomor_induk }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role->name ?? 'Tidak Ada Role' }}</td>
+                <td>{{ $user->prodi->nama_prodi ?? '-' }}</td>
+                <td>{{ $user->status }}</td>
+                <td>
+                    <a href="{{ route('admin.karyawan.edit', $user->nomor_induk) }}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <button type="submit" class="btn btn-danger btn-sm delete-btn" data-id="{{ $user->nomor_induk }}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
             @endforeach
         </tbody>
     </table>
-       
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        $('.table').DataTable();
+    });
+</script>
 @if(session('success'))
     <script>
         Swal.fire({
@@ -67,11 +89,17 @@
     $(document).ready(function () {
         $('.table').DataTable();
 
+        var table = $('#userTable').DataTable();
+
+        $('#filter').on('change', function () {
+            var selectedRole = $(this).val();
+            table.column(4).search(selectedRole).draw();
+        });
         $('.delete-btn').click(function () {
-            var suratId = $(this).data('id');
+            var userId = $(this).data('nomor_induk');
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: "Surat ini akan dihapus secara permanen!",
+                text: "User ini akan dihapus secara permanen!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -81,7 +109,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/admin/surat/delete/' + suratId,
+                        url: '/admin/user/delete/' + userId,
                         type: 'POST',
                         data: {
                             _method: 'DELETE',
@@ -109,5 +137,4 @@
         });
     });
 </script>
-
 @endsection
