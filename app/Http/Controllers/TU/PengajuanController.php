@@ -11,22 +11,22 @@ use Illuminate\Support\Facades\Auth;
 class PengajuanController extends Controller
 {
     public function index() {
-        $tu = Auth::user();
+        $user = Auth::user();
         $pengajuans = Pengajuan::with('mahasiswa', 'surat')
-        ->whereHas('mahasiswa', function ($query) use ($tu) {
-            $query->where('kode_prodi', $tu->kode_prodi);
+        ->whereHas('mahasiswa', function ($query) use ($user) {
+            $query->where('kode_prodi', $user->kode_prodi);
         })
         ->get();
 
-        return view('TU.pengajuan.index', compact('tu','pengajuans'));
+        return view('TU.pengajuan.index', compact('user','pengajuans'));
     }
 
     public function show($id_pengajuan) {
-        $tu = Auth::user();
+        $user = Auth::user();
 
         $pengajuan = Pengajuan::with('mahasiswa', 'surat', 'lhs', 'skl', 'skma', 'sptmk')
-        ->whereHas('mahasiswa', function ($query) use ($tu) {
-            $query->where('kode_prodi', $tu->kode_prodi);
+        ->whereHas('mahasiswa', function ($query) use ($user) {
+            $query->where('kode_prodi', $user->kode_prodi);
         })
         ->findOrFail($id_pengajuan);
 
@@ -41,7 +41,7 @@ class PengajuanController extends Controller
             $pengajuan->skl->tanggal_kelulusan = Carbon::parse($pengajuan->skl->tanggal_kelulusan);
         }
 
-        return view('TU.pengajuan.show', compact('tu','pengajuan'));
+        return view('TU.pengajuan.show', compact('user','pengajuan'));
 
 
     }
@@ -49,10 +49,10 @@ class PengajuanController extends Controller
     
     public function update(Request $request, $id_pengajuan)
     {
-        $tu = Auth::user();
+        $user = Auth::user();
 
-        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($tu) {
-            $query->where('kode_prodi', $tu->kode_prodi);
+        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($user) {
+            $query->where('kode_prodi', $user->kode_prodi);
         })->findOrFail($id_pengajuan);
     
         $pengajuan->status_pengajuan = $request->status_pengajuan;
@@ -68,10 +68,10 @@ class PengajuanController extends Controller
             'file_surat' => 'required|mimes:pdf|max:2048', // Hanya menerima file PDF dengan ukuran maksimal 2MB
             'catatan_tu' => 'nullable|string|max:255', // Catatan TU opsional
         ]);
-        $tu = Auth::user();
+        $user = Auth::user();
 
-        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($tu) {
-            $query->where('kode_prodi', $tu->kode_prodi);
+        $pengajuan = Pengajuan::whereHas('mahasiswa', function ($query) use ($user) {
+            $query->where('kode_prodi', $user->kode_prodi);
         })->findOrFail($id_pengajuan);
     
         // Hapus file surat lama jika ada
