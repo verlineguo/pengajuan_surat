@@ -32,12 +32,15 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'nomor_induk' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role_id' => 1,
+            'nomor_induk' => $request->nomor_induk,
             'password' => Hash::make($request->password),
         ]);
 
@@ -45,13 +48,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        $authUserRole = Auth::user()->role;
+        $authUserRole = Auth::user()->role_id;
         if ($authUserRole == 0) {
             return redirect()->intended(route('admin.dashboard', absolute: false));
-        } else if ($authUserRole == 1) {
-            return redirect()->intended(route('tu.dashboard', absolute: false));
-        } else if ($authUserRole == 2) {
-            return redirect()->intended(route('kaprodi.dashboard', absolute: false));
         } else {
             return redirect()->intended(route('mahasiswa.dashboard', absolute: false));
         }

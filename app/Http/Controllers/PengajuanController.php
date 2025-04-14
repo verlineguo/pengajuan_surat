@@ -8,6 +8,10 @@ use App\Models\SKL;
 use App\Models\SKMA;
 use App\Models\SPTMK;
 use App\Models\Surat;
+use App\Models\User;
+use App\Notifications\PengajuanApproved;
+use App\Notifications\PengajuanRejected;
+use App\Notifications\PengajuanSubmitted;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,8 +48,19 @@ class PengajuanController extends Controller
             'status_pengajuan' => 'pending',
             'tanggal_pengajuan' => now(),
         ]);
+        $mahasiswa = User::find(Auth::user()->nomor_induk);
+        $mahasiswaProdi = $mahasiswa->kode_prodi;
 
         
+        $kaprodi = User::where('role_id', 3)
+                  ->where('kode_prodi', $mahasiswaProdi)
+                  ->where('status', 'aktif')
+                  ->get();
+    
+        foreach ($kaprodi as $kp) {
+            $kp->notify(new PengajuanSubmitted($pengajuan));
+        }
+
         switch ($request->id_surat) {
             case 1:
                 SKMA::create([
@@ -256,16 +271,35 @@ class PengajuanController extends Controller
         $pengajuan->delete();
 
         return redirect()->route('mahasiswa.pengajuan.history')->with('success', 'Pengajuan berhasil dihapus.');
+    
     }
+    
 
-
-    public function approve($id_pengajuan) {
+    public function approve(Request $request, $id_pengajuan) {
         
         $pengajuan = Pengajuan::findOrFail($id_pengajuan);
         $pengajuan->update([
             'status_pengajuan' => 'Disetujui',
             'tanggal_persetujuan' => now(),
+            'catatan_kaprodi' => $request->catatan_kaprodi,
+
         ]);
+        $mahasiswa = User::where('nomor_induk', operator: $pengajuan->nrp)->first();
+        $mahasiswa->notify(new PengajuanApproved($pengajuan));
+
+        $mahasiswaProdi = $mahasiswa->kode_prodi;
+    
+        $tuStaff = User::where('role_id', 2)
+                    ->where('status', 'aktif')
+                    ->where(function($query) use ($mahasiswaProdi) {
+                        $query->where('kode_prodi', $mahasiswaProdi)
+                                ->orWhereNull('kode_prodi'); // Untuk TU yang menangani semua prodi
+                    })
+                    ->get();
+        
+        foreach ($tuStaff as $tu) {
+            $tu->notify(new PengajuanApproved($pengajuan));
+        }
         return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil disetujui.');
     }
 
@@ -277,6 +311,10 @@ class PengajuanController extends Controller
             'catatan_kaprodi' => $request->catatan_kaprodi,
         ]);
 
+        $mahasiswa = User::where('nomor_induk', $pengajuan->nrp)->first();
+        $mahasiswa->notify(new PengajuanRejected($pengajuan));
+
+  
         return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
     }
 

@@ -10,132 +10,60 @@
         {{-- <ul class="header-nav d-none d-md-flex">
             <li class="nav-item"><a class="nav-link" href="#" data-coreui-i18n="settings">Settings</a></li>
           </ul> --}}
-        <ul class="header-nav d-none d-md-flex ms-auto">
-            <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button"
-                    aria-haspopup="true" aria-expanded="false">
-                    <svg class="icon icon-lg my-1 mx-2">
-                        <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
-                    </svg><span class="badge rounded-pill position-absolute top-0 end-0 bg-danger-gradient">5</span></a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg pt-0">
-                    <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"
-                        data-coreui-i18n="notificationsCounter, { 'counter': 5 }">You have 5 notifications</div><a
-                        class="dropdown-item" href="#">
-                        <svg class="icon me-2 text-success">
-                            <use
-                                xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user-follow">
-                            </use>
-                        </svg><span data-coreui-i18n="newUserRegistered">New user registered</span></a><a
-                        class="dropdown-item" href="#">
-                        <svg class="icon me-2 text-danger">
-                            <use
-                                xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-user-unfollow">
-                            </use>
-                        </svg><span data-coreui-i18n="userDeleted">User deleted</span></a><a class="dropdown-item"
-                        href="#">
-                        <svg class="icon me-2 text-info">
-                            <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-chart">
-                            </use>
-                        </svg><span data-coreui-i18n="salesReportIsReady">Sales report is ready</span></a><a
-                        class="dropdown-item" href="#">
-                        <svg class="icon me-2 text-success">
-                            <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-basket">
-                            </use>
-                        </svg><span data-coreui-i18n="newClient">New client</span></a><a class="dropdown-item"
-                        href="#">
+          <ul class="header-nav d-none d-md-flex ms-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <svg class="icon icon-lg my-1 mx-2">
+                  <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
+                </svg>
+                @if(auth()->user()->unreadNotifications->count() > 0)
+                  <span class="badge rounded-pill position-absolute top-0 end-0 bg-danger-gradient">
+                    {{ auth()->user()->unreadNotifications->count() }}
+                  </span>
+                @endif
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg pt-0">
+                <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2">
+                  Notifikasi
                 </div>
+                
+                <div style="width: 400px; max-height: 300px; overflow-y: auto;">
+                    @forelse(auth()->user()->notifications()->latest()->take(5)->get() as $notification)
+                    <a class="dropdown-item" href="{{ $notification->data['action_url'] }}">
+                        <div class="message text-wrap {{ $notification->read_at ? '' : 'fw-bold' }}">
+                          <div class="d-flex align-items-center">
+                            <div class="me-2">
+                              @if(isset($notification->data['type']) && $notification->data['type'] == 'message')
+                                <svg class="icon text-primary"><use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use></svg>
+                              @elseif(isset($notification->data['type']) && $notification->data['type'] == 'alert')
+                                <svg class="icon text-danger"><use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-warning"></use></svg>
+                              @else
+                                <svg class="icon text-info"><use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-info"></use></svg>
+                              @endif
+                            </div>
+                            <div class="flex-grow-1">
+                              <div class="d-flex justify-content-between">
+                                <div>{{ $notification->data['title'] }}</div>
+                                <div class="small text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</div>
+                              </div>
+                              <div class="small text-muted">{{ $notification->data['message'] }}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    @empty
+                      <div class="dropdown-item text-center">Tidak ada notifikasi</div>
+                    @endforelse
+                  </div>
+                
+                @if(auth()->user()->notifications->count() > 5)
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item text-center fw-semibold" href="{{ route('notifications.index') }}">Lihat semua notifikasi</a>
+                @endif
+              </div>
             </li>
-            <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#"
-                    role="button" aria-haspopup="true" aria-expanded="false">
-                    <svg class="icon icon-lg my-1 mx-2">
-                        <use xlink:href="{{ asset('template') }}/vendors/@coreui/icons/svg/free.svg#cil-envelope-open">
-                        </use>
-                    </svg><span class="badge rounded-pill position-absolute top-0 end-0 bg-info-gradient">7</span></a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-md pt-0" style="min-width: 24rem">
-                    <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"
-                        data-coreui-i18n="messagesCounter, { 'counter': 7 }">You have 4 messages</div><a
-                        class="dropdown-item" href="#">
-                        <div class="d-flex">
-                            <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img"
-                                    src="{{ asset('template') }}/assets/img/avatars/1.jpg" alt="user@email.com"><span
-                                    class="avatar-status bg-success"></span></div>
-                            <div class="message text-wrap">
-                                <div class="d-flex justify-content-between mt-1">
-                                    <div class="small text-body-secondary">Jessica Williams</div>
-                                    <div class="small text-body-secondary">Just now</div>
-                                </div>
-                                <div class="fw-semibold"><span class="text-danger">! </span>Urgent: System Maintenance
-                                    Tonight</div>
-                                <div class="small text-body-secondary">Attention team, we'll be conducting critical
-                                    system maintenance tonight from 10 PM to 2 AM. Plan accordingly...</div>
-                            </div>
-                        </div>
-                    </a><a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                            <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img"
-                                    src="{{ asset('template') }}/assets/img/avatars/2.jpg" alt="user@email.com"><span
-                                    class="avatar-status bg-warning"></span></div>
-                            <div class="message text-wrap">
-                                <div class="d-flex justify-content-between mt-1">
-                                    <div class="small text-body-secondary">Richard Johnson</div>
-                                    <div class="small text-body-secondary">5 minutes ago</div>
-                                </div>
-                                <div class="fw-semibold"><span class="text-danger">! </span>Project Update: Milestone
-                                    Achieved</div>
-                                <div class="small text-body-secondary">Kudos on hitting sales targets last quarter!
-                                    Let's keep the momentum. New goals, new victories ahead...</div>
-                            </div>
-                        </div>
-                    </a><a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                            <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img"
-                                    src="{{ asset('template') }}/assets/img/avatars/4.jpg" alt="user@email.com"><span
-                                    class="avatar-status bg-secondary"></span></div>
-                            <div class="message text-wrap">
-                                <div class="d-flex justify-content-between mt-1">
-                                    <div class="small text-body-secondary">Angela Rodriguez</div>
-                                    <div class="small text-body-secondary">1:52 PM</div>
-                                </div>
-                                <div class="fw-semibold">Social Media Campaign Launch</div>
-                                <div class="small text-body-secondary">Exciting news! Our new social media campaign
-                                    goes live tomorrow. Brace yourselves for engagement...</div>
-                            </div>
-                        </div>
-                    </a><a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                            <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img"
-                                    src="{{ asset('template') }}/assets/img/avatars/5.jpg" alt="user@email.com"><span
-                                    class="avatar-status bg-success"></span></div>
-                            <div class="message text-wrap">
-                                <div class="d-flex justify-content-between mt-1">
-                                    <div class="small text-body-secondary">Jane Lewis</div>
-                                    <div class="small text-body-secondary">4:03 PM</div>
-                                </div>
-                                <div class="fw-semibold">Inventory Checkpoint</div>
-                                <div class="small text-body-secondary">Team, it's time for our monthly inventory check.
-                                    Accurate counts ensure smooth operations. Let's nail it...</div>
-                            </div>
-                        </div>
-                    </a><a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                            <div class="avatar flex-shrink-0 my-3 me-3"><img class="avatar-img"
-                                    src="{{ asset('template') }}/assets/img/avatars/3.jpg" alt="user@email.com"><span
-                                    class="avatar-status bg-secondary"></span></div>
-                            <div class="message text-wrap">
-                                <div class="d-flex justify-content-between mt-1">
-                                    <div class="small text-body-secondary">Ryan Miller</div>
-                                    <div class="small text-body-secondary">3 days ago</div>
-                                </div>
-                                <div class="fw-semibold">Customer Feedback Results</div>
-                                <div class="small text-body-secondary">Our latest customer feedback is in. Let's
-                                    analyze and discuss improvements for an even better service...</div>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item text-center fw-semibold"
-                        href="#" data-coreui-i18n="viewAllMessages">View all messages</a>
-                </div>
-            </li>
-        </ul>
+            
+          </ul>
         <ul class="header-nav ms-auto ms-md-0">
             <li class="nav-item py-1">
                 <div class="vr h-100 mx-2 text-body text-opacity-75"></div>

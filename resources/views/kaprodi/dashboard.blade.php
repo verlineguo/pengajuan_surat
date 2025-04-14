@@ -81,7 +81,7 @@
       <div class="card mb-4">
         <div class="card-header" data-coreui-i18n="trafficAndSales">History Pengajuan</div>
         <div class="card-body">
-          <div class="table-responsive">
+          <div class="table-responsive-sm">
             <table class="table border mb-0">
               <thead class="fw-semibold text-nowrap">
                 <tr class="align-middle">

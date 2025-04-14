@@ -12,6 +12,7 @@ use App\Http\Controllers\SuratController;
 use App\Http\Controllers\TUController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProdiController;
 
@@ -22,6 +23,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/{role}/profile/update', [ProfileController::class, 'updateProfile'])
         ->where('role', 'admin|tu|kaprodi|mahasiswa')
         ->name('profile.update');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    
 });
 
 Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () {
@@ -46,6 +52,24 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::put('/mahasiswa/update/{nomor_induk}', 'updateMahasiswa')->name('admin.mahasiswa.update');
             Route::delete('/mahasiswa/delete/{nomor_induk}', 'destroyMahasiswa')->name('admin.mahasiswa.delete');
 
+        });
+
+        Route::controller(ProdiController::class)->group(function() {
+            Route::get('/prodi', 'index')->name('admin.prodi');
+            Route::get('/prodi/create', 'create')->name('admin.prodi.create');
+            Route::post('/prodi/store', 'store')->name('admin.prodi.store');
+            Route::get('/prodi/edit/{kode_prodi}', 'edit')->name('admin.prodi.edit');
+            Route::put('/prodi/update/{kode_prodi}', 'update')->name('admin.prodi.update');
+            Route::delete('/prodi/delete/{kode_prodi}', 'destroy')->name('admin.prodi.delete');
+        });
+        Route::controller(SuratController::class)->group(function() {
+            Route::get('/surat', 'index')->name('admin.surat');
+            Route::get('/surat/create', 'create')->name('admin.surat.create');
+            Route::post('/surat/store', 'store')->name('admin.surat.store');
+            Route::get('/surat/{id_surat}', 'show')->name('admin.surat.show');
+            Route::get('/surat/edit/{id_surat}', 'edit')->name('admin.surat.edit');
+            Route::put('/surat/update/{id_surat}', 'update')->name('admin.surat.update');
+            Route::delete('/surat/delete/{id_surat}', 'destroy')->name('admin.surat.delete');
         });
 
   
@@ -92,8 +116,8 @@ Route::middleware(['auth', 'verified', 'rolemanager:kaprodi'])->group(function (
     Route::prefix('kaprodi')->group(function() {
         Route::controller(KaprodiController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('kaprodi.dashboard');
-
         });
+        
         Route::controller(KaprodiPengajuanController::class)->group(function() {
             Route::get('/pengajuan', 'index')->name('kaprodi.pengajuan');
             Route::get('/pengajuan/{id_pengajuan}', 'show')->name('kaprodi.pengajuan.show');

@@ -7,6 +7,9 @@ use App\Models\Pengajuan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Notifications\PengajuanApproved;
+use App\Notifications\PengajuanRejected;
 
 class KaprodiPengajuanController extends Controller
 {
@@ -52,6 +55,22 @@ class KaprodiPengajuanController extends Controller
             'status_pengajuan' => 'Disetujui',
             'tanggal_persetujuan' => now(),
         ]);
+        $mahasiswa = User::where('nomor_induk', $pengajuan->nrp)->first();
+        $mahasiswa->notify(new PengajuanApproved($pengajuan));
+
+        $mahasiswaProdi = $mahasiswa->kode_prodi;
+    
+        $tuStaff = User::where('role_id', 2)
+                    ->where('status', 'aktif')
+                    ->where(function($query) use ($mahasiswaProdi) {
+                        $query->where('kode_prodi', $mahasiswaProdi)
+                                ->orWhereNull('kode_prodi'); 
+                    })
+                    ->get();
+        
+        foreach ($tuStaff as $tu) {
+            $tu->notify(new PengajuanApproved($pengajuan));
+        }
         return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil disetujui.');
     }
 
@@ -71,6 +90,11 @@ class KaprodiPengajuanController extends Controller
             'catatan_kaprodi' => $request->catatan_kaprodi,
             'catatan_tu' => $request->catatan_tu,
         ]);
+
+        $mahasiswa = User::where('nomor_induk', $pengajuan->nrp)->first();
+        $mahasiswa->notify(new PengajuanRejected($pengajuan));
+
+
 
         return redirect()->route('kaprodi.pengajuan')->with('success', 'Pengajuan berhasil ditolak.');
     }

@@ -29,17 +29,7 @@
                         </div>
                     </div>
                     
-                    @if($pengajuan->tanggal_persetujuan)
-                    <div class="d-flex align-items-center">
-                        <div class="bg-light rounded-circle p-2 me-3">
-                            <i class="fas fa-calendar-check text-primary"></i>
-                        </div>
-                        <div>
-                            <small class="text-muted">Tanggal Persetujuan</small>
-                            <p class="mb-0 fw-bold">{{ $pengajuan->tanggal_persetujuan->format('d-m-Y H:i') }}</p>
-                        </div>
-                    </div>
-                    @endif
+                    
                 </div>
                 
                 <div class="col-md-6">
@@ -82,7 +72,7 @@
             <div class="row">
                 <div class="col-md-6">
               
-                    
+    
                     @if($pengajuan->tanggal_persetujuan)
                     <div class="d-flex align-items-center">
                         <div class="bg-light rounded-circle p-2 me-3">

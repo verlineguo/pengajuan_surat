@@ -4,6 +4,8 @@ namespace App\Http\Controllers\TU;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pengajuan;
+use App\Models\User;
+use App\Notifications\LetterUploaded;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -94,6 +96,19 @@ class PengajuanController extends Controller
                 'status_pengajuan' => 'Done', 
                 
             ]);
+
+            $mahasiswa = User::where('nomor_induk', $pengajuan->nrp)->first();
+            $mahasiswa->notify(new LetterUploaded($pengajuan));
+            
+            $kaprodi = User::where('role_id', 3)
+                        ->where('kode_prodi', $mahasiswa->kode_prodi)
+                        ->where('status', 'aktif')
+                        ->get();
+            
+            foreach ($kaprodi as $kp) {
+                $kp->notify(new LetterUploaded($pengajuan));
+            }
+            
         }
 
         return redirect()->route('tu.pengajuan.show', ['id_pengajuan' => $id_pengajuan])

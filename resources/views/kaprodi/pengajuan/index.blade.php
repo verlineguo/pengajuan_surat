@@ -119,6 +119,14 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Mengirim...',
+                        html: 'Mohon tunggu, sedang diproses.',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
                     $.post("{{ url('kaprodi/pengajuan') }}/" + pengajuanId + "/approve", {
                         _token: '{{ csrf_token() }}'
                     }, function (data) {

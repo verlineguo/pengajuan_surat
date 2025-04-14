@@ -7,9 +7,12 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Prodi;
+use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
     public function indexKaryawan() {
+        $user = Auth::user();        
         $users = User::whereHas('role', function ($query) {
             $query->whereNot('name', 'mahasiswa');
         })->get();
@@ -18,14 +21,15 @@ class UserController extends Controller
         $roles = Role::whereNot('name', 'mahasiswa')->get();
         $prodis = Prodi::all();
 
-        return view('admin.karyawan.index', compact('users', 'roles', 'prodis'));
+        return view('admin.karyawan.index', compact('user','users', 'roles', 'prodis'));
     }
 
     public function createKaryawan(){
+        $user = Auth::user();        
         $roles = Role::whereNot('name', 'mahasiswa')->get();
         $prodis = Prodi::all();
 
-        return view('admin.karyawan.create', compact('roles', 'prodis'));
+        return view('admin.karyawan.create', compact('user', 'roles', 'prodis'));
     }
 
 
@@ -127,18 +131,22 @@ class UserController extends Controller
 
 
     public function indexMahasiswa() {
+        $user = Auth::user();        
+
         $users = User::with('role', 'prodi')->get();
     
         $prodis = Prodi::all();
 
-        return view('admin.mahasiswa.index', compact('users', 'prodis'));
+        return view('admin.mahasiswa.index', compact('user','users', 'prodis'));
     }
 
     public function createMahasiswa(){
         $roles = Role::all(); 
         $prodis = Prodi::all();
+        $user = Auth::user();        
 
-        return view('admin.mahasiswa.create', compact('roles', 'prodis'));
+
+        return view('admin.mahasiswa.create', compact('user','roles', 'prodis'));
     }
 
 
