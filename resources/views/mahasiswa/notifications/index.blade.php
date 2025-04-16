@@ -11,7 +11,7 @@
             @if($notifications->count() > 0)
                 <div class="list-group">
                     @foreach($notifications as $notification)
-                    <div class="list-group-item list-group-item-action {{ $notification->read_at ? '' : 'fw-bold bg-light' }}">
+                    <div class="list-group-item list-group-item-action {{ $notification->read_at ? '' : 'fw-bold' }}">
                         <div class="d-flex w-100 justify-content-between align-items-center">
                             <div>
                                 <div class="mb-1">
