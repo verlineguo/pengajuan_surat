@@ -31,6 +31,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->where('role', 'admin|tu|kaprodi|mahasiswa')
         ->name('notifications.read');
 
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+
+
 });
 
 

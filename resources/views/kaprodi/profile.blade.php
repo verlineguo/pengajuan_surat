@@ -71,6 +71,13 @@
                                 <i class="fas fa-edit me-2"></i> Edit Profil
                             </button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link d-flex align-items-center justify-content-center" 
+                                    id="change-password-tab" data-bs-toggle="tab" data-bs-target="#change-password" 
+                                    type="button" role="tab" aria-selected="false">
+                                <i class="fas fa-key me-2"></i> Ganti Password
+                            </button>
+                        </li>
                     </ul>
 
                     <div class="tab-content p-4" id="profileTabsContent">
@@ -172,7 +179,8 @@
                         
                         <!-- Edit Profil -->
                         <div class="tab-pane fade" id="edit-profile" role="tabpanel">
-                            <form action="{{ route('profile.update', ['role' => 'kaprodi']) }}" method="POST" enctype="multipart/form-data" id="profileForm">                                @csrf
+                            <form action="{{ route('profile.update', ['role' => 'kaprodi']) }}" method="POST" enctype="multipart/form-data" id="profileForm">
+                                @csrf
                                 @method('PUT')
                                 
                                 <div class="row">
@@ -260,6 +268,56 @@
                                     </button>
                                 </div>
                             </form>
+                        </div>
+
+                        <!-- Change Password -->
+                        <div class="tab-pane fade" id="change-password" role="tabpanel">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <h5 class="card-title mb-4 text-center">
+                                                <i class="fas fa-key me-2"></i>Ganti Password
+                                            </h5>
+
+                                            <form action="{{ route('profile.password.update') }}" method="POST" id="passwordForm">
+                                                @csrf
+                                                @method('PUT')
+                                                
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control @error('current_password') is-invalid @enderror" 
+                                                           id="current_password" name="current_password" required placeholder="Password Saat Ini">
+                                                    <label for="current_password">Password Saat Ini</label>
+                                                    @error('current_password')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control @error('password') is-invalid @enderror" 
+                                                           id="password" name="password" required placeholder="Password Baru">
+                                                    <label for="password">Password Baru</label>
+                                                    @error('password')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                
+                                                <div class="form-floating mb-4">
+                                                    <input type="password" class="form-control" 
+                                                           id="password_confirmation" name="password_confirmation" required placeholder="Konfirmasi Password">
+                                                    <label for="password_confirmation">Konfirmasi Password</label>
+                                                </div>
+                                                
+                                                <div class="d-grid gap-2">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="fas fa-save me-1"></i> Simpan Password Baru
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

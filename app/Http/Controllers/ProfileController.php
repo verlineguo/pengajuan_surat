@@ -38,4 +38,31 @@ class ProfileController extends Controller
         $user->save();
         return redirect()->route('profile', ['role' => $role])
         ->with('success', 'Profil berhasil diperbarui.');    }
+
+
+        public function updatePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => ['required', function ($attribute, $value, $fail) {
+            if (!Hash::check($value, Auth::user()->password)) {
+                $fail('Password saat ini tidak cocok');
+            }
+        }],
+        'password' => ['required', 'min:8', 'confirmed', 'different:current_password'],
+    ], [
+        'current_password.required' => 'Password saat ini wajib diisi',
+        'password.required' => 'Password baru wajib diisi',
+        'password.min' => 'Password baru minimal 8 karakter',
+        'password.confirmed' => 'Konfirmasi password tidak cocok',
+        'password.different' => 'Password baru harus berbeda dengan password saat ini',
+    ]);
+
+    $user = Auth::user();
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    return redirect()->back()->with('success', 'Password berhasil diubah');
 }
+
+}
+

@@ -29,6 +29,7 @@
                 </select>
             </div>
         </div>
+        
         <table class="table table-striped" id="pengajuanTable">
             <thead>
                 <tr>
@@ -73,33 +74,32 @@
                                         <button class="btn btn-success btn-sm" type="button" id="uploadDropdown-{{ $pengajuan->id_pengajuan }}" data-coreui-toggle="dropdown" aria-expanded="false">
                                             <i class="fas fa-file-upload"></i>
                                         </button>
-                                        <div class="dropdown-menu p-3" style="min-width: 300px;" aria-labelledby="uploadDropdown-{{ $pengajuan->id_pengajuan }}">
-                                            <form id="uploadForm"action="{{ route('tu.pengajuan.upload', $pengajuan->id_pengajuan) }}" method="POST" enctype="multipart/form-data" id="uploadForm-{{ $pengajuan->id_pengajuan }}">
+                                        {{-- <div class="dropdown-menu p-3" style="min-width: 300px;" aria-labelledby="uploadDropdown-{{ $pengajuan->id_pengajuan }}">
+                                            <form action="{{ route('tu.pengajuan.upload', $pengajuan->id_pengajuan) }}" method="POST" enctype="multipart/form-data" class="upload-form" id="uploadForm-{{ $pengajuan->id_pengajuan }}">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="file_surat-{{ $pengajuan->id_pengajuan }}" class="form-label">Pilih File</label>
                                                     <input type="file" name="file_surat" id="file_surat-{{ $pengajuan->id_pengajuan }}" class="form-control form-control-sm" required>
                                                 </div>
-                                                <button type="button" class="btn btn-primary  btn-sm" onclick="confirmUpload('{{ $pengajuan->id_pengajuan }}')">
+                                                <button type="button" class="btn btn-primary btn-sm" onclick="confirmUpload('{{ $pengajuan->id_pengajuan }}')">
                                                     <i class="fas fa-upload"></i> Upload
                                                 </button>
                                             </form>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     @endif
                                     
                                     @if ($pengajuan->status_pengajuan == 'Done' && $pengajuan->file_surat)
-                                        <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary me-1  btn-sm" target="_blank">
+                                        <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary me-1 btn-sm" target="_blank">
                                             <i class="fas fa-download"></i>
                                         </a>
                                     @endif
                             
-                                    <a href="{{ route('tu.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm" style="background-color: #53BCE9">
+                                    <a href="{{ route('tu.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm view-detail" style="background-color: #53BCE9">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </div>
                             </td>
-
                     </tr>
                 @endforeach
             </tbody>
@@ -113,47 +113,60 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
-            $('.table').DataTable();
-
-            var table = $('#pengajuanTable').DataTable();
-            table.column(5).search('Disetujui').draw();
-
-
-            $('#filter').on('change', function() {
-                var selectedStatus = $(this).val();
-                table.column(5).search(selectedStatus).draw();
-            });
-
-
-        });
-        function confirmUpload() {
-    Swal.fire({
-        title: 'Konfirmasi Upload',
-        text: "Apakah Anda yakin ingin mengunggah surat ini?",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, Upload!',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Show loading state
+            // Tampilkan loading saat halaman dimuat
             Swal.fire({
-                title: 'Sedang Mengupload...',
-                html: 'Mohon tunggu sebentar',
+                title: 'Mengirim...',
+                html: 'Mohon tunggu, sedang diproses.',
                 allowOutsideClick: false,
                 didOpen: () => {
                     Swal.showLoading();
                 }
             });
             
-            // Submit the form
-            document.getElementById('uploadForm').submit();
-        }
-    });
-}
-    </script>
+            // Inisialisasi DataTable dengan callback saat selesai
+            var table = $('#pengajuanTable').DataTable({
+                "initComplete": function() {
+                    // Sembunyikan loading setelah DataTable dimuat
+                    Swal.close();
+                }
+            });
+            
+            // Set filter default ke "Disetujui"
+            table.column(5).search('Disetujui').draw();
+
+            // Event handler untuk filter
+            $('#filter').on('change', function() {
+                Swal.fire({
+                    title: 'Mengirim...',
+                    html: 'Mohon tunggu, sedang diproses.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                
+                var selectedStatus = $(this).val();
+                table.column(5).search(selectedStatus).draw();
+                setTimeout(function() {
+                    Swal.close();
+                }, 300);
+            });
+            
+            // Event handler untuk tombol view detail
+            $('.view-detail').on('click', function(e) {
+                Swal.fire({
+                    title: 'Mengirim...',
+                    html: 'Mohon tunggu, sedang diproses.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+            });
+        });
+        
+        
+   </script>
     @if (session('success'))
         <script>
             Swal.fire({
