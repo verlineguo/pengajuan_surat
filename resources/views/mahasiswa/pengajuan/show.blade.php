@@ -124,7 +124,10 @@
                     </tr>
                     <tr>
                         <td><strong>Mata Kuliah</strong></td>
-                        <td>{{ $pengajuan->sptmk->mata_kuliah }}</td>
+                    
+                            
+                        <td>{{ $pengajuan->sptmk->mataKuliah->kode_mk ?? '-' }} - {{ $pengajuan->sptmk->mataKuliah->nama_mk ?? '-' }}
+                        </td>
                     </tr>
                     <tr class="bg-light">
                         <td><strong>Semester</strong></td>

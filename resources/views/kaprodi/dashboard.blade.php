@@ -104,9 +104,18 @@
                     <td>{{ $pengajuan->surat->nama_jenis_surat }}</td>
                     <td>{{ $pengajuan->tanggal_pengajuan }}</td>
                     <td>
-                        <span class="badge {{ $pengajuan->status_pengajuan == 'Disetujui' ? 'bg-success' : ($pengajuan->status_pengajuan == 'Ditolak' ? 'bg-danger' : 'bg-warning') }}">
-                            {{ $pengajuan->status_pengajuan }}
-                        </span>
+                     
+                        @if($pengajuan->status_pengajuan === 'Disetujui')
+                                        <span class="badge bg-success">{{ $pengajuan->status_pengajuan }}</span>
+                                    @elseif($pengajuan->status_pengajuan === 'Ditolak')
+                                        <span class="badge bg-danger">{{ $pengajuan->status_pengajuan }}</span>
+                                    @elseif($pengajuan->status_pengajuan === 'pending')
+                                        <span class="badge bg-warning text-dark">{{ $pengajuan->status_pengajuan }}</span>
+                                    @elseif($pengajuan->status_pengajuan === 'Done')
+                                        <span class="badge bg-primary">{{ $pengajuan->status_pengajuan }}</span>
+                                    @else
+                                        <span class="badge bg-secondary">{{ $pengajuan->status_pengajuan }}</span>
+                                    @endif
                     </td>
 
                     

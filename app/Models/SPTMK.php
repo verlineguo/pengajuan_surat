@@ -25,4 +25,13 @@ class SPTMK extends Model
     {
         return $this->belongsTo(Pengajuan::class, 'pengajuan_id', 'id_pengajuan');
     }
+
+    // Sptmk.php
+    public function mataKuliah()
+{
+    return $this->belongsTo(MataKuliah::class, 'mata_kuliah', 'kode_mk');
+}
+
+
+
 }

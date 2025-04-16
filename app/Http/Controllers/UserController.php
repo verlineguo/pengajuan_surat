@@ -45,7 +45,7 @@ class UserController extends Controller
         $request->validate([
             'nomor_induk' => 'required|string|max:10|unique:users,nomor_induk',
             'name' => 'required|string|max:255',
-            'kode_prodi' => 'nullable|exists:prodi,kode_prodi',
+            'kode_prodi' => 'required|exists:prodi,kode_prodi',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'role_id' => 'required|exists:role,id',
@@ -170,6 +170,8 @@ class UserController extends Controller
             'address' => 'nullable|string|max:255',
         ]);
 
+
+
         $profilePicturePath = null;
         if ($request->hasFile('profile')) {
             $profilePicturePath = $request->file('profile')->store('profiles', 'public');
@@ -197,6 +199,7 @@ class UserController extends Controller
         $request->validate([
             'nomor_induk' => 'required|unique:users,nomor_induk,'.$user->nomor_induk.',nomor_induk',
             'name' => 'required|string|max:255',
+            'kode_prodi' => 'required|exists:prodi,kode_prodi',
             'email' => 'required|email|unique:users,email,' . $nomor_induk . ',nomor_induk',
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
@@ -219,6 +222,7 @@ class UserController extends Controller
             'nomor_induk' => $request->nomor_induk,
             'name' => $request->name,
             'email' => $request->email,
+            'kode_prodi' => $request->kode_prodi,
             'phone' => $request->phone,
             'address' => $request->address,
             'status' => $request->status,

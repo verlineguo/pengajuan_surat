@@ -70,6 +70,15 @@
                     </select>
                 </div>
             
+                <div class="mb-3">
+                    <label class="form-label" for="role_id">Role</label>
+                    <select class="form-select" id="role_id" name="role_id" required>
+                        <option value="">Pilih Role</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>

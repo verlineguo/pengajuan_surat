@@ -23,12 +23,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/{role}/profile/update', [ProfileController::class, 'updateProfile'])
         ->where('role', 'admin|tu|kaprodi|mahasiswa')
         ->name('profile.update');
+
+    Route::get('/{role}/notifications', [NotificationController::class, 'index'])
+        ->where('role', 'admin|tu|kaprodi|mahasiswa')
+        ->name('notifications.index');
+    Route::post('/{role}/notifications/{id}/read', [NotificationController::class, 'markAsRead'])
+        ->where('role', 'admin|tu|kaprodi|mahasiswa')
+        ->name('notifications.read');
+
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
-    
-});
+
 
 Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () {
     Route::prefix('admin')->group(function() {

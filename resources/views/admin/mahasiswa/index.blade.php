@@ -56,7 +56,7 @@
                     <a href="{{ route('admin.mahasiswa.edit', $user->nomor_induk) }}" class="btn btn-warning btn-sm">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <button type="submit" class="btn btn-danger btn-sm delete-btn" data-id="{{ $user->nomor_induk }}">
+                    <button type="submit" class="btn btn-danger btn-sm delete-btn" data-nomor_induk="{{ $user->nomor_induk }}">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
@@ -106,7 +106,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/admin/user/delete/' + userId,
+                        url: '/admin/mahasiswa/delete/' + userId,
                         type: 'POST',
                         data: {
                             _method: 'DELETE',

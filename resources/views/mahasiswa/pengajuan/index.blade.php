@@ -52,18 +52,23 @@
                 <td>
                     @if ($pengajuan->status_pengajuan == 'Done' && $pengajuan->file_surat)
                     <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                    <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-download"></i></a>
+                    @endif
+                    @if ($pengajuan->status_pengajuan == 'Disetujui' || $pengajuan->status_pengajuan == 'Ditolak')
+                        <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                    @endif
+                   
 
-                        <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-download"></i></a>
-                    @endif
-                    @if ($pengajuan->status_pengajuan == 'Disetujui')
+             
+                    @if ($pengajuan->status_pengajuan == 'pending')
                         <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                    @endif
-                    @if ($pengajuan->status_pengajuan == 'pending' || $pengajuan->status_pengajuan == 'Ditolak')
-                        <a href="{{ route('mahasiswa.pengajuan.show', $pengajuan->id_pengajuan) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('mahasiswa.pengajuan.edit', $pengajuan->id_pengajuan) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                         <button class="btn btn-danger btn-sm delete-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
                             <i class="fas fa-trash"></i>
                         </button>
                     @endif
+                    @if ($pengajuan->status_pengajuan == 'pending')
+                @endif
                 </td>
                 
             </tr>

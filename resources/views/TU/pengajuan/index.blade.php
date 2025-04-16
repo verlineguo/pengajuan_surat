@@ -58,7 +58,7 @@
                             ? 'bg-success'
                             : ($pengajuan->status_pengajuan == 'Ditolak'
                                 ? 'bg-danger'
-                                : ($pengajuan->status_pengajuan == 'Done'
+                                : ($pengajuan->status_pengajuan == 'Done' && $pengajuan->file_surat
                                     ? 'bg-primary'
                                     : 'bg-warning')) }}">
                                 {{ $pengajuan->status_pengajuan }}
@@ -127,22 +127,32 @@
 
         });
         function confirmUpload() {
+    Swal.fire({
+        title: 'Konfirmasi Upload',
+        text: "Apakah Anda yakin ingin mengunggah surat ini?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Upload!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
             Swal.fire({
-                title: 'Konfirmasi Upload',
-                text: "Apakah Anda yakin ingin mengunggah surat ini?",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#28a745',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Upload!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Kirim form jika pengguna mengonfirmasi
-                    document.getElementById('uploadForm').submit();
+                title: 'Sedang Mengupload...',
+                html: 'Mohon tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
                 }
             });
+            
+            // Submit the form
+            document.getElementById('uploadForm').submit();
         }
+    });
+}
     </script>
     @if (session('success'))
         <script>

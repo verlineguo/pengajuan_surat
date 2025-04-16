@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LHS;
+use App\Models\MataKuliah;
 use App\Models\Pengajuan;
 use App\Models\SKL;
 use App\Models\SKMA;
@@ -29,7 +30,8 @@ class PengajuanController extends Controller
     public function create() {
         $user = Auth::user();
         $surats = Surat::all();
-        return view('mahasiswa.pengajuan.create', compact('user','surats'));
+        $matakuliahs = MataKuliah::where('kode_prodi', $user->kode_prodi)->get();
+        return view('mahasiswa.pengajuan.create', compact('user','surats', 'matakuliahs'));
     }
 
     public function store(Request $request)
@@ -104,6 +106,12 @@ class PengajuanController extends Controller
         return redirect()->route('mahasiswa.pengajuan.history')->with('success', 'Pengajuan surat berhasil dikirim!');
     }
 
+    public function edit($id_pengajuan) {
+        $pengajuan = Pengajuan::findOrFail($id_pengajuan);
+        $surats = Surat::all();
+        $user = Auth::user();
+        return view('mahasiswa.pengajuan.edit', compact('pengajuan', 'surats', 'user'));
+    }
     public function update(Request $request, $id_pengajuan)
     {
         $request->validate([

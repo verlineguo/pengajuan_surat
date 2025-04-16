@@ -12,12 +12,15 @@ use Illuminate\Support\Facades\Hash;
 class TUController extends Controller
 {
     public function index() {
-        $user = Auth::user();        
+        $user = Auth::user();
         $surats = Surat::all();
-        $pengajuans = Pengajuan::where('status_pengajuan', 'disetujui')->get();
-        $pengajuanDiterima = Pengajuan::where('status_pengajuan', 'Disetujui')->get();
-        $pengajuanPending = Pengajuan::where('status_pengajuan', 'pending')->get();
-        $pengajuanDitolak = Pengajuan::where('status_pengajuan', 'Ditolak')->get();
+        $mahasiswaNrp = User::where('kode_prodi', $user->kode_prodi)->pluck('nomor_induk')->toArray();
+        $pengajuans = Pengajuan::whereIn('nrp', $mahasiswaNrp)->get();
+        $pengajuanPending = Pengajuan::where('status_pengajuan', 'pending')->whereIn('nrp', $mahasiswaNrp)->get();
+
+        $pengajuanDiterima = Pengajuan::where('status_pengajuan', 'Disetujui')->whereIn('nrp', $mahasiswaNrp)->get();
+
+        $pengajuanDitolak = Pengajuan::where('status_pengajuan', 'Ditolak')->whereIn('nrp', $mahasiswaNrp)->get();
         return view('TU.dashboard', compact('user', 'pengajuans', 'pengajuanDiterima', 'pengajuanPending', 'pengajuanDitolak'));
     }
 

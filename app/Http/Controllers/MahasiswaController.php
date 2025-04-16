@@ -11,18 +11,14 @@ use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $user = Auth::user();
         $surats = Surat::all();
         $pengajuans = Pengajuan::where('nrp', Auth::user()->nomor_induk)->get();
-        $pengajuanDiterima = Pengajuan::where('status_pengajuan', 'Disetujui')->get();
-        $pengajuanPending = Pengajuan::where('status_pengajuan', 'pending')->get();
-        $pengajuanDitolak = Pengajuan::where('status_pengajuan', 'Ditolak')->get();
+        $pengajuanDiterima = Pengajuan::where('nrp', $user->nomor_induk)->where('status_pengajuan', 'Disetujui')->get();
+        $pengajuanPending = Pengajuan::where('nrp', $user->nomor_induk)->where('status_pengajuan', 'pending')->get();
+        $pengajuanDitolak = Pengajuan::where('nrp', $user->nomor_induk)->where('status_pengajuan', 'Ditolak')->get();
         return view('mahasiswa.dashboard', compact('user', 'pengajuans', 'pengajuanDiterima', 'pengajuanPending', 'pengajuanDitolak'));
     }
-
-   
-
-
-
 }

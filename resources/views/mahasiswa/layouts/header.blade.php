@@ -55,11 +55,13 @@
                 <div class="dropdown-item text-center">Tidak ada notifikasi</div>
               @endforelse
             </div>
-          
+            @php
+            $currentRole = auth()->user()->role->name;
+        @endphp
           @if(auth()->user()->notifications->count() > 5)
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-center fw-semibold" href="{{ route('notifications.index') }}">Lihat semua notifikasi</a>
-          @endif
+            <a class="dropdown-item text-center fw-semibold" href="{{ route('notifications.index', ['role' => $currentRole]) }}">Lihat semua notifikasi</a>
+            @endif
         </div>
       </li>
       

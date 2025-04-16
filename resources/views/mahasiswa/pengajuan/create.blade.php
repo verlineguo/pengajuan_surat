@@ -94,9 +94,16 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Nama Mata Kuliah - Kode Mata Kuliah</label>
-                    <div class="form-text">Contoh: Proses Bisnis - IN255</div>
-                    <input class="form-control" type="text" name="mata_kuliah" required>
+                    <select class="form-select" name="mata_kuliah" required>
+                        <option value="" disabled selected>-- Pilih Mata Kuliah --</option>
+                        @foreach($matakuliahs as $matakuliah)
+                            <option value="{{ $matakuliah->kode_mk }}">
+                                {{ $matakuliah->kode_mk }} - {{ $matakuliah->nama_mk }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+
                 
             
                 <div class="mb-3">

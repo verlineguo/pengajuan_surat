@@ -29,6 +29,7 @@ class LoginRequest extends FormRequest
         return [
             'login' => ['required', 'string'],
             'password' => ['required', 'string'],
+            
         ];
     }
 
@@ -51,6 +52,24 @@ class LoginRequest extends FormRequest
                 'login' => trans('auth.failed'),
             ]);
         }
+
+        $user = Auth::user();
+        
+        // Pastikan user memiliki status aktif
+        if ($user->status !== 'aktif') {
+            // Logout user karena tidak aktif
+            Auth::logout();
+            
+            $this->session()->invalidate();
+            $this->session()->regenerateToken();
+            
+            RateLimiter::hit($this->throttleKey());
+            
+            throw ValidationException::withMessages([
+                'email' => 'Akun Anda tidak aktif. Silahkan hubungi administrator.',
+            ]);
+        }
+
 
         RateLimiter::clear($this->throttleKey());
     }

@@ -172,7 +172,7 @@
                         
                         <!-- Edit Profil -->
                         <div class="tab-pane fade" id="edit-profile" role="tabpanel">
-                            <form action="{{ route('admin.user.update', $user->nomor_induk) }}" method="POST" enctype="multipart/form-data" id="profileForm">
+                            <form action="{{ route('profile.update', ['role' => 'admin']) }}" method="POST" enctype="multipart/form-data" id="profileForm">                                @csrf
                                 @csrf
                                 @method('PUT')
                                 

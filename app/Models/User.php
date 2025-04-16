@@ -22,7 +22,7 @@ class User extends Authenticatable
     protected $primaryKey = 'nomor_induk';
     public $incrementing = false; 
     protected $keyType = 'string';
-    protected $fillable = ['nomor_induk', 'name', 'email', 'password', 'role_id', 'profile', 'phone', 'address', 'status'];
+    protected $fillable = ['nomor_induk', 'name', 'email', 'password','kode_prodi', 'role_id', 'profile', 'phone', 'address', 'status'];
 
 
     /**1

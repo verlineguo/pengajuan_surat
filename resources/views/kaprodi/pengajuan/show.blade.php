@@ -90,17 +90,12 @@
                 
             </div>
             @if($pengajuan->status_pengajuan === 'pending')
-                <form id="pengajuanForm" action="{{ route('kaprodi.pengajuan.update', ['id_pengajuan' => $pengajuan->id_pengajuan]) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="status_pengajuan" id="status_pengajuan">
-                    
-                    <div class="mb-2">
+                <div class="mt-4">
+                    <div class="mb-3">
                         <label for="catatan_kaprodi" class="form-label">Catatan Kaprodi (Opsional)</label>
-                        <textarea name="catatan_kaprodi" id="catatan_kaprodi" class="form-control"></textarea>
+                        <textarea id="catatan_kaprodi" class="form-control"></textarea>
                     </div>
-                
-
+                    
                     <button type="button" class="btn btn-success text-white approve-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
                         Setujui
                     </button>
@@ -108,40 +103,17 @@
                     <button type="button" class="btn btn-danger text-white reject-btn" data-id_pengajuan="{{ $pengajuan->id_pengajuan }}">
                         Menolak
                     </button>
-                </form>
-                
-            
-
-            
-            @endif
-            @if($pengajuan->status_pengajuan === 'disetujui' || $pengajuan->status_pengajuan === 'Done')
-            <div class="row">
-                <div class="col-md-6">
-            
-                    
-                    @if($pengajuan->tanggal_persetujuan)
-                    <div class="d-flex align-items-center">
-                        <div class="bg-light rounded-circle p-2 me-3">
-                            <i class="fas fa-calendar-check text-primary"></i>
-                        </div>
-                        <div>
-                            <small class="text-muted">Tanggal Persetujuan</small>
-                            <p class="mb-0 fw-bold">{{ $pengajuan->tanggal_persetujuan ? $pengajuan->tanggal_persetujuan->format('d-m-Y H:i') : '-' }}</p>                        </div>
-                    </div>
-                    @endif
                 </div>
-    
-                
-            
-                
-            </div>
             @endif
-            @if($pengajuan->file_surat && $pengajuan->status_pengajuan === 'Done')
-            <div class="mt-4 text-start">
-                <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary" target="_blank">
-                    <i class="fas fa-download me-2"></i>Download Surat
-                </a>
-            </div>
+            
+            @if($pengajuan->status_pengajuan === 'Disetujui' || $pengajuan->status_pengajuan === 'Done')
+                @if($pengajuan->file_surat)
+                    <div class="mt-4 text-start">
+                        <a href="{{ asset('uploads/surat/' . $pengajuan->file_surat) }}" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-download me-2"></i>Download Surat
+                        </a>
+                    </div>
+                @endif
             @endif
         </div>
     </div>
@@ -225,18 +197,13 @@
 @endsection
 @section('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function submitForm(status) {
-        document.getElementById('status_pengajuan').value = status;
-        document.getElementById('pengajuanForm').submit();
-    }
-
-    
-    $('.approve-btn').click(function () {
+    $(document).ready(function () {
+        $('.approve-btn').click(function () {
             var pengajuanId = $(this).data('id_pengajuan');
-console.log(pengajuanId);
+            var catatan = $('#catatan_kaprodi').val();
+            
             Swal.fire({
                 title: 'Setujui Pengajuan?',
                 text: "Anda akan menyetujui pengajuan ini.",
@@ -248,8 +215,19 @@ console.log(pengajuanId);
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Show loading state
+                    Swal.fire({
+                        title: 'Mengirim...',
+                        html: 'Mohon tunggu, sedang diproses.',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    
                     $.post("{{ url('kaprodi/pengajuan') }}/" + pengajuanId + "/approve", {
-                        _token: '{{ csrf_token() }}'
+                        _token: '{{ csrf_token() }}',
+                        catatan_kaprodi: catatan
                     }, function (data) {
                         Swal.fire(
                             'Berhasil!',
@@ -269,7 +247,8 @@ console.log(pengajuanId);
 
         $('.reject-btn').click(function () {
             var pengajuanId = $(this).data('id_pengajuan');
-
+            var catatan = $('#catatan_kaprodi').val();
+            
             Swal.fire({
                 title: 'Tolak Pengajuan?',
                 text: "Anda akan menolak pengajuan ini.",
@@ -281,8 +260,19 @@ console.log(pengajuanId);
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Show loading state
+                    Swal.fire({
+                        title: 'Mengirim...',
+                        html: 'Mohon tunggu, sedang diproses.',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    
                     $.post("{{ url('kaprodi/pengajuan') }}/" + pengajuanId + "/reject", {
-                        _token: '{{ csrf_token() }}'
+                        _token: '{{ csrf_token() }}',
+                        catatan_kaprodi: catatan
                     }, function (data) {
                         Swal.fire(
                             'Ditolak!',
@@ -299,10 +289,8 @@ console.log(pengajuanId);
                 }
             });
         });
-    
-
+    });
 </script>
-
 
 @if(session('success'))
     <script>
@@ -315,5 +303,4 @@ console.log(pengajuanId);
         });
     </script>
 @endif
-
 @endsection
