@@ -5,12 +5,7 @@
     <div class="card mb-4">
         <div class="card-header">
             <strong>Semua Notifikasi</strong>
-            @if(auth()->user()->unreadNotifications->count() > 0)
-            <form action="{{ route('notifications.readAll', ['role' => $role]) }}" method="POST" class="float-end">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-primary">Tandai Semua Sudah Dibaca</button>
-            </form>
-            @endif
+            
         </div>
         <div class="card-body">
             @if($notifications->count() > 0)

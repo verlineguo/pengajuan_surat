@@ -74,7 +74,7 @@
                                         <button class="btn btn-success btn-sm" type="button" id="uploadDropdown-{{ $pengajuan->id_pengajuan }}" data-coreui-toggle="dropdown" aria-expanded="false">
                                             <i class="fas fa-file-upload"></i>
                                         </button>
-                                        {{-- <div class="dropdown-menu p-3" style="min-width: 300px;" aria-labelledby="uploadDropdown-{{ $pengajuan->id_pengajuan }}">
+                                        <div class="dropdown-menu p-3" style="min-width: 300px;" aria-labelledby="uploadDropdown-{{ $pengajuan->id_pengajuan }}">
                                             <form action="{{ route('tu.pengajuan.upload', $pengajuan->id_pengajuan) }}" method="POST" enctype="multipart/form-data" class="upload-form" id="uploadForm-{{ $pengajuan->id_pengajuan }}">
                                                 @csrf
                                                 <div class="mb-3">
@@ -85,7 +85,7 @@
                                                     <i class="fas fa-upload"></i> Upload
                                                 </button>
                                             </form>
-                                        </div> --}}
+                                        </div>
                                     </div>
                                     @endif
                                     
@@ -165,7 +165,56 @@
             });
         });
         
-        
+        function confirmUpload(id) {
+    Swal.fire({
+        title: 'Konfirmasi Upload',
+        text: "Apakah Anda yakin ingin mengunggah surat ini?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Upload!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Tampilkan loading
+            Swal.fire({
+                title: 'Mengirim...',
+                html: 'Mohon tunggu, sedang diproses.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Submit form dengan AJAX
+            var formData = new FormData($('#uploadForm-'+id)[0]);
+            $.ajax({
+                url: $('#uploadForm-'+id).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'File berhasil diupload',
+                        icon: 'success'
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: 'Terjadi kesalahan saat upload file',
+                        icon: 'error'
+                    });
+                }
+            });
+        }
+    });
+}
    </script>
     @if (session('success'))
         <script>

@@ -100,14 +100,14 @@ class PengajuanController extends Controller
             $mahasiswa = User::where('nomor_induk', $pengajuan->nrp)->first();
             $mahasiswa->notify(new LetterUploaded($pengajuan));
             
-            $kaprodi = User::where('role_id', 3)
-                        ->where('kode_prodi', $mahasiswa->kode_prodi)
-                        ->where('status', 'aktif')
-                        ->get();
+            // $kaprodi = User::where('role_id', 3)
+            //             ->where('kode_prodi', $mahasiswa->kode_prodi)
+            //             ->where('status', 'aktif')
+            //             ->get();
             
-            foreach ($kaprodi as $kp) {
-                $kp->notify(new LetterUploaded($pengajuan));
-            }
+            // foreach ($kaprodi as $kp) {
+            //     $kp->notify(new LetterUploaded($pengajuan));
+            // }
             
         }
 
